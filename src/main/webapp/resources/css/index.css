@@ -1,0 +1,26 @@
+* {
+  padding:0;
+  margin:0;
+}
+.intro {
+  display: table;
+  width: 100%;
+  height: 100vh;
+  padding: 100px 0;
+  color: white;
+  background:grey;
+  background-position: 30% 45%;
+  background-size: cover;
+}
+
+.form-pesquisa{
+	height: 80%;
+	margin-left: 20%;
+	width: 500px;
+	background: white;
+}
+
+.form-control{
+	margin-left: 10px;
+	width: 50%!important;
+}

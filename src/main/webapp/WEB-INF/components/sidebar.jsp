@@ -1,0 +1,47 @@
+<ul style="margin-bottom:-30%" class="sidebar navbar-nav">
+      <li class="nav-item">
+        <a id="inicio" class="nav-link" href="/painel/home">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span >Inicio</span>
+        </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Hospedagem</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <h6 class="dropdown-header">Ações</h6>
+          <a class="dropdown-item" id="side-consultar" href="/painel/hospedagem/consultar">Consultar</a>
+          <a class="dropdown-item" id="side-cadastrar" href="/painel/hospedagem/cadastrar">Cadastrar</a>
+          
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Estadia</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <h6 class="dropdown-header">Ações</h6>
+          <a class="dropdown-item" id="side-consultar" href="/painel/hospedagem/consultar">Consultar</a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Charts</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="tables.html">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Tables</span></a>
+      </li>
+    </ul>
+    
+
+   
+  
+  
