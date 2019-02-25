@@ -6,7 +6,7 @@
 <meta charset="ISO-8859-1">
 <title>Pesquisa de hospedagem</title>
 </head>
-<body>
+<body class="bg-dark">
 <jsp:include page="components/navbar.jsp" />
 	<div style="margin-top:2%; margin-left:20%;">
 		<div class="row">
@@ -15,7 +15,7 @@
 			  <div class="card-body">
 				  <h5 class="card-title">Card title</h5>
 				  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  <a href="#" class="btn btn-primary">Go somewhere</a>
+				  <a href="/painel/hospedagem/detalhes" class="btn btn-primary" >Reservar</a>
 			  </div>
 			 </div> 
 				<div class="card" style="width: 18rem; margin-left:20px"> 

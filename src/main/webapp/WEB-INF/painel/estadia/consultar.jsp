@@ -32,17 +32,18 @@ text-decoration:none;
 
 <jsp:include page="../../components/navbar.jsp" />
 <jsp:include page="../../components/sidebar.jsp" />
-<jsp:include page="../../components/hospedagem/modalMotivoHospede.jsp" />  
-<h2 style="color:white; margin-left:500px; margin-bottom:40px">Estadias da hospedagem: Casa na praia</h2> 
-<div style="width:900px!important; max-width:2000px"  class="card card-register mx-auto mt-2">
-	 <table style="width:900px" class="table">
+<jsp:include page="../../components/estadia/modalAvaliarHospedagem.jsp" />   
+<jsp:include page="../../components/hospedagem/modalMotivoHospede.jsp" /> 
+<div style="width:1200px!important; max-width:2000px"  class="card card-register mx-auto mt-2">
+	 <table style="width:1200px" class="table">
 	  <thead>
 	    <tr>
 	      <th scope="col">#</th>
-	      <th scope="col">Nome do Hóspede</th>
+	      <th scope="col">Hospedagem</th>
 	      <th scope="col">Data do check-in</th>
 	      <th scope="col">Data do check-out</th>
 	      <th scope="col">Qtd hóspedes</th>
+	       <th scope="col">Anfitrião</th>
 	      <th scope="col">Status</th>
 	      <th scope="col">Ações</th>
 	    </tr>
@@ -50,32 +51,35 @@ text-decoration:none;
 	  <tbody>
 	    <tr>
 	      <th scope="row">1</th>
-	      <td>Fabio</td>
+	      <td>Pousada</td>
 	      <td>21/02/2019</td>
 	      <td>26/02/2019</td>
 	      <td>5</td>
-	      <td>Reservado</td>
+	      <td>Anfitrião</td>
+	      <td>Aprovado</td>
 	      <td>
 	     	 <button data-toggle="modal" data-target="#modalMotivo" type="button" class="btn btn-danger">Cancelar Estadia</button>
 	      </td>
 	    </tr>
 	    <tr>
 	      <th scope="row">1</th>
-	      <td>Lucas</td>
+	      <td>Casa na praia em caraguatatuba</td>
 	      <td>21/02/2019</td>
 	      <td>24/02/2019</td>
 	      <td>5</td>
+	      <td>Anfitrião</td>
 	      <td>Realizado</td>
 	      <td>
-	     	 <button data-toggle="modal" data-target="#modalAvaliacao" type="button" class="btn btn-warning">Avaliar Hóspede</button>
+	     	 <button data-toggle="modal" data-target="#modalAvaliacaoHospedagem" type="button" class="btn btn-warning">Avaliar Anfitrião</button>
 	      </td>
 	    </tr>
 	    <tr>
 	      <th scope="row">1</th>
-	      <td>Bruno</td>
+	      <td>Hotel Paulista</td>
 	      <td>21/02/2019</td>
 	      <td>24/02/2019</td>
 	      <td>5</td>
+	      <td>Anfitrião</td>
 	      <td>Realizado</td>
 	      <td>
 	     	 <button data-toggle="modal" data-target="#modalVerAvaliacao" type="button" class="btn btn-success">Ver avaliação</button>

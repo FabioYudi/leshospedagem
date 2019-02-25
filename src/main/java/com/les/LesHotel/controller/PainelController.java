@@ -33,6 +33,11 @@ public class PainelController {
 		return "painel/hospedagem/estadia";
 	}
 	
+	@GetMapping("painel/estadia/consultar")
+	public String consultaEstadiaHospede() {
+		return "painel/estadia/consultar";
+	}
+	
 	
 	
 	

@@ -8,7 +8,7 @@
 <meta charset="ISO-8859-1">
 <title>Home</title>
 </head>
-<body>
+<body class="bg-dark">
 <jsp:include page="components/navbar.jsp" />
 <div class="intro">
 	<form method="get" action="/pesquisa" class="margem-cima-30 form-pesquisa">
