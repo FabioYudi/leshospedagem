@@ -34,8 +34,8 @@ text-decoration:none;
 <jsp:include page="../../components/sidebar.jsp" />
 <jsp:include page="../../components/hospedagem/modalMotivoHospede.jsp" />  
 <h2 style="color:white; margin-left:500px; margin-bottom:40px">Estadias da hospedagem: Casa na praia</h2> 
-<div style="width:900px!important; max-width:2000px"  class="card card-register mx-auto mt-2">
-	 <table style="width:900px" class="table">
+<div style="width:1000px!important; max-width:2000px"  class="card card-register mx-auto mt-2">
+	 <table style="width:1000px" class="table">
 	  <thead>
 	    <tr>
 	      <th scope="col">#</th>
@@ -57,6 +57,7 @@ text-decoration:none;
 	      <td>Reservado</td>
 	      <td>
 	     	 <button data-toggle="modal" data-target="#modalMotivo" type="button" class="btn btn-danger">Cancelar Estadia</button>
+	     	 <a href="/painel/hospedagem/detalheEstadia"  class="btn btn-danger">Detalhes</a>
 	      </td>
 	    </tr>
 	    <tr>

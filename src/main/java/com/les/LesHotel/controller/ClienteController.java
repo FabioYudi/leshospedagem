@@ -13,6 +13,11 @@ public class ClienteController {
 		return "cliente/cadastrar";
 	}
 	
+	@GetMapping("/dados")
+	public String carregarDados() {
+		return "cliente/dados";
+	}
+	
 	@GetMapping("/login")
 	public String index() {
 		return "cliente/login";

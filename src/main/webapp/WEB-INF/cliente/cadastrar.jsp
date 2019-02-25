@@ -3,16 +3,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+label{
+	color: white;
+}
+</style>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body>
+<body class="bg-dark">
 <jsp:include page="../components/navbar.jsp" />
 <form style="margin-left:30px; margin-top:20px">
 	<div class="row">
 	   <div class="col">
 		  <div class="form-group" >
-		    <label for="formGroupExampleInput">Nome Completo</label>
+		    <label  for="formGroupExampleInput">Nome Completo</label>
 		    <input type="text" style="width:500px;"" class="form-control" id="formGroupExampleInput" placeholder="Example input">
 		  </div>
 		</div>

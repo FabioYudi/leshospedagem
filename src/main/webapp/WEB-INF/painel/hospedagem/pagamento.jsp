@@ -28,13 +28,34 @@
 	        <form>
 		        <div class="form-group">
 		          	<div class="form-row">	
-		    			<label for="exampleFormControlSelect1">Selecione Seu cartão de crédito ou cadastre um novo</label>
+		    			<label for="exampleFormControlSelect1">Selecione seu cartão de crédito ou cadastre um novo</label>
 					    <select class="form-control" id="exampleFormControlSelect1">
 					      <option>visa-xxx321</option>
 					      <option>master-xxx245</option>
 					    </select>
 					    <a style="margin-top:20px" class="btn btn-primary" href="/painel/hospedagem/pagamento">Novo Cartão</a>
 		          	</div>
+		          </div>
+		          <div class="form-group">
+		          	<div class="form-row">	
+		    			<label for="exampleFormControlSelect1">Selecione seu endereço de cobrança ou cadastre um novo</label>
+					    <select class="form-control" id="exampleFormControlSelect1">
+					      <option>endereço 1</option>
+					      <option>endereço 2</option>
+					    </select>
+					    <a style="margin-top:20px" class="btn btn-primary" href="/painel/hospedagem/pagamento">Novo Endereço</a>
+		          	</div>
+		          </div>
+		           <div class="form-group">
+		            <div class="form-row">
+		              <div class="col-md-6">
+		                <div class="form-label-group">
+		                  <label for="firstName">Cupom de desconto</label>
+		                  <input type="text" id="firstName" class="form-control" placeholder="" required="required" autofocus="autofocus">
+		                  <button style="margin-top:10px"class="btn btn-warning">Aplicar</button>
+		                </div>
+		              </div>
+		            </div>
 		          </div>
 		          <div class="form-group">
 		          	<div class="form-row">
@@ -44,6 +65,7 @@
 		  				</div>
 		          	</div>     
 		          </div> 
+		          <a style="margin-top:20px" class="btn btn-success btn-block" href="/painel/estadia/consultar">Concordar e continuar</a>
 	        </form>
           </div>
          

@@ -36,22 +36,18 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <h6 class="dropdown-header">Dados</h6>
-          <a class="dropdown-item" id="side-consultar" href="/painel/estadia/consultar">Pessoais</a>
+          <a class="dropdown-item" id="side-consultar" href="/cliente/dados">Pessoais</a>
           <a class="dropdown-item" id="side-consultar" href="/painel/estadia/consultar">Endereços</a>
           <a class="dropdown-item" id="side-consultar" href="/painel/estadia/consultar">Cartões</a>
           <div class="dropdown-divider"></div>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="/painel/graficos/graficos">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Gráficos</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li>
+     
     </ul>
     
 

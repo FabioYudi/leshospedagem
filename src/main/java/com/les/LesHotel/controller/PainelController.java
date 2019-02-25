@@ -38,6 +38,11 @@ public class PainelController {
 		return "painel/estadia/consultar";
 	}
 	
+	@GetMapping("painel/graficos/graficos")
+	public String consultaDeGraficos() {
+		return "painel/graficos/graficos";
+	}
+	
 	
 	
 	

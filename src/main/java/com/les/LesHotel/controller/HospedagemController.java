@@ -16,4 +16,9 @@ public class HospedagemController {
 	public String pagamentoHospedagem() {
 		return "painel/hospedagem/pagamento";
 	}
+	
+	@GetMapping("painel/hospedagem/detalheEstadia")
+	public String detalhesEstadia() {
+		return "painel/hospedagem/detalheEstadia";
+	}
 }
