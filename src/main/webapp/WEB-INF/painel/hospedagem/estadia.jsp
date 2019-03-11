@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Consulta de estadias</title>
+  <title>Consulta de reservas</title>
 
   <!-- Custom fonts for this template-->
  <link href="../../resources/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -33,7 +33,7 @@ text-decoration:none;
 <jsp:include page="../../components/navbar.jsp" />
 <jsp:include page="../../components/sidebar.jsp" />
 <jsp:include page="../../components/hospedagem/modalMotivoHospede.jsp" />  
-<h2 style="color:white; margin-left:500px; margin-bottom:40px">Estadias da hospedagem: Casa na praia</h2> 
+<h2 style="color:white; margin-left:500px; margin-bottom:40px">Reservas da hospedagem: Casa na praia</h2> 
 <div style="width:1000px!important; max-width:2000px"  class="card card-register mx-auto mt-2">
 	 <table style="width:1000px" class="table">
 	  <thead>
@@ -56,7 +56,7 @@ text-decoration:none;
 	      <td>5</td>
 	      <td>Reservado</td>
 	      <td>
-	     	 <button data-toggle="modal" data-target="#modalMotivo" type="button" class="btn btn-danger">Cancelar Estadia</button>
+	     	 <button data-toggle="modal" data-target="#modalMotivo" type="button" class="btn btn-danger">Cancelar Reserva</button>
 	     	 <a href="/painel/hospedagem/detalheEstadia"  class="btn btn-danger">Detalhes</a>
 	      </td>
 	    </tr>

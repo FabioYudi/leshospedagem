@@ -34,10 +34,10 @@ text-decoration:none;
 <jsp:include page="../../components/sidebar.jsp" />
 <jsp:include page="../../components/estadia/modalAvaliarHospedagem.jsp" />   
 <jsp:include page="../../components/hospedagem/modalMotivoHospede.jsp" /> 
-<h2 style="color:white; margin-left:20%">Consulta de Estadias</h2>
-<div style="width:1200px!important; max-width:2000px"  class="card card-register mx-auto mt-2">
+<h2 style="color:white; margin-left:20%">Consulta de Reservas</h2>
+<div style="width:1000px!important; max-width:2000px"  class="card card-register mx-auto mt-2">
 
-	 <table style="width:1200px" class="table">
+	 <table style="width:1000px" class="table">
 	
 	  <thead>
 	    <tr>

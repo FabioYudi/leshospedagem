@@ -53,7 +53,7 @@ text-decoration:none;
 	      <td>
 	      	 <button type="button" class="btn btn-primary"><a style="color:white" href="/painel/hospedagem/editar">Editar</a></button>	
 	     	 <button type="button" class="btn btn-danger">Excluir</button>
-	     	 <button type="button" class="btn btn-warning"><a style="color:black" href="/painel/hospedagem/estadia">Estadias</a></button>	
+	     	 <button type="button" class="btn btn-warning"><a style="color:black" href="/painel/hospedagem/estadia">Reservas</a></button>	
 	      </td>
 	    </tr>
 	    <tr>
@@ -64,7 +64,7 @@ text-decoration:none;
 	       <td>
 	      	 <button type="button" class="btn btn-primary"><a style="color:white" href="/painel/hospedagem/editar">Editar</a></button>	
 	     	 <button type="button" class="btn btn-danger">Excluir</button>
-	     	 <button type="button" class="btn btn-warning"><a style="color:black" href="/painel/hospedagem/estadia">Estadias</a></button>
+	     	 <button type="button" class="btn btn-warning"><a style="color:black" href="/painel/hospedagem/estadia">Reservas</a></button>
 	      </td>
 	    </tr>
 	    <tr>
@@ -75,20 +75,14 @@ text-decoration:none;
 	       <td>
 	      	 <button type="button" class="btn btn-primary"><a style="color:white" href="/painel/hospedagem/editar">Editar</a></button>	
 	     	 <button type="button" class="btn btn-danger">Excluir</button>
-	     	 <button type="button" class="btn btn-warning"><a style="color:black" href="/painel/hospedagem/estadia">Estadias</a></button>
+	     	 <button type="button" class="btn btn-warning"><a style="color:black" href="/painel/hospedagem/estadia">Reservas</a></button>
 	      </td>
 	    </tr>
 	  </tbody>
 	</table>
 </div>
   
-    <footer class="sticky-footer">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
+   
 
     
 
