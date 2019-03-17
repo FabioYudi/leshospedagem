@@ -14,7 +14,10 @@ import com.les.LesHotel.dao.HospedagemDAO;
 import com.les.LesHotel.dao.IDAO;
 import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.entities.Hospedagem;
+import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.rns.IStrategy;
+import com.les.LesHotel.rns.ValidarDataHospedagem;
+import com.les.LesHotel.rns.hospedagem.ValidarDadosObrigatoriosHospedagem;
 
 @Component
 public class Facade implements IFacade {
@@ -33,9 +36,15 @@ public class Facade implements IFacade {
 		//regras para hospedagem
 		List<IStrategy> rnsSalvarHospedagem = new ArrayList<>();
 		Map<String, List<IStrategy>> rnsHospedagem = new HashMap<>();
+		rnsSalvarHospedagem.add(new ValidarDadosObrigatoriosHospedagem());
+		rnsSalvarHospedagem.add(new ValidarDataHospedagem());
+		rnsHospedagem.put("SALVAR", rnsSalvarHospedagem);
+		rnsHospedagem.put("ALTERAR", rnsSalvarHospedagem);
 		
 		//lista de repositorios
 		repositories.put(Hospedagem.class.getName(), hospedagemDao);
+		
+		rns.put(Hospedagem.class.getName(), rnsHospedagem);
 
 	}
 
@@ -80,8 +89,20 @@ public class Facade implements IFacade {
 
 	@Override
 	public Resultado excluir(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
-		return null;
+		resultado = new Resultado();
+		String nmClass = entidade.getClass().getName();
+		String msg = executaRegras(entidade, "EXCLUIR");
+		if (msg == null) {
+			try {
+				repositories.get(nmClass).deletar(entidade);
+			}catch(Exception ex) {
+				ex.printStackTrace();
+				resultado.setMsg("Não foi possivel excluir os dados");
+			}
+		} else {
+			resultado.setMsg(msg);
+		}
+		return resultado;
 	}
 
 	@Override
@@ -117,7 +138,7 @@ public class Facade implements IFacade {
 			if (regras != null) {
 				for (IStrategy s : regras) {
 					String m = s.processar(entidade);
-					if (m != null) {
+					if (!StringHelper.isNullOrEmpty(m)) {
 						msg.append(m);
 						msg.append("\n");
 					}

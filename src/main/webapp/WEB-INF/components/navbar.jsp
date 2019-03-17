@@ -25,7 +25,7 @@
       </li>
       
       <li class="nav-item">
-        <a class="nav-link" href="/painel/home">Painel de controle</a>
+        <a id="linkPainel" class="nav-link" href="/painel/home">Painel de controle</a>
       </li>
     </ul>
   </div>

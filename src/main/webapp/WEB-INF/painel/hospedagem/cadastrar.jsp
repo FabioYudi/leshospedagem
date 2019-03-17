@@ -18,7 +18,11 @@
   <link href="../../../resources/css/sb-admin.css" rel="stylesheet">
   <!-- Page level plugin CSS-->
   <link href="../../../resources/js/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
+<style>
+	.hide{
+		display:none;
+	}
+</style>
 </head>
 
 <body class="bg-dark page-top">
@@ -35,6 +39,10 @@
 
         
         <!-- Icon Cards-->
+    	<div id="alertaErro" class="alert alert-warning hide" role="alert"></div>
+					
+		
+
         <div class="row" style="margin-left: 50px">
           <div style="background-color:white; color:black"  class="col-xl-4 col-sm-7 mb-3 ">
             <div class="card-header">Cadastrar Hospedagem</div>
@@ -205,7 +213,9 @@
     <!-- /.content-wrapper -->
 
   </div>
-
+<form id="formConsultar" method="POST" action="/painel/hospedagem/consultarAtualizacao">
+	<input id="mensagem" name="mensagem"></input>
+</form>
     
 
   <!-- Bootstrap core JavaScript-->
@@ -249,6 +259,7 @@ $("#adicionarTaxa").click(function(){
 		        	   dataInicio: $("#dataInicio").val(),
 		        	   dataFim: $("#dataFim").val(),
 		        	   descricao:$("#descricao").val(),
+		        	   ativo: true,
 		        	   taxas: [{nome:"teste", valor: "23"}],
 		        	   endereco: {
 		        		   logradouro:$("#logradouro").val(),
@@ -266,7 +277,14 @@ $("#adicionarTaxa").click(function(){
 			 url: "/painel/hospedagem/processar",
 			 data: {action: "SALVAR", entidade: JSON.stringify(data)},
 			 success: function(data) {
-		         console.log("oi");
+				 data = JSON.parse(data);
+		         if(data.ok == true){
+		        	 $("#mensagem").val(data.mensagem);
+		        	 $("#formConsultar").submit();
+		         }else{
+		        	 $("#alertaErro").removeClass("hide");
+		        	 $("#alertaErro").html(data.mensagem);
+		         }
 		      },
 		      error: function(){
 		    	  

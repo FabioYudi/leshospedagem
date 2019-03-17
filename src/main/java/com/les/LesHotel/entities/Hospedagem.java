@@ -1,7 +1,7 @@
 package com.les.LesHotel.entities;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -24,18 +24,25 @@ public class Hospedagem extends EntidadeDominio {
 	private List<Taxa> taxas;
 	private int qtdQuartos;
 	private int qtdHospedes;
-	@DateTimeFormat(pattern="dd-MM-yyyy")
-	private Date dataInicio;
-	@DateTimeFormat(pattern="dd-MM-yyyy")
-	private Date dataFim;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private LocalDate dataInicio;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private LocalDate dataFim;
 	private String categoria;
 	private String descricao;
+	private Boolean ativo;
 	
 	
 	
 	
 	
 	
+	public Boolean getAtivo() {
+		return ativo;
+	}
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
 	public String getDescricao() {
 		return descricao;
 	}
@@ -61,16 +68,16 @@ public class Hospedagem extends EntidadeDominio {
 		this.qtdHospedes = qtdHospedes;
 	}
 	
-	public Date getDataInicio() {
+	public LocalDate getDataInicio() {
 		return dataInicio;
 	}
-	public void setDataInicio(Date dataInicio) {
+	public void setDataInicio(LocalDate dataInicio) {
 		this.dataInicio = dataInicio;
 	}
-	public Date getDataFim() {
+	public LocalDate getDataFim() {
 		return dataFim;
 	}
-	public void setDataFim(Date dataFim) {
+	public void setDataFim(LocalDate dataFim) {
 		this.dataFim = dataFim;
 	}
 	public String getTitulo() {

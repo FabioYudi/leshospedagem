@@ -7,14 +7,14 @@
         </a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="hospedagemDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-fw fa-folder"></i>
           <span>Hospedagem</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <h6 class="dropdown-header">Ações</h6>
-          <a class="dropdown-item" id="side-consultar" href="/painel/hospedagem/consultar">Consultar</a>
-          <a class="dropdown-item" id="side-cadastrar" href="/painel/hospedagem/cadastrar">Cadastrar</a>
+          <a id="linkConsultarHospedagem" class="dropdown-item" id="side-consultar" href="/painel/hospedagem/consultar">Consultar</a>
+          <a id="linkCadastrarHospedagem" class="dropdown-item" id="side-cadastrar" href="/painel/hospedagem/cadastrar">Cadastrar</a>
           
           <div class="dropdown-divider"></div>
         </div>

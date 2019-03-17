@@ -18,7 +18,11 @@
   <link href="../../../resources/css/sb-admin.css" rel="stylesheet">
   <!-- Page level plugin CSS-->
   <link href="../../../resources/js/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
+<style>
+	.hide{
+		display:none;
+	}
+</style>
 </head>
 
 <body class="bg-dark page-top">
@@ -35,6 +39,8 @@
 
         
         <!-- Icon Cards-->
+        <div id="alertaErro" class="alert alert-warning hide" role="alert"></div>
+        
         <div class="row" style="margin-left: 50px">
           <div style="background-color:white; color:black"  class="col-xl-4 col-sm-7 mb-3 ">
             <div class="card-header">Editar Hospedagem</div>
@@ -98,7 +104,7 @@
 			          	<div class="form-row">
 			          		<div class="form-group">
 			          			<label for="exampleFormControlTextarea1">Descrição</label>
-			   					<textarea name="descricao"  style="width:600px;" value="${hospedagem.descricao}" class="form-control" id="descricao" rows="5"></textarea>
+			   					<textarea name="descricao"  style="width:600px;"  class="form-control" id="descricao" rows="5">${hospedagem.descricao}</textarea>
 			  				</div>
 			          	</div>     
 			          </div>
@@ -187,6 +193,7 @@
 						          </div>
 					         </div> 
 			         </form> 
+			         <input class="hide" name="ativo" id="ativo" value="${hospedagem.ativo}">
 			         <a class="btn btn-primary btn-block" style="color:white" onclick="cadastrar()"  id="btn-cadastrar">Editar</a>
 			        
 			      </div>
@@ -228,7 +235,7 @@
 <script>
 
 $(document).ready(function(){
-	
+	debugger;
 	var dataInicio = "${hospedagem.dataInicio}";
 	var dataFim = "${hospedagem.dataFim}";
 	dataInicio = dataInicio.substr(0,10);
@@ -269,6 +276,7 @@ $(document).ready(function(){
 		        	   dataFim: $("#dataFim").val(),
 		        	   descricao:$("#descricao").val(),
 		        	   taxas: [{nome:"teste", valor: "23"}],
+		        	   ativo: $("#ativo").val(),
 		        	   endereco: {
 		        		   logradouro:$("#logradouro").val(),
 		        		   numero:$("#numero").val(),
@@ -285,14 +293,19 @@ $(document).ready(function(){
 			 url: "/painel/hospedagem/editar/",
 			 data: {hospedagem: JSON.stringify(data)},
 			 success: function(data) {
-				$("#mensagem").val(data);
-				$("#formConsulta").submit();
-				
-		         
+				 data = JSON.parse(data);
+				 if(data.ok == true){
+					$("#mensagem").val(data.mensagem);
+					$("#formConsulta").submit();
+				 }else{
+					 $("#alertaErro").removeClass("hide");
+		        	 $("#alertaErro").html(data.mensagem);
+				 }
+ 
 		      },
 		      error: function(){
-		    	 $("#mensagem").val(data);
-				 $("#formConsulta").submit();
+		    	    $("#alertaErro").removeClass("hide");
+		        	 $("#alertaErro").html("Ocorreu um erro ao editar a hospedagem, por favor, tente novamente mais tarde");
 
 		      }
 		});

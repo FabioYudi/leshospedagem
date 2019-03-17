@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.les.LesHotel.command.AbstractCommand;
 import com.les.LesHotel.command.AlterarCommand;
 import com.les.LesHotel.command.ConsultarCommand;
+import com.les.LesHotel.command.ExcluirCommand;
 import com.les.LesHotel.command.SalvarCommand;
 
 @Component
@@ -25,6 +26,9 @@ public class ControllerBase {
 	@Autowired
 	protected AlterarCommand alterarCmd;
 	
+	@Autowired
+	protected ExcluirCommand excluirCmd;
+	
 	protected Map<String, AbstractCommand> commands;
 	@Autowired
 	protected ObjectMapper mapper;
@@ -37,6 +41,7 @@ public class ControllerBase {
 		commands.put("SALVAR", salvarCmd);
 		commands.put("CONSULTAR", consultarCmd);
 		commands.put("ALTERAR", alterarCmd);
+		commands.put("EXCLUIR", excluirCmd);
 	
 	
 	}

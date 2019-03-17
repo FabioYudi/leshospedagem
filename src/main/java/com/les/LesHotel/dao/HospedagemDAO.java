@@ -55,6 +55,9 @@ public class HospedagemDAO extends AbstractDAO  {
 			if(!StringHelper.isNullOrEmpty(hospedagem.getEndereco().getLogradouro()))
 				allPredicates.add(h -> h.getEndereco().getLogradouro().contains(hospedagem.getEndereco().getLogradouro()));
 		}
+		if(hospedagem.getAtivo() != null)
+			allPredicates.add(h-> h.getAtivo() == hospedagem.getAtivo());
+
 		
 		if(hospedagem.getTaxas() != null)
 			allPredicates.add(h -> h.getTaxas().containsAll(hospedagem.getTaxas()));
@@ -67,7 +70,9 @@ public class HospedagemDAO extends AbstractDAO  {
 
 	@Override
 	public void deletar(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
-		repository.delete(noCast(entidade));
+		
+		if(entidade.getId() > 0) {
+			repository.save(noCast(entidade));
+		}
 	}	
 }
