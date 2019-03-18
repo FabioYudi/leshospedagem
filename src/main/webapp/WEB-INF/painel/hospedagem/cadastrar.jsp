@@ -253,10 +253,10 @@ $("#adicionarTaxa").click(function(){
 
 	function cadastrar(){
 		if($("#dataFim").val() == ""){
-			$("#dataFim").val("0000-00-00");
+			$("#dataFim").val("1111-11-11");
 		}
 		if($("#dataInicio").val() == ""){
-			$("#dataInicio").val("0000-00-00");
+			$("#dataInicio").val("1111-11-11");
 		}
 		
 		if($("#qtdHospedes").val() == ""){

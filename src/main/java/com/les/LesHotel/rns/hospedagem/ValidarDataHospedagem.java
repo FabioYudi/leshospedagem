@@ -24,6 +24,9 @@ public class ValidarDataHospedagem implements IStrategy {
 			builder.append("A data de fim das reservas deve ser maior que data de inicio!<br>");
 		}
 		
+
+		
+		
 		return builder.toString();
 	}
 
