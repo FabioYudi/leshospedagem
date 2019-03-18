@@ -174,26 +174,30 @@
 				      </div>  
 			         </div>
 			        </form>
-			        <form  id="form-taxa" style="margin-top:20px">
-			        	<div class="card-header">Taxas</div>
-			        	<a type="button" class="btn btn-danger"  style="margin-bottom:20px; color:white; margin-top:10px" id="adicionarTaxa">Adicionar Taxa</a>
-					         <div class="form-group" id="taxas">
-						         <div class="row">
-						            <div class="col-md-6">
-							            <div class="form-label-group">
-							              <input style="width:300px" type="text" id="inputTituloTaxa"  name="nome" class="form-control" placeholder="Número" required="required">
-							              <label for="inputTituloTaxa">Titulo</label>
-							            </div>
-							          </div> 
-							          <div class="col-md-6">
-							            <div class="form-label-group">
-							              <input style="width:120px" type="text" id="inputValorTaxa" name="valor" class="form-control" placeholder="Bairro" required="required">
-							              <label for="inputValorTaxa">Valor</label>
-							            </div>
-							          </div>   
-						          </div>
-					         </div> 
-			         </form> 
+			        <div class="card-header">Taxas</div>
+			        <a type="button" class="btn btn-danger"  style="margin-bottom:20px; color:white; margin-top:10px" id="adicionarTaxa">Adicionar Taxa</a>
+			        
+			        <div class="row">
+				        <form  id="form-taxa" style="margin-top:20px">
+						         <div class="form-group" id="taxas">
+							            <div class="col-md-6">
+								            <div class="form-label-group">
+								              <input style="width:300px" type="text" id="inputTituloTaxa"  name="nome" class="form-control" placeholder="Número" required="required">
+								              <label for="inputTituloTaxa">Titulo</label>
+								            </div>
+								          </div> 
+						         </div> 
+				         </form>
+				         <form  id="form-valor-taxa" style="margin-top:20px">
+				         	<div class="col-md-6" id="valor-taxa">
+								            <div class="form-label-group">
+								              <input style="width:120px" type="text" id="inputValorTaxa" name="valor" class="form-control" placeholder="Bairro" required="required">
+								              <label for="inputValorTaxa">Valor</label>
+								            </div>
+							</div>  
+				         </form>
+			           </div>
+			           
 			         <a class="btn btn-primary btn-block" style="color:white" onclick="cadastrar()"  id="btn-cadastrar">Cadastrar</a>
 			        
 			      </div>
@@ -231,24 +235,42 @@ var i = 0;
 $("#adicionarTaxa").click(function(){
 	i = i + 1;
 	$("#taxas").append(
-	'<div class="row" style="margin-top:15px">'
-    + '<div class="col-md-6">'
-        +'<div class="form-label-group">'
-        +'<input style="width:300px" type="text" id="inputTituloTaxa" value=""  name="nome" class="form-control" placeholder="Número" required="required">'
-        +'<label for="inputTituloTaxa">Titulo</label>'
-        +'</div>'
-      +'</div> '
-      +'<div class="col-md-6">'
-        +'<div class="form-label-group">'
-          +'<input style="width:120px" type="text" id="inputValorTaxa" name="valor" class="form-control" placeholder="Bairro" required="required">'
-          +'<label for="inputValorTaxa">Valor</label>'
-        +'</div>'
-      +'</div>'
-  +'</div>');
+		'<div class="form-group" id="taxas">'
+            +'<div class="col-md-6">'
+	              +'<input style="width:300px; margin-top:10px" type="text" id="inputTituloTaxa"  name="nome" class="form-control" placeholder="Titulo" >'
+	          +'</div>' 
+     +'</div>');
+	
+	$("#valor-taxa").append(
+		'<div class="col-md-6" id="valor-taxa">'
+              +'<input style="width:120px; margin-top:10px; margin-left:-15px" type="text" id="inputValorTaxa" name="valor" class="form-control" placeholder="Valor">'
+            +'</div>'
+		+'</div>');  
+
+      
 });
 
 
 	function cadastrar(){
+		if($("#dataFim").val() == ""){
+			$("#dataFim").val("0000-00-00");
+		}
+		if($("#dataInicio").val() == ""){
+			$("#dataInicio").val("0000-00-00");
+		}
+		
+		if($("#qtdHospedes").val() == ""){
+			$("#qtdHospedes").val("0");
+		}
+		
+		if($("#qtdQuartos").val() == ""){
+			$("#qtdQuartos").val("0");
+		}
+		
+		if($("#valorDiaria").val() == ""){
+			$("#valorDiaria").val("0");
+		}
+		
 		var action = { action: "SALVAR"}
 		var data = {
 		        	   titulo: $("#titulo").val(),

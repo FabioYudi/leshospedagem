@@ -1,9 +1,10 @@
-package com.les.LesHotel.rns;
+package com.les.LesHotel.rns.hospedagem;
 
 import java.time.LocalDate;
 
 import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.entities.Hospedagem;
+import com.les.LesHotel.rns.IStrategy;
 
 public class ValidarDataHospedagem implements IStrategy {
 
@@ -19,8 +20,8 @@ public class ValidarDataHospedagem implements IStrategy {
 			builder.append("A data de inicio das reservas deve ser maior que a data atual!<br>");
 		}
 		
-		if(hospedagem.getDataFim().isBefore(hospedagem.getDataInicio())) {
-			builder.append("A data de fim das reservas deve ser maior que data de inicio<br>");
+		if(hospedagem.getDataFim() == null || hospedagem.getDataFim().isBefore(hospedagem.getDataInicio())) {
+			builder.append("A data de fim das reservas deve ser maior que data de inicio!<br>");
 		}
 		
 		return builder.toString();

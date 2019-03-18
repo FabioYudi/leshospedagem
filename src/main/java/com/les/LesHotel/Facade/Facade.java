@@ -16,8 +16,10 @@ import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.rns.IStrategy;
-import com.les.LesHotel.rns.ValidarDataHospedagem;
+import com.les.LesHotel.rns.hospedagem.ValidaQtdNegativasHospedagem;
+import com.les.LesHotel.rns.hospedagem.ValidaTamanhoDescricaoHospedagem;
 import com.les.LesHotel.rns.hospedagem.ValidarDadosObrigatoriosHospedagem;
+import com.les.LesHotel.rns.hospedagem.ValidarDataHospedagem;
 
 @Component
 public class Facade implements IFacade {
@@ -38,6 +40,8 @@ public class Facade implements IFacade {
 		Map<String, List<IStrategy>> rnsHospedagem = new HashMap<>();
 		rnsSalvarHospedagem.add(new ValidarDadosObrigatoriosHospedagem());
 		rnsSalvarHospedagem.add(new ValidarDataHospedagem());
+		rnsSalvarHospedagem.add(new ValidaTamanhoDescricaoHospedagem());
+		rnsSalvarHospedagem.add(new ValidaQtdNegativasHospedagem());
 		rnsHospedagem.put("SALVAR", rnsSalvarHospedagem);
 		rnsHospedagem.put("ALTERAR", rnsSalvarHospedagem);
 		
