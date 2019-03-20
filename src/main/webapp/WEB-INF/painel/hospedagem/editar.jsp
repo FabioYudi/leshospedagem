@@ -42,7 +42,7 @@
         <div id="alertaErro" class="alert alert-warning hide" role="alert"></div>
         
         <div class="row" style="margin-left: 50px">
-          <div style="background-color:white; color:black"  class="col-xl-4 col-sm-7 mb-3 ">
+          <div style="background-color:white; color:black"  class="col-xl-6 col-sm-7 mb-3 ">
             <div class="card-header">Editar Hospedagem</div>
 			      <div class="card-body">
 			        <form  id="form-cadastro">
@@ -113,7 +113,7 @@
 			      </div>
           </div>
           
-          <div style="background-color:white; color:black" class="col-xl-4 col-sm-7 mb-3 ">
+          <div style="background-color:white; color:black" class="col-xl-6 col-sm-7 mb-3 ">
 		        <div class="card-header"></div>
 			      <div class="card-body">
 			        <form  id="form-endereco">
@@ -263,6 +263,28 @@ $(document).ready(function(){
 	});
 
 	function cadastrar(){
+		if($("#dataFim").val() == ""){
+			$("#dataFim").val("1111-11-11");
+		}
+		if($("#dataInicio").val() == ""){
+			$("#dataInicio").val("1111-11-11");
+		}
+		
+		if($("#qtdHospedes").val() == ""){
+			$("#qtdHospedes").val("0");
+		}
+		
+		if($("#qtdQuartos").val() == ""){
+			$("#qtdQuartos").val("0");
+		}
+		
+		if($("#valorDiaria").val() == ""){
+			$("#valorDiaria").val("0");
+		}
+		
+		
+		
+		
 		var action = { action: "ALTERAR"}
 		
 		var data = {
