@@ -18,7 +18,7 @@
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/cliente/cadastrar">Cadastrar-se</a>
+        <a class="nav-link" href="/cliente/paginaCadastrar">Cadastrar-se</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="cliente/login">Login</a>
