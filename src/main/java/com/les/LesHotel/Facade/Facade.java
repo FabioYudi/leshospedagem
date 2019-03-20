@@ -10,8 +10,10 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.les.LesHotel.dao.ClienteDAO;
 import com.les.LesHotel.dao.HospedagemDAO;
 import com.les.LesHotel.dao.IDAO;
+import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.helper.StringHelper;
@@ -31,6 +33,9 @@ public class Facade implements IFacade {
 	@Autowired 
 	private HospedagemDAO hospedagemDao;
 	
+	@Autowired
+	private ClienteDAO clienteDAO;
+	
 	@PostConstruct
 	public void init() {
 		repositories = new HashMap<>();
@@ -47,8 +52,14 @@ public class Facade implements IFacade {
 		rnsHospedagem.put("SALVAR", rnsSalvarHospedagem);
 		rnsHospedagem.put("ALTERAR", rnsSalvarHospedagem);
 		
+		
+		//regras para hospedagem
+			List<IStrategy> rnsSalvarCliente = new ArrayList<>();
+			Map<String, List<IStrategy>> rnsCliente = new HashMap<>();
+		
 		//lista de repositorios
 		repositories.put(Hospedagem.class.getName(), hospedagemDao);
+		repositories.put(Cliente.class.getName(), clienteDAO);
 		
 		rns.put(Hospedagem.class.getName(), rnsHospedagem);
 

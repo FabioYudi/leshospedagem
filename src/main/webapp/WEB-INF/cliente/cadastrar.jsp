@@ -13,59 +13,119 @@ label{
 </head>
 <body class="bg-dark">
 <jsp:include page="../components/navbar.jsp" />
-<form style="margin-left:30px; margin-top:20px">
-	<div class="row">
-	   <div class="col">
-		  <div class="form-group" >
-		    <label  for="formGroupExampleInput">Nome Completo</label>
-		    <input type="text" style="width:500px;"" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-		  </div>
-		</div>
-		<div style="margin-left: -50.5%" class="col">
-		  <div class="form-group">
-		    <label for="formGroupExampleInput2">data de nasc.</label>
-		    <input style="width:500px" type="text" class="form-control" id="formGroupExampleInput2" placeholder="dd/mm/aaaa">
-		  </div>
-		 </div>
-	</div>	
-	<div class="row">
-	   <div class="col">
-		  <div class="form-group" >
-		    <label for="formGroupExampleInput">Logradouro</label>
-		    <input type="text" style="width:500px;"" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-		  </div>
-		</div>
-		<div class="col">
-		  <div style="margin-left: -60%" class="form-group">
-		    <label for="formGroupExampleInput2">Número.</label>
-		    <input style="width:100px" type="text" class="form-control" id="formGroupExampleInput2" placeholder="">
-		  </div>
-		</div>
-		<div style="margin-left: -80%" class="col">
-		  <div class="form-group" >
-		    <label for="formGroupExampleInput">Bairro</label>
-		    <input type="text" style="width:500px;"" class="form-control" id="formGroupExampleInput" placeholder="">
-		  </div>
-		</div>
-	</div>
-		
-	<div class="row">
-	   
-		<div class="col">
-		  <div  class="form-group">
-		    <label for="formGroupExampleInput2">Cidade</label>
-		    <input style="width:500px" type="text" class="form-control" id="formGroupExampleInput2" placeholder="">
-		  </div>
-		</div>  
-		<div class="col">
-		  <div style="margin-left: -52%" class="form-group">
-		    <label for="formGroupExampleInput2">Estado</label>
-		    <input style="width:500px" type="text" class="form-control" id="formGroupExampleInput2" placeholder="">
-		  </div>
-		</div>
-	</div>	    
-		  <button type="button" class="btn btn-success">Success</button>  
+<form style="margin-left:20px; margin-top:20px">
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" >
+    </div>
+    <div class="form-group col-md-2">
+      <label for="senha">Senha</label>
+      <input type="password" class="form-control" id="senha" >
+    </div>
+    <div class="form-group col-md-2">
+      <label for="nome">Nome</label>
+      <input type="text" class="form-control" id="nome" placeholder=>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label for="dtNascimento">Data de nascimento</label>
+      <input type="date" class="form-control" id="dtNascimento" >
+    </div>
+    <div class="form-group col-md-2">
+      <label for="cpf">CPF</label>
+      <input type="text" class="form-control" id="cpf" >
+    </div>
+    <div class="form-group col-md-2">
+      <label for="genero">Gênero</label>
+      <select id="genero" class="form-control">
+        <option value="masculino" selected>Masculino</option>
+        <option value="feminino" >Feminino</option>
+        <option value="outros">Outros...</option>
+       </select>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label for="logradouro">Logradouro</label>
+      <input type="text" class="form-control" id="logradouro" >
+    </div>
+    <div class="form-group col-md-2">
+      <label for="numero">Número</label>
+      <input type="text" class="form-control" id="numero" >
+    </div>
+    <div class="form-group col-md-2">
+      <label for="cep">CEP</label>
+      <input type="text" class="form-control" id="cep" >
+    </div>
+    
+  </div>
+  <div class="form-row">
+  	<div class="form-group col-md-2">
+      <label for="bairro">Bairro</label>
+      <input type="text" class="form-control" id="bairro" >
+    </div>
+    <div class="form-group col-md-2">
+      <label for="cidade">Cidade</label>
+      <input type="text" class="form-control" id="cidade" >
+    </div>
+    <div class="form-group col-md-2">
+      <label for="estado">Estado</label>
+      <input type="text" class="form-control" id="estado" >
+    </div>
+    
+  </div>
+  <div class="form-row">
+  	<div class="form-group col-md-2">
+      <label for="complemento">Complemento</label>
+      <input type="text" class="form-control" id="complemento" >
+    </div>
+   </div>
+    
+  <button type="button" onclick="cadastrar()" class="btn btn-primary">Cadastrar-se</button>
 </form>
 
 </body>
+<script>
+	function cadastrar(){
+		var data = {
+	        	   nome: $("#nome").val(),
+	        	   email: $("#email").val(),
+	        	   senha: $("#senha").val(),
+	        	   dataNascimento: $("#dtNascimento").val(),
+	        	   cpf: $("#cpf").val(),
+	        	   genero: $("#genero").val(),
+	        	   enderecos: {
+	        		   logradouro:$("#logradouro").val(),
+	        		   numero:$("#numero").val(),
+	        		   bairro:$("#bairro").val(),
+	        		   cep:$("#cep").val(),
+	        		   estado:$("#estado").val(),
+	        		   cidade:$("#cidade").val(),
+	        		   complemento:$("#complemento").val()
+	        	   }
+	       
+	       };
+	$.ajax({
+		 method: "POST",
+		 url: "/cliente/cadastrar",
+		 data: { cliente: JSON.stringify(data)},
+		 success: function(data) {
+			 data = JSON.parse(data);
+	         if(data.ok == true){
+	        	 $("#mensagem").val(data.mensagem);
+	        	 $("#formConsultar").submit();
+	         }else{
+	        	 $("#alertaErro").removeClass("hide");
+	        	 $("#alertaErro").html(data.mensagem);
+	         }
+	      },
+	      error: function(){
+	    	  
+	      }
+	});
+	}
+
+</script>
 </html>

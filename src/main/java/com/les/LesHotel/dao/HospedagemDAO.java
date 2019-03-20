@@ -17,7 +17,7 @@ import com.les.LesHotel.repository.HospedagemRepository;
 public class HospedagemDAO extends AbstractDAO  {
 	
 	@Autowired
-	HospedagemRepository repository;
+	private HospedagemRepository repository;
 
 	@Override
 	public void salvar(EntidadeDominio entidade) {
