@@ -142,8 +142,20 @@ public class Facade implements IFacade {
 
 	@Override
 	public Resultado visualizar(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
-		return null;
+		resultado = new Resultado();
+		String nmClass = entidade.getClass().getName();
+		String msg = executaRegras(entidade, "CONSULTAR");
+		if (msg == null) {
+			try {
+				resultado.setEntidades(repositories.get(nmClass).consultar(entidade));
+			}catch(Exception ex) {
+				ex.printStackTrace();
+				resultado.setMsg("Não foi possivel salvar os dados");
+			}
+		} else {
+			resultado.setMsg(msg);
+		}
+		return resultado;
 	}
 	
 	private String executaRegras(EntidadeDominio entidade, String operacao) {

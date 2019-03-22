@@ -96,7 +96,7 @@ label{
 	        	   dataNascimento: $("#dtNascimento").val(),
 	        	   cpf: $("#cpf").val(),
 	        	   genero: $("#genero").val(),
-	        	   enderecos: {
+	        	   enderecos: [{
 	        		   logradouro:$("#logradouro").val(),
 	        		   numero:$("#numero").val(),
 	        		   bairro:$("#bairro").val(),
@@ -104,7 +104,7 @@ label{
 	        		   estado:$("#estado").val(),
 	        		   cidade:$("#cidade").val(),
 	        		   complemento:$("#complemento").val()
-	        	   }
+	        	   }]
 	       
 	       };
 	$.ajax({

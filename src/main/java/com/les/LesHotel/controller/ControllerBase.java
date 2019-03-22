@@ -14,6 +14,7 @@ import com.les.LesHotel.command.AlterarCommand;
 import com.les.LesHotel.command.ConsultarCommand;
 import com.les.LesHotel.command.ExcluirCommand;
 import com.les.LesHotel.command.SalvarCommand;
+import com.les.LesHotel.command.VisualizarCommand;
 
 @Component
 public class ControllerBase {
@@ -29,11 +30,15 @@ public class ControllerBase {
 	@Autowired
 	protected ExcluirCommand excluirCmd;
 	
+	@Autowired
+	protected VisualizarCommand visualizarCmd;
+	
 	protected Map<String, AbstractCommand> commands;
 	@Autowired
 	protected ObjectMapper mapper;
 	
 	protected final String CONSULTAR = "CONSULTAR";
+	protected final String VISUALIZAR = "VISUALIZAR";
 	
 	@PostConstruct
 	public void init() {
@@ -42,6 +47,7 @@ public class ControllerBase {
 		commands.put("CONSULTAR", consultarCmd);
 		commands.put("ALTERAR", alterarCmd);
 		commands.put("EXCLUIR", excluirCmd);
+		commands.put("VISUALIZAR", visualizarCmd);
 	
 	
 	}

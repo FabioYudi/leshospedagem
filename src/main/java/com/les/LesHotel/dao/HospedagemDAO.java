@@ -40,7 +40,7 @@ public class HospedagemDAO extends AbstractDAO  {
 		if(hospedagem.getId() > 0) 
 			allPredicates.add(h -> h.getId() == hospedagem.getId());
 		if(!StringHelper.isNullOrEmpty(hospedagem.getTitulo()))
-			allPredicates.add(h -> h.getTitulo().contains(hospedagem.getTitulo()));
+			allPredicates.add(h -> h.getTitulo().toLowerCase().contains(hospedagem.getTitulo().toLowerCase()));
 		if(hospedagem.getDiaria() != null)
 			allPredicates.add(h -> h.getDiaria() == hospedagem.getDiaria());
 		if(hospedagem.getQtdHospedes() > 0)
@@ -49,11 +49,14 @@ public class HospedagemDAO extends AbstractDAO  {
 			allPredicates.add(h-> h.getQtdQuartos() == hospedagem.getQtdQuartos());
 		if(hospedagem.getEndereco() != null) {
 			if(!StringHelper.isNullOrEmpty(hospedagem.getEndereco().getEstado()))
-				allPredicates.add(h -> h.getEndereco().getEstado().contains(hospedagem.getEndereco().getEstado()));
+				allPredicates.add(h -> h.getEndereco().getEstado()
+						.toLowerCase().contains(hospedagem.getEndereco().getEstado().toLowerCase()));
 			if(!StringHelper.isNullOrEmpty(hospedagem.getEndereco().getCidade()))
-				allPredicates.add(h -> h.getEndereco().getCidade().contains(hospedagem.getEndereco().getCidade()));
+				allPredicates.add(h -> h.getEndereco().getCidade()
+						.toLowerCase().contains(hospedagem.getEndereco().getCidade().toLowerCase()));
 			if(!StringHelper.isNullOrEmpty(hospedagem.getEndereco().getLogradouro()))
-				allPredicates.add(h -> h.getEndereco().getLogradouro().contains(hospedagem.getEndereco().getLogradouro()));
+				allPredicates.add(h -> h.getEndereco().getLogradouro()
+						.toLowerCase().contains(hospedagem.getEndereco().getLogradouro().toLowerCase()));
 		}
 		if(hospedagem.getAtivo() != null)
 			allPredicates.add(h-> h.getAtivo() == hospedagem.getAtivo());
