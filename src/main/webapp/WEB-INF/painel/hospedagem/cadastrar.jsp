@@ -44,7 +44,7 @@
 		
 
         <div class="row" style="margin-left: 50px">
-          <div style="background-color:white; color:black"  class="col-xl-4 col-sm-7 mb-3 ">
+          <div style="background-color:white; color:black"  class="col-xl-6 col-sm-7 mb-3 ">
             <div class="card-header">Cadastrar Hospedagem</div>
 			      <div class="card-body">
 			        <form  id="form-cadastro">
@@ -115,7 +115,7 @@
 			      </div>
           </div>
           
-          <div style="background-color:white; color:black" class="col-xl-4 col-sm-7 mb-3 ">
+          <div style="background-color:white; color:black" class="col-xl-6 col-sm-7 mb-3 ">
 		        <div class="card-header"></div>
 			      <div class="card-body">
 			        <form  id="form-endereco">

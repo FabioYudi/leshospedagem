@@ -73,14 +73,14 @@ text-decoration:none;
 					            </div>
 					          </div> 
 					          <div class="col-md-2">
-					            <div class="form-label-group">
-					              <input style="width:300px" type="text" name="endereco.cidade" id="cidade" class="form-control"  >
+					            <div class="form-label-group" >
+					              <input style="width:300px; " type="text" name="endereco.cidade" id="cidade" class="form-control"  >
 					              <label for="cidade">cidade</label>
 					            </div>
 					          </div>   
 					          <div class="col-md-2">
-					            <div class="form-label-group">
-					              <input style="width:300px" type="text" name="endereco.estado" id="estado" class="form-control"  >
+					            <div class="form-label-group" style="margin-left:100px">
+					              <input style="width:300px; " type="text" name="endereco.estado" id="estado" class="form-control"  >
 					              <label for="estado">estado</label>
 					            </div>
 					          </div>   
