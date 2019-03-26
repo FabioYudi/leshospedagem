@@ -20,7 +20,7 @@ public class Cliente extends EntidadeDominio {
 	private String senha;
 	private String cpf;
 	private String genero;
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private List<Endereco> enderecos;
 	public String getNome() {
 		return nome;

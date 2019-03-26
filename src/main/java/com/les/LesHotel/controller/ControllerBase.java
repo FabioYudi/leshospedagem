@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,9 @@ public class ControllerBase {
 	
 	@Autowired
 	protected VisualizarCommand visualizarCmd;
+	
+	@Autowired
+	protected HttpSession httpSession;
 	
 	protected Map<String, AbstractCommand> commands;
 	@Autowired

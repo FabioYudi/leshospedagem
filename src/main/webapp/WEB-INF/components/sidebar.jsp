@@ -42,11 +42,21 @@
           <a class="dropdown-item" id="side-consultar" href="/painel/estadia/consultar">Cartões</a>
           <div class="dropdown-divider"></div>
         </div>
-         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-          <h6 class="dropdown-header">Administrador</h6>
-          <a class="dropdown-item" id="side-consultar" href="/cliente/consultar">Consultar Clientes</a>
+         
+      </li>
+      <li class="nav-item dropdown">
+      	<a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Administrador</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <h6 class="dropdown-header">Ações</h6>
+          <a class="dropdown-item" id="side-consultar" href="/cliente/consultar">Consultar usuários</a>
+          <a class="dropdown-item" id="side-consultar" href="/painel/estadia/consultar">Endereços</a>
+          <a class="dropdown-item" id="side-consultar" href="/painel/estadia/consultar">Cartões</a>
           <div class="dropdown-divider"></div>
         </div>
+         
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/painel/graficos/graficos">

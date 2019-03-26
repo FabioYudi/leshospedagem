@@ -4,7 +4,11 @@
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 <script src="../resources/js/jquery.js"></script>
 
-
+<style>
+	.hide{
+		display:none;
+	}
+</style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">LES HOSPEDAGEM</a>
@@ -17,16 +21,47 @@
       <li class="nav-item">
         <a class="nav-link" href="/">Home</a>
       </li>
-      <li class="nav-item">
+      <li id="cadastrar" class="nav-item">
         <a class="nav-link" href="/cliente/paginaCadastrar">Cadastrar-se</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="cliente/login">Login</a>
+      <li id="login" class="nav-item">
+        <a class="nav-link" href="/cliente/login">Login</a>
       </li>
       
-      <li class="nav-item">
+      <li id="painel" class="nav-item hide">
         <a id="linkPainel" class="nav-link" href="/painel/home">Painel de controle</a>
       </li>
     </ul>
   </div>
 </nav>
+
+<script>
+
+	$(document).ready(function(){
+
+		$.ajax({
+			 method: "GET",
+			 url: "/cliente/verificaLogin",
+			 success: function(data) {
+				 data = JSON.parse(data);
+				if(data.clienteLogado == null){
+				 $("#cadastrar").removeClass("hide");
+					$("#login").removeClass("hide");
+					$("#painel").addClass("hide");
+			      
+				}else{
+					$("#cadastrar").addClass("hide");
+					$("#login").addClass("hide");
+					$("#painel").removeClass("hide");
+				}
+				
+		      },
+		      error: function(){
+		    	
+		    	  $("#cadastrar").removeClass("hide");
+					$("#login").removeClass("hide");
+					$("#painel").addClass("hide");
+		      }
+		});
+	});
+</script>

@@ -13,8 +13,18 @@ public class Endereco extends EntidadeDominio {
 	private String complemento;
 	private String estado;
 	private String cidade;
+	private boolean principal;
+	
+	
+	
 	
 	 
+	public boolean isPrincipal() {
+		return principal;
+	}
+	public void setPrincipal(boolean principal) {
+		this.principal = principal;
+	}
 	public String getLogradouro() {
 		return logradouro;
 	}

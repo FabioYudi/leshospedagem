@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,22 +35,57 @@ public class ClienteController extends ControllerBase{
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			resultado.setMsg("Hospedagem cadastrada com sucesso!");
 			model.addAttribute("ok", true);
+			httpSession.setAttribute("clienteLogado", resultado.getEntidades().get(0));
 		}else {
 			model.addAttribute("ok", false);
+			
+
 		}
 		model.addAttribute("mensagem", resultado.getMsg());
 		return mapper.writeValueAsString(model);
 	}
 	
 	@GetMapping("/dados")
-	public String carregarDados() {
+	public String carregarDados(Model model) {
+		model.addAttribute("cliente", httpSession.getAttribute("clienteLogado"));
 		return "cliente/dados";
 	}
 	
 	@GetMapping("/login")
-	public String index() {
+	public String login() throws JsonParseException, JsonMappingException, IOException {
+		
 		return "cliente/login";
 	}
+	
+	@PostMapping("/logar")
+	public String entrar(@RequestParam("cliente") String cliente, Model model) throws IOException {
+		
+		Cliente cli = (Cliente) mapper.readValue(cliente, Cliente.class);
+		
+		Resultado resultado = commands.get(VISUALIZAR).execute(cli);
+		if(!resultado.getEntidades().isEmpty()) {
+			model.addAttribute("ok", true);
+			Cliente clien = (Cliente) resultado.getEntidades().get(0);
+			httpSession.setAttribute("clienteLogado", clien);
+		}else {
+			model.addAttribute("ok", false);
+			httpSession.setAttribute("clienteLogado", null);
+		}
+		return mapper.writeValueAsString(model);
+	}
+	
+	@ResponseBody
+	@GetMapping("/verificaLogin")
+	public String verificarLogin(Model model) throws JsonProcessingException {
+		try {
+			model.addAttribute("clienteLogado", httpSession.getAttribute("clienteLogado"));
+		} catch (Exception e) {
+			model.addAttribute("clienteLogado", "");
+		}
+		
+		return mapper.writeValueAsString(model);
+	}
+	
 	
 	@GetMapping("/visualizar/{id}")
 	public String carregarDadosEdicao(@PathVariable("id") String id, Model model) {
@@ -57,7 +93,7 @@ public class ClienteController extends ControllerBase{
 		cliente.setId(Long.parseLong(id));
 		Resultado resultado = commands.get(VISUALIZAR).execute(cliente);
 		model.addAttribute("cliente", resultado.getEntidades().get(0));
-		return "cliente/editar";
+		return "cliente/dados";
 	}
 	
 	
@@ -68,6 +104,15 @@ public class ClienteController extends ControllerBase{
 		model.addAttribute("clientes", resultado.getEntidades());
 		return "cliente/consultar";
 	}
+	
+	@GetMapping("endereco/consultar")
+	public String consultarEnderecos(Model model) {
+		Cliente cliente = new Cliente();
+		Resultado resultado = commands.get(CONSULTAR).execute(cliente);
+		model.addAttribute("clientes", resultado.getEntidades());
+		return "cliente/endereco/consultar";
+	}
+	
 	
 	
 	@ResponseBody
