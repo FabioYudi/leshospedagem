@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,22 +39,26 @@
 		         
 		        </div>
 		    </div>
-		    <div class="col">
-		     	 <div class="card mt-12">
-		          <div class="card-body">
-		            <h3 class="card-title">Endereço principal</h3>
-		            <h4>Nome: ${cliente.nome}</h4>
-		            <p class="card-text">Email: ${cliente.email}</p>
-		            <p class="card-text">Telefone:</p>
-		            <p class="card-text">data de nascimento: ${cliente.dtNascimento}</p>
-		            <p class="card-text">CPF: ${cliente.cpf}</p>
-		            <p class="card-text">Gênero: ${cliente.genero}</p>
-		            
-		           	<a href="/cliente/cadastrar" class="btn btn-block btn-primary" >Editar Dados</a>
-		          </div>
-		         
-		        </div>
-		    </div>
+		    <c:forEach var="endereco" items="${cliente.enderecos}">
+			    <div class="col">
+			     	 <div class="card mt-12">
+			          <div class="card-body">
+			            <h3 class="card-title">Endereço principal</h3>
+			            <h4>Logradouro: ${endereco.logradouro}</h4>
+			            <p class="card-text">Número: ${endereco.numero}</p>
+			            <p class="card-text">Bairro: ${endereco.bairro}</p>
+			            <p class="card-text">CEP: ${endereco.cep}</p>
+			            <p class="card-text">Complemento: ${endereco.complemento}</p>
+			            <p class="card-text">Estado: ${endereco.estado}</p>
+			            <p class="card-text">Cidade: ${endereco.cidade}</p>
+			        
+			            
+			           	<a href="/cliente/cadastrar" class="btn btn-block btn-warning" ><strong>Consultar Endereços</strong></a>
+			          </div>
+			         
+			        </div>
+			    </div>
+			  </c:forEach>  
 		   
   		</div>
   		<div class="row">

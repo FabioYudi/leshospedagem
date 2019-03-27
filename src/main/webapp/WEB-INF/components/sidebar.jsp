@@ -38,7 +38,7 @@
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <h6 class="dropdown-header">Dados</h6>
           <a class="dropdown-item" id="side-consultar" href="/cliente/dados">Pessoais</a>
-          <a class="dropdown-item" id="side-consultar" href="/painel/estadia/consultar">Endereços</a>
+          <a class="dropdown-item" id="side-consultar" href="/cliente/endereco/consultar">Endereços</a>
           <a class="dropdown-item" id="side-consultar" href="/painel/estadia/consultar">Cartões</a>
           <div class="dropdown-divider"></div>
         </div>
@@ -52,8 +52,7 @@
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <h6 class="dropdown-header">Ações</h6>
           <a class="dropdown-item" id="side-consultar" href="/cliente/consultar">Consultar usuários</a>
-          <a class="dropdown-item" id="side-consultar" href="/painel/estadia/consultar">Endereços</a>
-          <a class="dropdown-item" id="side-consultar" href="/painel/estadia/consultar">Cartões</a>
+          
           <div class="dropdown-divider"></div>
         </div>
          

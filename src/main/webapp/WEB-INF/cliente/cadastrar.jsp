@@ -103,7 +103,8 @@ label{
 	        		   cep:$("#cep").val(),
 	        		   estado:$("#estado").val(),
 	        		   cidade:$("#cidade").val(),
-	        		   complemento:$("#complemento").val()
+	        		   complemento:$("#complemento").val(),
+	        		   principal: true
 	        	   }]
 	       
 	       };

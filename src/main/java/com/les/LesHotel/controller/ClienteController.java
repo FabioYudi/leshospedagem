@@ -1,6 +1,9 @@
 package com.les.LesHotel.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.les.LesHotel.Facade.Resultado;
 import com.les.LesHotel.entities.Cliente;
+import com.les.LesHotel.entities.Endereco;
 
 @Controller
 @RequestMapping("/cliente")
@@ -35,7 +39,6 @@ public class ClienteController extends ControllerBase{
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			resultado.setMsg("Hospedagem cadastrada com sucesso!");
 			model.addAttribute("ok", true);
-			httpSession.setAttribute("clienteLogado", resultado.getEntidades().get(0));
 		}else {
 			model.addAttribute("ok", false);
 			
@@ -47,7 +50,13 @@ public class ClienteController extends ControllerBase{
 	
 	@GetMapping("/dados")
 	public String carregarDados(Model model) {
-		model.addAttribute("cliente", httpSession.getAttribute("clienteLogado"));
+		Cliente cliente = (Cliente) httpSession.getAttribute("clienteLogado");
+		cliente.setEnderecos(
+					cliente.getEnderecos().stream()
+					.filter(e -> e.isPrincipal() == true)
+					.collect(Collectors.toList())
+				);
+		model.addAttribute("cliente", cliente);
 		return "cliente/dados";
 	}
 	
@@ -91,7 +100,13 @@ public class ClienteController extends ControllerBase{
 	public String carregarDadosEdicao(@PathVariable("id") String id, Model model) {
 		Cliente cliente = new Cliente();
 		cliente.setId(Long.parseLong(id));
+		Endereco endereco = new Endereco();
+		endereco.setPrincipal(true);
+		List<Endereco> enderecos= new ArrayList<>();
+		enderecos.add(endereco);
+		cliente.setEnderecos(enderecos);
 		Resultado resultado = commands.get(VISUALIZAR).execute(cliente);
+		mensagemHelper.getMensagem(resultado, model);
 		model.addAttribute("cliente", resultado.getEntidades().get(0));
 		return "cliente/dados";
 	}
@@ -107,9 +122,13 @@ public class ClienteController extends ControllerBase{
 	
 	@GetMapping("endereco/consultar")
 	public String consultarEnderecos(Model model) {
-		Cliente cliente = new Cliente();
-		Resultado resultado = commands.get(CONSULTAR).execute(cliente);
-		model.addAttribute("clientes", resultado.getEntidades());
+		try {
+			
+			model.addAttribute("cliente", httpSession.getAttribute("clienteLogado"));
+		}catch (Exception e) {
+			model.addAttribute("cliente", "");
+		}
+		
 		return "cliente/endereco/consultar";
 	}
 	

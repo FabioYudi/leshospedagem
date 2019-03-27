@@ -16,9 +16,14 @@ import com.les.LesHotel.command.ConsultarCommand;
 import com.les.LesHotel.command.ExcluirCommand;
 import com.les.LesHotel.command.SalvarCommand;
 import com.les.LesHotel.command.VisualizarCommand;
+import com.les.LesHotel.helper.MensagemHelper;
 
 @Component
 public class ControllerBase {
+	
+	@Autowired
+	protected MensagemHelper mensagemHelper;
+	
 	@Autowired
 	protected SalvarCommand salvarCmd;
 	

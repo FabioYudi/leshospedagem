@@ -49,7 +49,7 @@ text-decoration:none;
 			              <div class="col-md-2">
 			                <div class="form-label-group">
 			                  <input type="text" id="titulo"  name="titulo" class="form-control"  >
-			                  <label for="titulo">Titulo</label>
+			                  <label for="titulo">Logradouro</label>
 			                </div>
 			              </div>
 			              <div class="col-md-2">
@@ -100,7 +100,8 @@ text-decoration:none;
 					          </div>  
 				      	 </div>   
 			          </div>
-			     </form>     
+			     </form>   
+			     <button class="btn btn-danger"><strong>Cadastrar novo endereço</strong></button>  
           <div class="card-header">
             <i class="fas fa-table"></i>
             Consulta de hospedagens</div>
@@ -109,45 +110,37 @@ text-decoration:none;
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                   	  <th>Nome</th>
-	      			  <th>Data de nascimento</th>
-				      <th>Email</th>
-				      <th>CPF</th>
-				      <th>Email</th>
-				      <th>Gênero</th>
+                   	  <th>Logradouro</th>
+	      			  <th>Número</th>
+				      <th>Bairro</th>
+				      <th>CEP</th>
+				      <th>Complemento</th>
+				      <th>Estado</th>
+				      <th>Cidade</th>
 				      <th>Status</th>
-				      <th>Ações</th>
                   </tr>
                 </thead>
                
                 <tbody>
-                  <c:forEach var="cliente" items="${clientes}">
+                   <c:forEach var="endereco" items="${cliente.enderecos}">
 				  	<tr>
-				      <th scope="row">${cliente.nome}</th>
-				      <td>${cliente.dtNascimento}</td>
-				      <td>${cliente.email}</td>
-				      <td>${cliente.cpf}</td>
-				      <td>${cliente.email}</td>
-				      <td>${cliente.genero}</td>
-				      <td>
-				      	 <c:choose>
-				      	 	<c:when test="${hospedagem.ativo}">
-								<span style="color:green">ATIVO</span>
-				      	 	</c:when>
-				      	 	<c:otherwise>
-								<span style="color:red">INATIVO</span>
-				      	 	</c:otherwise>	
-				      	 </c:choose>	
-				      </td>
+				      <th scope="row">${endereco.logradouro}</th>
+				      <td>${endereco.numero}</td>
+				      <td>${endereco.bairro}</td>
+				      <td>${endereco.cep}</td>
+				      <td>${endereco.complemento}</td>
+				      <td>${endereco.estado}</td>
+				      <td>${endereco.cidade}</td>
+				      
 				     
 				      <td>
-				      	 <button type="button" class="btn btn-primary"><a style="color:white" href="/cliente/visualizar/${cliente.id}">Editar</a></button>
+				      	 <button type="button" class="btn btn-primary"><a style="color:white" href="/cliente/visualizar/}">Editar</a></button>
 				      	 <c:choose>
 				      	 	<c:when test="${hospedagem.ativo}">
-				      	 		<button onclick="desativar(this)" valor="false" type="button" idHospedagem="${cliente.id}" class="btn btn-danger">Desativar</button>
+				      	 		<button onclick="desativar(this)" valor="false" type="button" idHospedagem="" class="btn btn-danger">Desativar</button>
 				      	 	</c:when>
 				      	 	<c:otherwise>
-				      	 		<button onclick="desativar(this)" valor="true"  type="button" class="btn btn-success" idHospedagem="${hospedagem.id}">Ativar</button>
+				      	 		<button onclick="desativar(this)" valor="true"  type="button" class="btn btn-success" idHospedagem="">Ativar</button>
 				      	 		
 				      	 	</c:otherwise>	
 				      	 </c:choose>
@@ -178,11 +171,7 @@ text-decoration:none;
     
 
   <!-- Bootstrap core JavaScript-->
-<script src="../../../resources/js/jquery.js"></script>
-  <script src="../../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Core plugin JavaScript-->
-  <script src="../../../resources/js/jquery-easing/jquery.easing.min.js"></script>
 
 </body>
 
@@ -209,5 +198,11 @@ text-decoration:none;
 		});
 	}
 </script>
+<script src="../../../resources/js/jquery.js"></script>
+  <script src="../../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+  <!-- Core plugin JavaScript-->
+  <script src="../../../resources/js/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../../../resources/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../../../resources/js/jquery.js"></script>
 </html>

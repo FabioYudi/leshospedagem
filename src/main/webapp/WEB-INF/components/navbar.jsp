@@ -1,8 +1,8 @@
 <link type="text/css" rel="stylesheet" media="screen" href="../resources/bootstrap/css/bootstrap.min.css">
 <link type="text/css" rel="stylesheet" media="screen" href="../resources/css/common.css">
 
-<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
-<script src="../resources/js/jquery.js"></script>
+<script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../resources/js/jquery.js"></script>
 
 <style>
 	.hide{
@@ -43,6 +43,7 @@
 			 method: "GET",
 			 url: "/cliente/verificaLogin",
 			 success: function(data) {
+				 debugger;
 				 data = JSON.parse(data);
 				if(data.clienteLogado == null){
 				 $("#cadastrar").removeClass("hide");
@@ -50,6 +51,7 @@
 					$("#painel").addClass("hide");
 			      
 				}else{
+					debugger;
 					$("#cadastrar").addClass("hide");
 					$("#login").addClass("hide");
 					$("#painel").removeClass("hide");
