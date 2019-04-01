@@ -22,6 +22,7 @@ import com.les.LesHotel.rns.cliente.ValidaDadosObrigatoriosCliente;
 import com.les.LesHotel.rns.cliente.ValidaDadosObrigatoriosEnderecoCliente;
 import com.les.LesHotel.rns.cliente.ValidaDataNascimentoCliente;
 import com.les.LesHotel.rns.cliente.ValidaEnderecoPrincipal;
+import com.les.LesHotel.rns.hospedagem.ValidaEmailJaCadastrado;
 import com.les.LesHotel.rns.hospedagem.ValidaPeriodoDataReservaHospedagem;
 import com.les.LesHotel.rns.hospedagem.ValidaQtdNegativasHospedagem;
 import com.les.LesHotel.rns.hospedagem.ValidaTamanhoDescricaoHospedagem;
@@ -65,6 +66,7 @@ public class Facade implements IFacade {
 			Map<String, List<IStrategy>> rnsCliente = new HashMap<>();
 			rnsSalvarCliente.add(new ValidaDadosObrigatoriosCliente());
 			rnsSalvarCliente.add(new ValidaDataNascimentoCliente());
+			rnsSalvarCliente.add(new ValidaEmailJaCadastrado());
 			
 			rnsExcluirEnderecoCliente.add(new ValidaEnderecoPrincipal());
 			
