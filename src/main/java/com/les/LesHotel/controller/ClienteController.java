@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.les.LesHotel.Facade.Resultado;
 import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.Endereco;
+import com.les.LesHotel.entities.Hospedagem;
 
 @Controller
 @RequestMapping("/cliente")
@@ -31,6 +32,28 @@ public class ClienteController extends ControllerBase{
 	public String paginaCadastrar() {
 		return "cliente/cadastrar";
 	}
+	
+	@ResponseBody
+	@PostMapping("/desativarCliente/{id}/{valor}")
+	public String desativarCliente(Model model, @PathVariable("id") String id, @PathVariable("valor") boolean valor) throws JsonProcessingException {
+		Cliente cliente = new Cliente();
+		cliente.setId(Long.parseLong(id));
+		Resultado resultado = commands.get(CONSULTAR).execute(cliente);
+		cliente = (Cliente) resultado.getEntidades().get(0);
+		cliente.setAtivo(valor);
+		resultado = commands.get(EXCLUIR).execute(cliente);
+		model.addAttribute("cliente", resultado.getEntidades());
+		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
+			resultado.setMsg("Cliente alterado com sucesso!");
+			model.addAttribute("ok", true);
+		}else {
+			model.addAttribute("ok", false);
+		}
+		model.addAttribute("mensagem", resultado.getMsg());
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(model);
+	}
+	
 	
 	@ResponseBody
 	@PostMapping("/cadastrar")
@@ -146,6 +169,12 @@ public class ClienteController extends ControllerBase{
 		return "cliente/consultar";
 	}
 	
+	@PostMapping("/filtrar")
+	public String filtrarHospedagem(Model model,  Cliente cliente) {
+		Resultado resultado = commands.get(CONSULTAR).execute(cliente);
+		model.addAttribute("clientes", resultado.getEntidades());
+		return "cliente/consultar";
+	}
 	
 	
 	@GetMapping("/logout")

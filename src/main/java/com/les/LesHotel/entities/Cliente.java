@@ -21,6 +21,7 @@ public class Cliente extends EntidadeDominio {
 	private String cpf;
 	private String genero;
 	private String telefone;
+	private Boolean ativo;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private List<Endereco> enderecos;
 	
@@ -28,6 +29,12 @@ public class Cliente extends EntidadeDominio {
 	
 	
 	
+	public Boolean getAtivo() {
+		return ativo;
+	}
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
 	public String getTelefone() {
 		return telefone;
 	}

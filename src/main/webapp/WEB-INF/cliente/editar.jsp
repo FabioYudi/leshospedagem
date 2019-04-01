@@ -74,7 +74,7 @@ label{
    </div> 	
    
    <input id="id" value="${cliente.id}">
-
+	<input id="ativo" value="${cliente.ativo}">
 
 
 </body>
@@ -95,6 +95,7 @@ $("#genero option").each(function(){
 	        	   cpf: $("#cpf").val(),
 	        	   genero: $("#genero").val(),
 	        	   telefone:$("#telefone").val(),
+	        	   ativo: $("#ativo").val(),
 	        	   enderecos: [{
 	        		   logradouro:$("#logradouro").val(),
 	        		   numero:$("#numero").val(),
