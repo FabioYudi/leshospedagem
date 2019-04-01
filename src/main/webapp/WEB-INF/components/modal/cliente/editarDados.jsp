@@ -37,10 +37,10 @@
 		    </div>
 		    <div class="form-group col-md-6">
 		      <label for="genero">Gênero</label>
-		      <select value="${cliente.genero}" id="genero" class="form-control">
-		        <option value="masculino" selected>Masculino</option>
-		        <option value="feminino" >Feminino</option>
-		        <option value="outros">Outros...</option>
+		      <select  id="genero" class="form-control">
+		        <option value="masculino" selected>masculino</option>
+		        <option value="feminino" >feminino</option>
+		        <option value="outros">outros...</option>
 		       </select>
 		    </div>
 		  </div>
@@ -62,6 +62,9 @@
 
 
 <script>
+debugger;
+$("#genero").val( $('option:contains(${cliente.genero})').val())
+
 function cadastrar(){
 	var data = {
 			   id: $("#id").val(),

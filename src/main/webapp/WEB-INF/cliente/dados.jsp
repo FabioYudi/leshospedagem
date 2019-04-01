@@ -115,6 +115,7 @@ function convertDate(dateString){
 }
 
 
+
 $(document).ready(function(){
 	$("#dataNascimento").text(convertDate("${cliente.dtNascimento}"));
 });
