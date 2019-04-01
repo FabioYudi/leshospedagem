@@ -8,6 +8,9 @@
         </button>
       </div>
       <div class="modal-body">
+      <div class="alert alert-danger hide" id="alertaErroDados" role="alert">
+  					
+		</div>
         <form style="margin-top:20px">
 		  <div class="form-row">
 		    <div class="form-group col-md-12">
@@ -65,7 +68,7 @@ function cadastrar(){
         	   nome: $("#nome").val(),
         	   email: $("#email").val(),
         	   senha: $("#senha").val(),
-        	   dataNascimento: $("#dtNascimento").val(),
+        	   dtNascimento: $("#dtNascimento").val(),
         	   cpf: $("#cpf").val(),
         	   genero: $("#genero").val(),
         	   telefone:$("#telefone").val(),
@@ -90,8 +93,8 @@ $.ajax({
         	 $("#mensagem").val(data.mensagem);
         	 $("#formDados").submit();
          }else{
-        	 $("#alertaErro").removeClass("hide");
-        	 $("#alertaErro").html(data.mensagem);
+        	 $("#alertaErroDados").removeClass("hide");
+        	 $("#alertaErroDados").html(data.mensagem);
          }
       },
       error: function(){

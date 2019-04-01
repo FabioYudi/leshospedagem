@@ -349,6 +349,7 @@ public class ClienteController extends ControllerBase{
 			model.addAttribute("ok", false);
 			
 		}
+		model.addAttribute("mensagem", resultado.getMsg());
 		return mapper.writeValueAsString(model);
 	}
 	

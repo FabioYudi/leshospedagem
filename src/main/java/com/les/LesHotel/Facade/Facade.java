@@ -19,6 +19,9 @@ import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.rns.IStrategy;
 import com.les.LesHotel.rns.cliente.ValidaDadosObrigatoriosCliente;
+import com.les.LesHotel.rns.cliente.ValidaDadosObrigatoriosEnderecoCliente;
+import com.les.LesHotel.rns.cliente.ValidaDataNascimentoCliente;
+import com.les.LesHotel.rns.cliente.ValidaEnderecoPrincipal;
 import com.les.LesHotel.rns.hospedagem.ValidaPeriodoDataReservaHospedagem;
 import com.les.LesHotel.rns.hospedagem.ValidaQtdNegativasHospedagem;
 import com.les.LesHotel.rns.hospedagem.ValidaTamanhoDescricaoHospedagem;
@@ -50,16 +53,29 @@ public class Facade implements IFacade {
 		rnsSalvarHospedagem.add(new ValidaTamanhoDescricaoHospedagem());
 		rnsSalvarHospedagem.add(new ValidaQtdNegativasHospedagem());
 		rnsSalvarHospedagem.add(new ValidaPeriodoDataReservaHospedagem());
+		
 		rnsHospedagem.put("SALVAR", rnsSalvarHospedagem);
 		rnsHospedagem.put("ALTERAR", rnsSalvarHospedagem);
 		
 		
 		//regras para cliente
 			List<IStrategy> rnsSalvarCliente = new ArrayList<>();
+			List<IStrategy> rnsAlterarCliente = new ArrayList<>();
+			List<IStrategy> rnsExcluirEnderecoCliente = new ArrayList<>();
 			Map<String, List<IStrategy>> rnsCliente = new HashMap<>();
 			rnsSalvarCliente.add(new ValidaDadosObrigatoriosCliente());
+			rnsSalvarCliente.add(new ValidaDataNascimentoCliente());
+			
+			rnsExcluirEnderecoCliente.add(new ValidaEnderecoPrincipal());
+			
+			rnsAlterarCliente.add(new ValidaDadosObrigatoriosEnderecoCliente());
+			rnsAlterarCliente.add(new ValidaDadosObrigatoriosCliente());
+			rnsAlterarCliente.add(new ValidaDataNascimentoCliente());
 			rnsCliente.put("SALVAR", rnsSalvarCliente);
 			rnsCliente.put("ALTERAR", rnsSalvarCliente);
+			rnsCliente.put("ALTERAR", rnsAlterarCliente);
+			
+			rnsCliente.put("EXCLUIR", rnsExcluirEnderecoCliente);
 		
 		//lista de repositorios
 		repositories.put(Hospedagem.class.getName(), hospedagemDao);

@@ -27,6 +27,10 @@
 { 
 text-decoration:none; 
 } 
+
+.hide{
+	display: none;
+}
 </style>
 </head>
 
@@ -38,9 +42,13 @@ text-decoration:none;
 	<jsp:include page="../../components/sidebar.jsp" />
 	<div id="content-wrapper">
       	<div class="container-fluid">
+      		
       		<div class="card mb-3">
+      		<div class="alert alert-danger hide" id="alertaExcluir" role="alert">
+  					
+				</div>
       		<c:if test="${!empty mensagem}">
-      			<div class="alert alert-success" role="alert">
+      			<div class="alert alert-success" id="alertaMensagem" role="alert">
   					${mensagem}
 				</div>
       		</c:if>
@@ -230,11 +238,15 @@ text-decoration:none;
 			 success: function(data) {
 		        data = JSON.parse(data);
 		        if(data.ok == true){
-		        	
+		        	$("#alertaExcluir").removeClass("hide");
+		        	$("#alertaExcluir").html("Endereço excluido com sucesso!");
 		        	 $("#mensagemEdicao").val(data.mensagem);
 		        	 $("#formDados").submit();
 		        }else{
-		        	
+		        	$("#alertaMensagem").addClass("hide");
+		        	$("#alertaExcluir").removeClass("hide");
+		        	$("#alertaExcluir").html(data.mensagem);
+				
 		        }
 		      },
 		      error: function(){
