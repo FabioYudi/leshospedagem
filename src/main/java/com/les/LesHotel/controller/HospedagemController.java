@@ -50,7 +50,7 @@ public class HospedagemController extends ControllerBase {
 		Resultado resultado = commands.get(CONSULTAR).execute(hospedagem);
 		hospedagem = (Hospedagem) resultado.getEntidades().get(0);
 		hospedagem.setAtivo(valor);
-		resultado = commands.get("ALTERAR").execute(hospedagem);
+		resultado = commands.get(EXCLUIR).execute(hospedagem);
 		model.addAttribute("hospedagens", resultado.getEntidades());
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			resultado.setMsg("Hospedagem alterada com sucesso!");

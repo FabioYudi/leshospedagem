@@ -48,7 +48,7 @@ public class ControllerBase {
 	
 	protected final String CONSULTAR = "CONSULTAR";
 	protected final String VISUALIZAR = "VISUALIZAR";
-	
+	protected final String EXCLUIR = "EXCLUIR";
 	@PostConstruct
 	public void init() {
 		commands = new HashMap<>();

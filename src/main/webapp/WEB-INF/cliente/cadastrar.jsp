@@ -110,7 +110,7 @@ label{
 	        	   nome: $("#nome").val(),
 	        	   email: $("#email").val(),
 	        	   senha: $("#senha").val(),
-	        	   dataNascimento: $("#dtNascimento").val(),
+	        	   dtNascimento: $("#dtNascimento").val(),
 	        	   cpf: $("#cpf").val(),
 	        	   genero: $("#genero").val(),
 	        	   telefone: $("#telefone").val(),

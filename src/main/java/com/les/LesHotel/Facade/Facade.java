@@ -18,6 +18,7 @@ import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.rns.IStrategy;
+import com.les.LesHotel.rns.cliente.ValidaDadosObrigatoriosCliente;
 import com.les.LesHotel.rns.hospedagem.ValidaPeriodoDataReservaHospedagem;
 import com.les.LesHotel.rns.hospedagem.ValidaQtdNegativasHospedagem;
 import com.les.LesHotel.rns.hospedagem.ValidaTamanhoDescricaoHospedagem;
@@ -53,15 +54,19 @@ public class Facade implements IFacade {
 		rnsHospedagem.put("ALTERAR", rnsSalvarHospedagem);
 		
 		
-		//regras para hospedagem
+		//regras para cliente
 			List<IStrategy> rnsSalvarCliente = new ArrayList<>();
 			Map<String, List<IStrategy>> rnsCliente = new HashMap<>();
+			rnsSalvarCliente.add(new ValidaDadosObrigatoriosCliente());
+			rnsCliente.put("SALVAR", rnsSalvarCliente);
+			rnsCliente.put("ALTERAR", rnsSalvarCliente);
 		
 		//lista de repositorios
 		repositories.put(Hospedagem.class.getName(), hospedagemDao);
 		repositories.put(Cliente.class.getName(), clienteDAO);
 		
 		rns.put(Hospedagem.class.getName(), rnsHospedagem);
+		rns.put(Cliente.class.getName(), rnsCliente);
 
 	}
 

@@ -39,7 +39,7 @@
 		            <p>Nome: <strong>${cliente.nome}</strong></p>
 		            <p class="card-text">Email: <strong> ${cliente.email}</strong></p>
 		            <p class="card-text">Telefone: <strong>${cliente.telefone}</strong></p>
-		            <p class="card-text">data de nascimento: <strong>${cliente.dtNascimento}</strong></p>
+		            <p class="card-text">data de nascimento: <strong id="dataNascimento"></strong></p>
 		            <p class="card-text">CPF: <strong>${cliente.cpf}</strong></p>
 		            <p class="card-text">Gênero: <strong>${cliente.genero}</strong></p>
 		            
@@ -108,7 +108,18 @@
 
 
 <jsp:include page="../components/modal/cliente/editarDados.jsp" />
+<script>
+function convertDate(dateString){
+	var p = dateString.split(/\D/g)
+	return [p[2],p[1],p[0] ].join("/")
+}
 
+
+$(document).ready(function(){
+	$("#dataNascimento").text(convertDate("${cliente.dtNascimento}"));
+});
+
+</script>
 </body>
 <script src="../../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../../../resources/js/jquery.js"></script>

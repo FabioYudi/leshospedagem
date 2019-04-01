@@ -187,6 +187,8 @@ text-decoration:none;
 </body>
 
 <script>
+
+
 	function desativar(botao){
 		var id = $(botao).attr("idHospedagem");
 		$.ajax({

@@ -91,13 +91,14 @@ public class ClienteController extends ControllerBase{
 		return "cliente/login";
 	}
 	
+	@ResponseBody
 	@PostMapping("/logar")
 	public String entrar(@RequestParam("cliente") String cliente, Model model) throws IOException {
 		
 		Cliente cli = (Cliente) mapper.readValue(cliente, Cliente.class);
 		
 		Resultado resultado = commands.get(VISUALIZAR).execute(cli);
-		if(!resultado.getEntidades().isEmpty()) {
+		if(!resultado.getEntidades().isEmpty() && resultado.getEntidades().size() == 1) {
 			model.addAttribute("ok", true);
 			Cliente clien = (Cliente) resultado.getEntidades().get(0);
 			httpSession.setAttribute("clienteLogado", clien);
@@ -339,7 +340,7 @@ public class ClienteController extends ControllerBase{
 		cliente.setEnderecos(cliente.getEnderecos().stream()
 				.filter(e -> e.getId() != Long.parseLong(idEndereco))
 				.collect(Collectors.toList()));
-		resultado = commands.get("ALTERAR").execute(cliente);
+		resultado = commands.get(EXCLUIR).execute(cliente);
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			resultado.setMsg("Endereço excluido com sucesso!");
 			model.addAttribute("ok", true);

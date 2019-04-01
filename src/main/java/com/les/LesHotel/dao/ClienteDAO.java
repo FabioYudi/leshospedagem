@@ -56,7 +56,7 @@ public class ClienteDAO extends AbstractDAO {
 
 	@Override
 	public void deletar(EntidadeDominio entidade) {
-		repository.delete(noCast(entidade));
+		repository.save(noCast(entidade));	
 		
 	}
 

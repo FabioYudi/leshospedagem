@@ -11,8 +11,12 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        
       </div>
       <div class="modal-body">
+      <div class="alert alert-danger hide" id="alertaErroCadastro" role="alert">
+  					
+		</div>
         <form style="margin-top:20px">
 			  <div class="form-row">
 			    <div class="form-group col-md-12">
@@ -80,8 +84,12 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        
       </div>
       <div class="modal-body">
+      <div class="alert alert-danger hide" id="alertaErroEdicao" role="alert">
+  					
+		</div>
         <form style="margin-top:20px">
 			  <div class="form-row">
 			    <div class="form-group col-md-12">
@@ -174,8 +182,8 @@ $.ajax({
         	 $("#mensagemEdicao").val(data.mensagem);
         	 $("#formDados").submit();
          }else{
-        	 $("#alertaErro").removeClass("hide");
-        	 $("#alertaErro").html(data.mensagem);
+        	 $("#alertaErroCadastro").removeClass("hide");
+        	 $("#alertaErroCadastro").html(data.mensagem);
          }
       },
       error: function(){
@@ -218,8 +226,8 @@ function editar(){
 	        	 $("#mensagemEdicao").val(data.mensagem);
 	        	 $("#formDados").submit();
 	         }else{
-	        	 $("#alertaErro").removeClass("hide");
-	        	 $("#alertaErro").html(data.mensagem);
+	        	 $("#alertaErroEdicao").removeClass("hide");
+	        	 $("#alertaErroEdicao").html(data.mensagem);
 	         }
 	      },
 	      error: function(){
