@@ -173,7 +173,7 @@ text-decoration:none;
   </div>
 
   
-    <form method="POST" id="formDesativar" action="/painel/hospedagem/consultarAtualizacao">
+    <form method="POST" class="hide" id="formDesativar" action="/painel/hospedagem/consultarAtualizacao">
     	<input id="mensagem" name="mensagem"></input>
     </form>
 

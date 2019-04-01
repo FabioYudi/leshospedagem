@@ -20,8 +20,20 @@ public class Cliente extends EntidadeDominio {
 	private String senha;
 	private String cpf;
 	private String genero;
+	private String telefone;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private List<Endereco> enderecos;
+	
+	
+	
+	
+	
+	public String getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 	public String getNome() {
 		return nome;
 	}

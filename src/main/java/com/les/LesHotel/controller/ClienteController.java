@@ -32,13 +32,17 @@ public class ClienteController extends ControllerBase{
 		return "cliente/cadastrar";
 	}
 	
+	@ResponseBody
 	@PostMapping("/cadastrar")
 	public String cadastrarCliente(Model model, @RequestParam("cliente") String cliente) throws IOException {
 		Cliente cli = (Cliente) mapper.readValue(cliente, Cliente.class);
 		Resultado resultado = commands.get("SALVAR").execute(cli);
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
-			resultado.setMsg("Hospedagem cadastrada com sucesso!");
+			resultado.setMsg("Cadastro realizado com sucesso!");
 			model.addAttribute("ok", true);
+			Resultado result = commands.get(VISUALIZAR).execute(cli);
+			cli = (Cliente) result.getEntidades().get(0);
+			httpSession.setAttribute("clienteLogado", cli);
 		}else {
 			model.addAttribute("ok", false);
 			
@@ -50,13 +54,34 @@ public class ClienteController extends ControllerBase{
 	
 	@GetMapping("/dados")
 	public String carregarDados(Model model) {
+		Cliente clienteConsulta = new Cliente();
 		Cliente cliente = (Cliente) httpSession.getAttribute("clienteLogado");
+		clienteConsulta.setId(cliente.getId());
+		Resultado resultado = commands.get(VISUALIZAR).execute(clienteConsulta);
+		cliente = (Cliente) resultado.getEntidades().get(0);
 		cliente.setEnderecos(
 					cliente.getEnderecos().stream()
 					.filter(e -> e.isPrincipal() == true)
 					.collect(Collectors.toList())
 				);
 		model.addAttribute("cliente", cliente);
+		return "cliente/dados";
+	}
+	
+	@PostMapping("/dadosAtualizados")
+	public String carregarDadosAtualizados(Model model, String mensagem, String id) {
+		Cliente cliente = new Cliente();
+		cliente.setId(Long.parseLong(id));
+		Resultado resultado = commands.get(VISUALIZAR).execute(cliente);
+		cliente = (Cliente) resultado.getEntidades().get(0);
+		httpSession.setAttribute("clienteLogado", cliente);
+		cliente.setEnderecos(
+					cliente.getEnderecos().stream()
+					.filter(e -> e.isPrincipal() == true)
+					.collect(Collectors.toList())
+				);
+		model.addAttribute("cliente", cliente);
+		model.addAttribute("mensagem", mensagem);
 		return "cliente/dados";
 	}
 	
@@ -120,16 +145,12 @@ public class ClienteController extends ControllerBase{
 		return "cliente/consultar";
 	}
 	
-	@GetMapping("endereco/consultar")
-	public String consultarEnderecos(Model model) {
-		try {
-			
-			model.addAttribute("cliente", httpSession.getAttribute("clienteLogado"));
-		}catch (Exception e) {
-			model.addAttribute("cliente", "");
-		}
-		
-		return "cliente/endereco/consultar";
+	
+	
+	@GetMapping("/logout")
+	public String logout() {
+		httpSession.removeAttribute("clienteLogado");
+		return "index";
 	}
 	
 	
@@ -143,11 +164,11 @@ public class ClienteController extends ControllerBase{
 		cli.setId(clienteEditado.getId());
 		Resultado resultado = commands.get(VISUALIZAR).execute(cli);
 		cli = (Cliente) resultado.getEntidades().get(0);
-		
+		clienteEditado.setSenha(cli.getSenha());
 	    clienteEditado.setEnderecos(cli.getEnderecos());
 		 resultado = commands.get("ALTERAR").execute(clienteEditado);
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
-			resultado.setMsg("Dados do cliente alterados com sucesso!");
+			resultado.setMsg("Seus dados foram alterados com sucesso!");
 			model.addAttribute("ok", true);
 			
 		}else {
@@ -156,6 +177,177 @@ public class ClienteController extends ControllerBase{
 		}
 		model.addAttribute("mensagem", resultado.getMsg());
 		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(model);
+	}
+	
+	
+	
+	
+	
+	//ENDEREÇOS
+	
+	
+	
+	@GetMapping("endereco/consultar")
+	public String consultarEnderecos(Model model) {
+		try {
+			Cliente cliente = (Cliente)  httpSession.getAttribute("clienteLogado");
+			Cliente clienteConsulta = new Cliente();
+			clienteConsulta.setId(cliente.getId());
+			Resultado resultado = commands.get(VISUALIZAR).execute(clienteConsulta);
+			cliente = (Cliente) resultado.getEntidades().get(0);
+			model.addAttribute("cliente", cliente);
+		}catch (Exception e) {
+			model.addAttribute("cliente", "");
+		}
+		
+		return "cliente/endereco/consultar";
+	}
+	
+	@ResponseBody
+	@GetMapping("/endereco/dadosEndereco/{id}")
+	public String getEndereco(@PathVariable String id, Model model) throws JsonProcessingException {
+		Cliente cliente = (Cliente)  httpSession.getAttribute("clienteLogado");
+		Cliente clienteConsulta = new Cliente();
+		clienteConsulta.setId(cliente.getId());
+		Resultado resultado = commands.get(VISUALIZAR).execute(clienteConsulta);
+		cliente = (Cliente) resultado.getEntidades().get(0);
+		List<Endereco> endereco = cliente.getEnderecos().stream()
+				.filter(e -> e.getId() == Long.parseLong(id))
+				.collect(Collectors.toList());
+		
+		model.addAttribute("endereco", endereco.get(0));
+		return mapper.writeValueAsString(model);
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/cadastrarEndereco")
+	public String cadastrarEndereco(@RequestParam("cliente") String cliente, Model model) throws JsonParseException, JsonMappingException, IOException {
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+		Cliente cli = new Cliente();
+		Cliente clienteEditado = (Cliente) mapper.readValue(cliente, Cliente.class);
+		cli.setId(clienteEditado.getId());
+		Resultado resultado = commands.get(VISUALIZAR).execute(cli);
+		cli = (Cliente) resultado.getEntidades().get(0);
+		clienteEditado.setSenha(cli.getSenha());
+		cli.getEnderecos().add(clienteEditado.getEnderecos().get(0));
+
+		 resultado = commands.get("ALTERAR").execute(cli);
+	
+		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
+			resultado.setMsg("Endereço cadastrado com sucesso!");
+			model.addAttribute("ok", true);
+			Resultado result = commands.get(VISUALIZAR).execute(cli);
+			cli = (Cliente) result.getEntidades().get(0);
+			httpSession.setAttribute("clienteLogado", cli);
+			
+		}else {
+			model.addAttribute("ok", false);
+			
+		}
+		model.addAttribute("mensagem", resultado.getMsg());
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(model);
+	}
+	
+	@ResponseBody
+	@PostMapping("/editarEndereco")
+	public String editarEndereco(@RequestParam("cliente") String cliente, Model model) throws JsonParseException, JsonMappingException, IOException {
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+		Cliente cli = new Cliente();
+		Cliente clienteEditado = (Cliente) mapper.readValue(cliente, Cliente.class);
+		cli.setId(clienteEditado.getId());
+		Resultado resultado = commands.get(VISUALIZAR).execute(cli);
+		cli = (Cliente) resultado.getEntidades().get(0);
+		//filtro para retirar o endereço que foi editado da lista
+		cli.setEnderecos(cli.getEnderecos().stream()
+			.filter(e -> e.getId() != clienteEditado.getEnderecos().get(0).getId())
+			.collect(Collectors.toList()));
+		cli.getEnderecos().add(clienteEditado.getEnderecos().get(0));
+		
+		 resultado = commands.get("ALTERAR").execute(cli);
+	
+		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
+			resultado.setMsg("Endereço alterado com sucesso!");
+			model.addAttribute("ok", true);
+			cli = new Cliente();
+			cli.setId(clienteEditado.getId());
+			Resultado result = commands.get(VISUALIZAR).execute(cli);
+			cli = (Cliente) result.getEntidades().get(0);
+			httpSession.setAttribute("clienteLogado", cli);
+			
+		}else {
+			model.addAttribute("ok", false);
+			
+		}
+		model.addAttribute("mensagem", resultado.getMsg());
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(model);
+	}
+	
+	
+	
+	
+	@PostMapping("endereco/consultarAtualizacao")
+	public String consultarEnderecosAtualizados(Model model, String mensagemEdicao) {
+		Cliente cliente = (Cliente)  httpSession.getAttribute("clienteLogado");
+		Cliente clienteConsulta = new Cliente();
+		clienteConsulta.setId(cliente.getId());
+		Resultado resultado = commands.get(VISUALIZAR).execute(clienteConsulta);
+		cliente = (Cliente) resultado.getEntidades().get(0);
+	
+		model.addAttribute("cliente", cliente);
+		
+		model.addAttribute("mensagem", mensagemEdicao);
+		return "cliente/endereco/consultar";
+	}
+	
+	@ResponseBody
+	@PostMapping("/endereco/setarComoPrincipal/{idEndereco}/{idCliente}")
+	public String setPrincipal(Model model, @PathVariable String idEndereco, @PathVariable String idCliente) throws JsonProcessingException {
+		Cliente cliente = new Cliente();
+		cliente.setId(Long.parseLong(idCliente));
+		Resultado resultado = commands.get(VISUALIZAR).execute(cliente);
+		cliente = (Cliente) resultado.getEntidades().get(0);
+		for(Endereco endereco : cliente.getEnderecos()) {
+			if(endereco.getId() == Long.parseLong(idEndereco)) {
+				endereco.setPrincipal(true);
+			}else {
+				endereco.setPrincipal(false);
+			}
+		}
+		resultado = commands.get("ALTERAR").execute(cliente);
+		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
+			resultado.setMsg("Endereço alterado com sucesso!");
+			model.addAttribute("ok", true);
+
+		}else {
+			model.addAttribute("ok", false);
+			
+		}
+		return mapper.writeValueAsString(model);
+	}
+	
+	@ResponseBody
+	@PostMapping("/endereco/excluirEndereco/{idEndereco}/{idCliente}")
+	public String excluirEndereco(Model model, @PathVariable String idEndereco, @PathVariable String idCliente) throws JsonProcessingException {
+		Cliente cliente = new Cliente();
+		cliente.setId(Long.parseLong(idCliente));
+		Resultado resultado = commands.get(VISUALIZAR).execute(cliente);
+		cliente = (Cliente) resultado.getEntidades().get(0);
+		cliente.setEnderecos(cliente.getEnderecos().stream()
+				.filter(e -> e.getId() != Long.parseLong(idEndereco))
+				.collect(Collectors.toList()));
+		resultado = commands.get("ALTERAR").execute(cliente);
+		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
+			resultado.setMsg("Endereço excluido com sucesso!");
+			model.addAttribute("ok", true);
+
+		}else {
+			model.addAttribute("ok", false);
+			
+		}
 		return mapper.writeValueAsString(model);
 	}
 	

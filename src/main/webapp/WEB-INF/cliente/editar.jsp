@@ -40,6 +40,10 @@ label{
 				      <label for="nome">Nome</label>
 				      <input value="${cliente.nome}" type="text" class="form-control" id="nome" placeholder=>
 				    </div>
+				     <div class="form-group col-md-2">
+				      <label for="nome">Telefone</label>
+				      <input value="${cliente.telefone}" type="text" class="form-control" id="telefone" placeholder=>
+				    </div>
 				  </div>
 				  <div class="form-row">
 				    <div class="form-group col-md-2">
@@ -90,6 +94,7 @@ $("#genero option").each(function(){
 	        	   dataNascimento: $("#dtNascimento").val(),
 	        	   cpf: $("#cpf").val(),
 	        	   genero: $("#genero").val(),
+	        	   telefone:$("#telefone").val(),
 	        	   enderecos: [{
 	        		   logradouro:$("#logradouro").val(),
 	        		   numero:$("#numero").val(),
@@ -109,7 +114,7 @@ $("#genero option").each(function(){
 			 data = JSON.parse(data);
 	         if(data.ok == true){
 	        	 $("#mensagem").val(data.mensagem);
-	        	 $("#formConsultar").submit();
+	        	 $("#formSubmit").submit();
 	         }else{
 	        	 $("#alertaErro").removeClass("hide");
 	        	 $("#alertaErro").html(data.mensagem);

@@ -7,12 +7,18 @@
 label{
 	color: white;
 }
+.hide{
+	display:none;
+}
 </style>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body class="bg-dark">
 <jsp:include page="../components/navbar.jsp" />
+				<div class="alert alert-danger hide" id="alert" role="alert">
+  					
+				</div>
 <form style="margin-left:20px; margin-top:20px">
   <div class="form-row">
     <div class="form-group col-md-2">
@@ -26,6 +32,10 @@ label{
     <div class="form-group col-md-2">
       <label for="nome">Nome</label>
       <input type="text" class="form-control" id="nome" placeholder=>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="nome">Telefone</label>
+      <input type="text" class="form-control" id="telefone" placeholder=>
     </div>
   </div>
   <div class="form-row">
@@ -86,6 +96,13 @@ label{
   <button type="button" onclick="cadastrar()" class="btn btn-primary">Cadastrar-se</button>
 </form>
 
+
+
+<form id="formDados" class="hide" method="POST" action="/painel/homePost">
+	<input id="mensagem"  name="mensagem"></input>
+	
+</form>
+
 </body>
 <script>
 	function cadastrar(){
@@ -96,6 +113,7 @@ label{
 	        	   dataNascimento: $("#dtNascimento").val(),
 	        	   cpf: $("#cpf").val(),
 	        	   genero: $("#genero").val(),
+	        	   telefone: $("#telefone").val(),
 	        	   enderecos: [{
 	        		   logradouro:$("#logradouro").val(),
 	        		   numero:$("#numero").val(),
@@ -116,10 +134,10 @@ label{
 			 data = JSON.parse(data);
 	         if(data.ok == true){
 	        	 $("#mensagem").val(data.mensagem);
-	        	 $("#formConsultar").submit();
+	        	 $("#formDados").submit();
 	         }else{
-	        	 $("#alertaErro").removeClass("hide");
-	        	 $("#alertaErro").html(data.mensagem);
+	        	 $("#alert").removeClass("hide");
+	        	 $("#alert").html(data.mensagem);
 	         }
 	      },
 	      error: function(){

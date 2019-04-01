@@ -5,6 +5,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+	.hide{
+		display:none
+	}
+</style>
  <link href="../../resources/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
   <!-- Page level plugin CSS-->
@@ -21,20 +26,24 @@
 	<jsp:include page="../components/sidebar.jsp" />
 	<div id="content-wrapper">
       <div class="container-fluid">
-      	
+      	<c:if test="${!empty mensagem}">
+      			<div class="alert alert-success" role="alert">
+  					${mensagem}
+				</div>
+      		</c:if>
       	<div class="row">
 		    <div class="col">
 				 <div class="card mt-12">
 		          <div class="card-body">
 		            <h3 class="card-title">Dados</h3>
-		            <h4>Nome: ${cliente.nome}</h4>
-		            <p class="card-text">Email: ${cliente.email}</p>
-		            <p class="card-text">Telefone:</p>
-		            <p class="card-text">data de nascimento: ${cliente.dtNascimento}</p>
-		            <p class="card-text">CPF: ${cliente.cpf}</p>
-		            <p class="card-text">Gênero: ${cliente.genero}</p>
+		            <p>Nome: <strong>${cliente.nome}</strong></p>
+		            <p class="card-text">Email: <strong> ${cliente.email}</strong></p>
+		            <p class="card-text">Telefone: <strong>${cliente.telefone}</strong></p>
+		            <p class="card-text">data de nascimento: <strong>${cliente.dtNascimento}</strong></p>
+		            <p class="card-text">CPF: <strong>${cliente.cpf}</strong></p>
+		            <p class="card-text">Gênero: <strong>${cliente.genero}</strong></p>
 		            
-		           	<a href="/cliente/cadastrar" class="btn btn-block btn-primary" >Editar Dados</a>
+		           	<a href="/cliente/cadastrar"  data-toggle="modal" data-target="#modalEdicaoDados" class="btn btn-block btn-primary" >Editar Dados</a>
 		          </div>
 		         
 		        </div>
@@ -96,28 +105,9 @@
 		
 </div>
 
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-	
 
 
+<jsp:include page="../components/modal/cliente/editarDados.jsp" />
 
 </body>
 <script src="../../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -1,6 +1,7 @@
 
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 
 <head>
 
@@ -101,7 +102,7 @@ text-decoration:none;
 				      	 </div>   
 			          </div>
 			     </form>   
-			     <button class="btn btn-danger"><strong>Cadastrar novo endereço</strong></button>  
+			     <button data-toggle="modal" data-target="#modalCadastrarEndereco" class="btn btn-danger"><strong>Cadastrar novo endereço</strong></button>  
           <div class="card-header">
             <i class="fas fa-table"></i>
             Consulta de hospedagens</div>
@@ -134,19 +135,19 @@ text-decoration:none;
 				      
 				     
 				      <td>
-				      	 <button type="button" class="btn btn-primary"><a style="color:white" href="/cliente/visualizar/}">Editar</a></button>
+				      	 <button type="button" idEndereco="${endereco.id}"  onclick="getDadosEndereco(this)" class="btn btn-primary"><a style="color:white" href="javascript:;}">Editar</a></button>
 				      	 <c:choose>
-				      	 	<c:when test="${hospedagem.ativo}">
-				      	 		<button onclick="desativar(this)" valor="false" type="button" idHospedagem="" class="btn btn-danger">Desativar</button>
+				      	 	<c:when test="${!endereco.principal}">
+				      	 		<button onclick="setPrincipal(this)" valor="true" type="button" idCliente="${cliente.id}" idEndereco="${endereco.id}" class="btn btn-success">Selecionar como principal</button>
 				      	 	</c:when>
 				      	 	<c:otherwise>
-				      	 		<button onclick="desativar(this)" valor="true"  type="button" class="btn btn-success" idHospedagem="">Ativar</button>
+				      	 		<button  valor="true" type="button" class="btn btn-warning">Este é seu endereço principal</button>
 				      	 		
 				      	 	</c:otherwise>	
 				      	 </c:choose>
 				      	 
 				     	 
-				     	 <button type="button" class="btn btn-warning"><a style="color:black" href="/painel/hospedagem/estadia">Estadias</a></button>	
+				     	 <button onclick="excluir(this)" valor="true"  type="button" class="btn btn-danger" idCliente="${cliente.id}" idEndereco="${endereco.id}">Excluir</button>	
 				      </td>
 				    </tr>
 			  	</c:forEach>
@@ -164,14 +165,15 @@ text-decoration:none;
   </div>
 
   
-    <form method="POST" id="formDesativar" action="/painel/hospedagem/consultarAtualizacao">
+    <form method="POST" id="formDesativar" class="hide" action="/painel/hospedagem/consultarAtualizacao">
     	<input id="mensagem" name="mensagem"></input>
     </form>
 
+<button data-toggle="modal" data-target="#modalEditarEndereco" class="hide" id="botaoModalEndereco"></button>
     
 
   <!-- Bootstrap core JavaScript-->
-
+<jsp:include page="../../components/modal/cliente/cadastrarEndereco.jsp" />
 
 </body>
 
@@ -197,6 +199,52 @@ text-decoration:none;
 		      }
 		});
 	}
+	
+	function setPrincipal(botao){
+		$.ajax({
+			 method: "POST",
+			 url: "/cliente/endereco/setarComoPrincipal/" + $(botao).attr("idEndereco") + "/" + $(botao).attr("idCliente"),
+			 data: {},
+			 success: function(data) {
+		        data = JSON.parse(data);
+		        if(data.ok == true){
+		        	
+		        	 $("#mensagemEdicao").val(data.mensagem);
+		        	 $("#formDados").submit();
+		        }else{
+		        	
+		        }
+		      },
+		      error: function(){
+		    	  
+		      }
+		});
+	}
+	
+	
+	function excluir(botao){
+		$.ajax({
+			 method: "POST",
+			 url: "/cliente/endereco/excluirEndereco/" + $(botao).attr("idEndereco") + "/" + $(botao).attr("idCliente"),
+			 data: {},
+			 success: function(data) {
+		        data = JSON.parse(data);
+		        if(data.ok == true){
+		        	
+		        	 $("#mensagemEdicao").val(data.mensagem);
+		        	 $("#formDados").submit();
+		        }else{
+		        	
+		        }
+		      },
+		      error: function(){
+		    	  
+		      }
+		});
+	}
+
+	
+	
 </script>
 <script src="../../../resources/js/jquery.js"></script>
   <script src="../../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>

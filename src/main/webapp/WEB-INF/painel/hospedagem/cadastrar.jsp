@@ -290,6 +290,7 @@ $("#adicionarTaxa").click(function(){
 		        		   cep:$("#cep").val(),
 		        		   estado:$("#estado").val(),
 		        		   cidade:$("#cidade").val(),
+		        		   principal: false,
 		        		   complemento:$("#complemento").val()
 		        	   }
 		       

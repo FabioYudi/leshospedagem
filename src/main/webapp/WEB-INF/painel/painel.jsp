@@ -1,9 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
 
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html>
 <head>
 
-  <meta charset="utf-8">
+ 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -20,26 +24,40 @@
   <!-- Custom styles for this template-->
   <link href="../../resources/css/sb-admin.css" rel="stylesheet">
 
+<style>
+	.hide{
+		display: none;
+	}
+</style>
 </head>
 
 <body id="page-top">
 
  	<jsp:include page="../components/navbar.jsp" />
-	<jsp:include page="../components/sidebar.jsp" />
+	
 
   <div id="wrapper">
-
+<jsp:include page="../components/sidebar.jsp" />
    
 
     <div id="content-wrapper">
-
+    <div class="container-fluid">
+    	
+		 	<c:if test="${!empty mensagem}">
+      			<div class="alert alert-success" role="alert">
+  					${mensagem}
+				</div>
+      		</c:if>
+		
+    </div>
+		
     
 
       <!-- Sticky Footer -->
       <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
+            <span>Copyright Â© Your Website 2019</span>
           </div>
         </div>
       </footer>
@@ -62,7 +80,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
+            <span aria-hidden="true">Ã—</span>
           </button>
         </div>
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

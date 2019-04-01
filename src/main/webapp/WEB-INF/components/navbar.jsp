@@ -31,6 +31,10 @@
       <li id="painel" class="nav-item hide">
         <a id="linkPainel" class="nav-link" href="/painel/home">Painel de controle</a>
       </li>
+      <li id="sair" class="hide">
+      	<a  class="nav-link" href="/cliente/logout">Sair</a>
+      	
+      </li>
     </ul>
   </div>
 </nav>
@@ -43,18 +47,20 @@
 			 method: "GET",
 			 url: "/cliente/verificaLogin",
 			 success: function(data) {
-				 debugger;
+				
 				 data = JSON.parse(data);
 				if(data.clienteLogado == null){
 				 $("#cadastrar").removeClass("hide");
 					$("#login").removeClass("hide");
 					$("#painel").addClass("hide");
+					$("#sair").addClass("hide");
 			      
 				}else{
-					debugger;
+					
 					$("#cadastrar").addClass("hide");
 					$("#login").addClass("hide");
 					$("#painel").removeClass("hide");
+					$("#sair").removeClass("hide");
 				}
 				
 		      },
@@ -63,6 +69,7 @@
 		    	  $("#cadastrar").removeClass("hide");
 					$("#login").removeClass("hide");
 					$("#painel").addClass("hide");
+					$("#sair").addClass("hide");
 		      }
 		});
 	});
