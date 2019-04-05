@@ -3,16 +3,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="../../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../../resources/js/jquery.js"></script>
-<script src="../../resources/js/moment.js"></script>
+<script src="../../../resources/js/jquery.js"></script>
+<script src="../../../resources/bootstrap/css/bootstrap.min.css"></script>
+	<script src="../../../resources/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../../resources/bootstrap/js/bootstrap.bundle.js"></script>
+	<script src="../../../resources/bootstrap/js/popper.min.js"></script>
+
+<script src="../../../resources/js/moment.js"></script>
 <style>
 .hide{
 	display:none;
 }
 </style>
-  <link href="../../../resources/js/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-<link href="../../../resources/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
 <link type="text/css" rel="stylesheet" media="screen" href="../../../resources/bootstrap/css/bootstrap.min.css">
 <link type="text/css" rel="stylesheet" media="screen" href="../../../resources/css/common.css">
 <meta charset="ISO-8859-1">
@@ -115,7 +118,7 @@
   </div>
   <!-- /.container -->
 
- 	 	<a href="javascript:;"  data-toggle="modal" data-target="#logiloginlogin" class="btn btn-block btn-primary" >da Dados</a>
+ 	 	<a href="javascript:;" id="abrirModalLogin"  data-toggle="modal" data-target="#modalLogin" class="hide btn btn-block btn-primary" >da Dados</a>
  	<jsp:include page="../../components/modal/cliente/login.jsp" />
 </body>
 
@@ -177,7 +180,9 @@ function verificaClienteLogado(){
 				$("#login").removeClass("hide");
 				$("#painel").addClass("hide");
 				$("#sair").addClass("hide");
-		      	$("#btn-modal").click();
+				$("#alertaErroLogin").removeClass("hide");
+				$("#alertaErroLogin").html("Entre ou cadastra-se antes de reservar sua hospedagem");
+		      	$("#abrirModalLogin").click();
 			}else{
 				
 				$("#cadastrar").addClass("hide");

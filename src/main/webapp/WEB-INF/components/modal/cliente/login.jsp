@@ -3,7 +3,7 @@
 
  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<div class="modal fade" id="logiloginlogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -14,7 +14,7 @@
         
       </div>
       <div class="modal-body">
-      <div class="alert alert-danger hide" id="alertaErroCadastro" role="alert">
+      <div class="alert alert-danger hide" id="alertaErroLogin" role="alert">
   					
 		</div>
         <form style="margin-top:20px">
@@ -34,8 +34,9 @@
 		 </form> 
   
       </div>
+      <a style="margin-left:20px" href="/cliente/paginaCadastrar">Clique aqui e cadastra-se</a>
       <div class="modal-footer">
-        <button type="button" onclick="login()"  data-dismiss="modal" class="btn btn-primary">Cadastrar</button>
+        <button type="button" onclick="entrar()"  class="btn btn-primary">Entrar</button>
       </div>
     </div>
   </div>
@@ -44,8 +45,8 @@
 	function entrar(){
 		
 			if( $("#email").val() == "" || $("#senha").val() == ""){
-				 $("#alertaErro").removeClass("hide");
-	        	 $("#alertaErro").html("Preencha todos os campos!");
+				 $("#alertaErroLogin").removeClass("hide");
+	        	 $("#alertaErroLogin").html("Preencha todos os campos!");
 	        	 return;
 			}
 			
@@ -62,15 +63,15 @@
 				 data = JSON.parse(data);
 		         if(data.ok == true){
 		        	 $("#mensagem").val(data.mensagem);
-		        	 $("#formPainel").submit();
+		        	 $("#modalLogin").modal("toggle");
 		         }else{
-		        	 $("#alertaErro").removeClass("hide");
-		        	 $("#alertaErro").html("Email ou senha incorretos, por favor, tente novamente!");
+		        	 $("#alertaErroLogin").removeClass("hide");
+		        	 $("#alertaErroLogin").html("Email ou senha incorretos, por favor, tente novamente!");
 		         }
 		      },
 		      error: function(){
 		    	  $("#alertaErro").removeClass("hide");
-		        	$("#alertaErro").html("Email ou senha incorretos, por favor, tente novamente!");
+		        	$("#alertaErroLogin").html("Email ou senha incorretos, por favor, tente novamente!");
 		      }
 		});
 	}
