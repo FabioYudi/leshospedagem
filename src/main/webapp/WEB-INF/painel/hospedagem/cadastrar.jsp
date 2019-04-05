@@ -175,27 +175,12 @@
 			         </div>
 			        </form>
 			        <div class="card-header">Taxas</div>
-			        <a type="button" class="btn btn-danger"  style="margin-bottom:20px; color:white; margin-top:10px" id="adicionarTaxa">Adicionar Taxa</a>
+			        <a type="button" data-toggle="modal" data-target="#modalCadastrarTaxa"  class="btn btn-danger"  style="margin-bottom:20px; color:white; margin-top:10px" id="adicionarTaxa">Adicionar Taxa</a>
 			        
-			        <div class="row">
-				        <form  id="form-taxa" style="margin-top:20px">
-						         <div class="form-group" id="taxas">
-							            <div class="col-md-6">
-								            <div class="form-label-group">
-								              <input style="width:300px" type="text" id="inputTituloTaxa"  name="nome" class="form-control" placeholder="Número" required="required">
-								              <label for="inputTituloTaxa">Titulo</label>
-								            </div>
-								          </div> 
-						         </div> 
-				         </form>
-				         <form  id="form-valor-taxa" style="margin-top:20px">
-				         	<div class="col-md-6" id="valor-taxa">
-								            <div class="form-label-group">
-								              <input style="width:120px" type="text" id="inputValorTaxa" name="valor" class="form-control" placeholder="Bairro" required="required">
-								              <label for="inputValorTaxa">Valor</label>
-								            </div>
-							</div>  
-				         </form>
+			        <div id="taxas" class="row">
+				             
+				         
+				      
 			           </div>
 			           
 			         <a class="btn btn-primary btn-block" style="color:white" onclick="cadastrar()"  id="btn-cadastrar">Cadastrar</a>
@@ -210,7 +195,7 @@
 
       </div>
       <!-- /.container-fluid -->
-
+<jsp:include page="../../components/modal/hospedagem/taxa.jsp" />
       
 
     </div>
@@ -232,25 +217,9 @@
 </body>
 <script>
 var i = 0;
-$("#adicionarTaxa").click(function(){
-	i = i + 1;
-	$("#taxas").append(
-		'<div class="form-group" id="taxas">'
-            +'<div class="col-md-6">'
-	              +'<input style="width:300px; margin-top:10px" type="text" id="inputTituloTaxa"  name="nome" class="form-control" placeholder="Titulo" >'
-	          +'</div>' 
-     +'</div>');
-	
-	$("#valor-taxa").append(
-		'<div class="col-md-6" id="valor-taxa">'
-              +'<input style="width:120px; margin-top:10px; margin-left:-15px" type="text" id="inputValorTaxa" name="valor" class="form-control" placeholder="Valor">'
-            +'</div>'
-		+'</div>');  
-
-      
-});
 
 
+taxas = []
 	function cadastrar(){
 		if($("#dataFim").val() == ""){
 			$("#dataFim").val("1111-11-11");
@@ -282,7 +251,7 @@ $("#adicionarTaxa").click(function(){
 		        	   dataFim: $("#dataFim").val(),
 		        	   descricao:$("#descricao").val(),
 		        	   ativo: true,
-		        	   taxas: [{nome:"teste", valor: "23"}],
+		        	   taxas: taxas,
 		        	   endereco: {
 		        		   logradouro:$("#logradouro").val(),
 		        		   numero:$("#numero").val(),
