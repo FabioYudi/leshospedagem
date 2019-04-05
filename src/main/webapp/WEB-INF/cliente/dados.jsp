@@ -30,7 +30,7 @@
       			<div class="alert alert-success" role="alert">
   					${mensagem}
 				</div>
-      		</c:if>
+      	</c:if>
       	<div class="row">
 		    <div class="col">
 				 <div class="card mt-12">

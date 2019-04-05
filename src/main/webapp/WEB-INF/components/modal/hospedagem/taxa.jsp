@@ -35,7 +35,7 @@
   
       </div>
       <div class="modal-footer">
-        <button type="button" onclick="cadastrarTaxa()" class="btn btn-primary">Cadastrar</button>
+        <button type="button" onclick="cadastrarTaxa()"  data-dismiss="modal" class="btn btn-primary">Cadastrar</button>
       </div>
     </div>
   </div>
@@ -113,13 +113,27 @@ function cadastrarTaxa(){
 	
 	taxas.push(taxa);
 	$("#taxas").html("");
-	for(var i = 0; i < taxas.length; i++ ){
-		$("#taxas").append("<span style='margin-left:20px' id=spanNomeTaxa"+i+">"+taxas[i].nome+"</span>" +  "<span tyle='margin-left:20px' id=spanValorTaxa"+i+">"+taxas[i].valor+"</span><br>" );
 	
+	for(var i = 0; i < taxas.length; i++ ){
+		$("#taxas").append("<div style='margin-bottom:10px' class='row'><div class='col-sm'><span  style='margin-left:20px'><strong>Nome:</strong></span> <span style='margin-left:5px' id=spanNomeTaxa"+i+">"+taxas[i].nome+"</span>" +  "<span  style='margin-left:5px'><strong>Valor:</strong></span><span style='margin-left:5px' id=spanValorTaxa"+i+">"+taxas[i].valor
+				+"</span></div></div><button onclick='excluirTaxa(this)' indiceTaxa='"+i+ "'style='background:none; margin-bottom:10px; border:none; margin-left:5px; color:red'> X</button>" );
+		
 	
 	}
 	
 	
+}
+
+function excluirTaxa(button){
+	taxas = taxas.filter(taxa => taxa.nome != taxas[$(button).attr("indiceTaxa")].nome)
+$("#taxas").html("");
+	
+	for(var i = 0; i < taxas.length; i++ ){
+		$("#taxas").append("<div style='margin-bottom:10px' class='row'><div class='col-sm'><span  style='margin-left:20px'><strong>Nome:</strong></span> <span style='margin-left:5px' id=spanNomeTaxa"+i+">"+taxas[i].nome+"</span>" +  "<span  style='margin-left:5px'><strong>Valor:</strong></span><span style='margin-left:5px' id=spanValorTaxa"+i+">"+taxas[i].valor
+				+"</span></div></div><button onclick='excluirTaxa(this)' indiceTaxa='"+i+ "'style=' margin-left:5px; margin-bottom:10px; border:none; background:none; color:red'> X</button>" );
+		
+	
+	}
 }
 
 

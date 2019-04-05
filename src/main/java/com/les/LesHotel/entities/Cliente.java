@@ -22,6 +22,7 @@ public class Cliente extends EntidadeDominio {
 	private String genero;
 	private String telefone;
 	private Boolean ativo;
+	private String idAnfitriao;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private List<Endereco> enderecos;
 	
@@ -29,6 +30,14 @@ public class Cliente extends EntidadeDominio {
 	
 	
 	
+	
+	
+	public String getIdAnfitriao() {
+		return idAnfitriao;
+	}
+	public void setIdAnfitriao(String idAnfitriao) {
+		this.idAnfitriao = idAnfitriao;
+	}
 	public Boolean getAtivo() {
 		return ativo;
 	}

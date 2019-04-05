@@ -3,7 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<script src="../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../resources/js/jquery.js"></script>
+<script src="../../resources/js/moment.js"></script>
+ <link href="../../resources/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+ <link href="../../resources/js/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <link href="../../../resources/js/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" media="screen" href="../../resources/bootstrap/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" media="screen" href="../../resources/css/common.css">
 <link type="text/css" rel="stylesheet" href="../resources/css/index.css" type="text/css">
 <meta charset="ISO-8859-1">
 <title>Home</title>

@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.les.LesHotel.Facade.Resultado;
+import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.Hospedagem;
 
 @Controller
@@ -103,13 +104,21 @@ public class HospedagemController extends ControllerBase {
 	
 	
 	@GetMapping("/detalhes/{id}")
-	public String detalhesHospedagem() {
+	public String detalhesHospedagem(@PathVariable String id, Model model) {
+		Hospedagem hospedagem = new Hospedagem();
+		hospedagem.setId(Long.parseLong(id));
+		Resultado resultado = commands.get(VISUALIZAR).execute(hospedagem);
+		model.addAttribute("hospedagem", resultado.getEntidades().get(0));
 		
 		return "painel/hospedagem/detalhes";
 	}
 	
-	@GetMapping("/pagamento")
-	public String pagamentoHospedagem() {
+	@GetMapping("/pagamento/{id}")
+	public String pagamentoHospedagem(@PathVariable String id, Model mode) {
+		Hospedagem hospedagem = new Hospedagem();
+		hospedagem.setId(Long.parseLong(id));
+		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
+		
 		return "painel/hospedagem/pagamento";
 	}
 	

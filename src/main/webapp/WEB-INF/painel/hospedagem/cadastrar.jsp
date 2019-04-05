@@ -18,6 +18,7 @@
   <link href="../../../resources/css/sb-admin.css" rel="stylesheet">
   <!-- Page level plugin CSS-->
   <link href="../../../resources/js/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  
 <style>
 	.hide{
 		display:none;
@@ -203,7 +204,7 @@
 
   </div>
 <form id="formConsultar" method="POST" action="/painel/hospedagem/consultarAtualizacao">
-	<input id="mensagem" name="mensagem"></input>
+	<input id="mensagem" class="hide" name="mensagem"></input>
 </form>
     
 

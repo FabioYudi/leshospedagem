@@ -3,7 +3,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+	<script src="../../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../resources/js/jquery.js"></script>
+<script src="../../resources/js/moment.js"></script>
+<style>
+.hide{
+	display:none;
+}
+</style>
+  <link href="../../../resources/js/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="../../../resources/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link type="text/css" rel="stylesheet" media="screen" href="../../../resources/bootstrap/css/bootstrap.min.css">
 <link type="text/css" rel="stylesheet" media="screen" href="../../../resources/css/common.css">
 <meta charset="ISO-8859-1">
@@ -11,7 +20,7 @@
 <jsp:include page="../../components/navbar.jsp" />
 </head>
 <body class="bg-dark">
-	
+
   
   <!-- Page Content -->
   <div class="container">
@@ -25,9 +34,9 @@
         <div class="card mt-4">
           <img class="card-img-top img-fluid" src="https://q-ec.bstatic.com/images/hotel/max1024x768/853/85381305.jpg" alt="">
           <div class="card-body">
-            <h3 class="card-title">Casa na praia</h3>
-            <h4>Diária: R$250,00</h4>
-            <p class="card-text">Casa na praia em caraguatatuba, 100 metros da praia</p>
+            <h3 class="card-title">${hospedagem.titulo}</h3>
+            <h4>Diária: <strong>R$ ${hospedagem.diaria}</strong></h4>
+            <p class="card-text">${hospedagem.descricao}</p>
            
           </div>
          
@@ -64,35 +73,37 @@
       <div class="col-lg-3">
         <div style="width:300px"class="card mt-4">
         	<div class="card-body">
-            <h4>Total: R$250,00</h4>
+            <h4>Total: R$<span id="total">${hospedagem.diaria}</span></h4>
             <form>
             	<div class="form-group">
 		            <div class="form-row">
 		              <div class="col-md-6">
 		                <div class="form-label-group">
-		                  <label for="inputPassword">Qtd hóspedes</label>
-		                  <input type="text" id="inputPassword" class="form-control" placeholder="" required="required"> 
+		                  <label for="qtdHospedes">Qtd hóspedes</label>
+		                  <input type="text" id="qtdHospedes" class="form-control" placeholder="" required="required"> 
 		                </div>
 		              </div>
 		            </div>
           		</div>
           		<div class="form-group">
 		            <div class="form-row">
-		              <div class="col-md-6">
-		                <div class="form-label-group">
-		                  <label for="inputPassword">check-in</label>
-		                  <input type="text" id="inputPassword" class="form-control" placeholder="" required="required"> 
-		                </div>
+			              <div class="col-md-12">
+			                <div class="form-label-group">
+			                  <label for="checkin">check-in</label>
+			                  <input type="date" id="checkin" class="form-control" placeholder="" required="required"> 
+			                </div>
+			              </div>
 		              </div>
-		              <div class="col-md-6">
-		                <div class="form-label-group">
-		                  <label for="inputPassword">check-out</label>
-		                  <input type="text" id="inputPassword" class="form-control" placeholder="" required="required"> 
-		                </div>
-		              </div>
+		              <div style="margin-top: 10px" class="form-row">
+			              <div class="col-md-12">
+			                <div class="form-label-group">
+			                  <label for="checkout">check-out</label>
+			                  <input  type="date" id="checkout" class="form-control" placeholder="" required="required"> 
+			                </div>
+			              </div>
 		            </div>
           		</div>
-          		 <a class="btn btn-primary btn-block" href="/painel/hospedagem/pagamento">Reservar</a>
+          		 <a onclick="verificaClienteLogado()" class="btn btn-primary btn-block" >Reservar</a>
             </form>
           </div>
         </div>
@@ -104,9 +115,87 @@
   </div>
   <!-- /.container -->
 
- 
+ 	 	<a href="javascript:;"  data-toggle="modal" data-target="#logiloginlogin" class="btn btn-block btn-primary" >da Dados</a>
+ 	<jsp:include page="../../components/modal/cliente/login.jsp" />
 </body>
+
+
 <!-- Bootstrap core JavaScript -->
-<script src="../../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../../../resources/js/jquery.js"></script>
+
+<script>
+
+var diaria = ${hospedagem.diaria};
+
+//href="/painel/hospedagem/pagamento"
+
+
+
+
+$("#checkin").on("change", function(){
+	recalculaValorTotal();
+});
+
+$("#checkout").on("change", function(){
+	recalculaValorTotal();
+});
+
+$("#qtdHospedes").on("change", function(){
+	recalculaValorTotal();
+});
+
+$("#qtdHospedes").on("keyup", function(){
+	recalculaValorTotal();
+});
+
+function recalculaValorTotal(){
+	var data1 = moment($("#checkin").val(),'YYYY-MM-DD');
+	var data2 = moment($("#checkout").val(),'YYYY-MM-DD');
+	var diff  = data2.diff(data1, 'days');
+	var qtdHospedes = $("#qtdHospedes").val();
+	if($("#qtdHospedes").val() == 1){
+		var total = diff * parseFloat(diaria);
+	}else{
+		var total = diff * parseFloat(diaria) * (qtdHospedes * (diaria * 0.05));
+	}
+	
+	if(!isNaN(total)){
+		$("#total").text(total.toFixed(2));
+	}
+	
+	
+}
+
+function verificaClienteLogado(){
+	$.ajax({
+		 method: "GET",
+		 url: "/cliente/verificaLogin",
+		 success: function(data) {
+			
+			 data = JSON.parse(data);
+			if(data.clienteLogado == null){
+			 $("#cadastrar").removeClass("hide");
+				$("#login").removeClass("hide");
+				$("#painel").addClass("hide");
+				$("#sair").addClass("hide");
+		      	$("#btn-modal").click();
+			}else{
+				
+				$("#cadastrar").addClass("hide");
+				$("#login").addClass("hide");
+				$("#painel").removeClass("hide");
+				$("#sair").removeClass("hide");
+			}
+			
+	      },
+	      error: function(){
+	    	
+	    	  $("#cadastrar").removeClass("hide");
+				$("#login").removeClass("hide");
+				$("#painel").addClass("hide");
+				$("#sair").addClass("hide");
+	      }
+	});
+}
+
+</script>
 </html>
