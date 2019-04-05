@@ -114,6 +114,7 @@ label{
 	        	   cpf: $("#cpf").val(),
 	        	   genero: $("#genero").val(),
 	        	   telefone: $("#telefone").val(),
+	        	   ativo: true,
 	        	   enderecos: [{
 	        		   logradouro:$("#logradouro").val(),
 	        		   numero:$("#numero").val(),

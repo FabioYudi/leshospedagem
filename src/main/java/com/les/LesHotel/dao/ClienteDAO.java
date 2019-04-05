@@ -48,6 +48,9 @@ public class ClienteDAO extends AbstractDAO {
 			allPredicates.add(c -> c.getDtNascimento().equals(cliente.getDtNascimento()));
 		if(cliente.getEnderecos() != null && !cliente.getEnderecos().isEmpty())
 			allPredicates.add(c -> c.getEnderecos().containsAll(cliente.getEnderecos()));
+		if(cliente.getAtivo() != null)
+			allPredicates.add(c -> c.getAtivo() == cliente.getAtivo());
+		
 		
 		
 		Predicate<Cliente> compositePredicate = allPredicates.stream().reduce(c -> true, Predicate::and);

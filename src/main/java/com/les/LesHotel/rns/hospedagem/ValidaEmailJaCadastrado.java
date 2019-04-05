@@ -20,16 +20,9 @@ public class ValidaEmailJaCadastrado implements IStrategy {
 		
 		Cliente cliente = (Cliente) entidade;
 		
-		List<Cliente> clientes = repository.findAll();
-		clientes = clientes.stream()
-				.filter(c -> c.getEmail().equalsIgnoreCase(cliente.getEmail()))
-				.collect(Collectors.toList());
-	
-		if(!clientes.isEmpty()) {
-			return "Este email já esta cadastrado no sistema, por favor, utilize outro <br>";
-		}else {
+		
 			return null;
-		}
+		
 		
 	}
 

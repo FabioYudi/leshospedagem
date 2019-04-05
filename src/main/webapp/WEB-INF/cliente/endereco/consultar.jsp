@@ -52,64 +52,7 @@ text-decoration:none;
   					${mensagem}
 				</div>
       		</c:if>
-      		<form method="post" id="form-cadastro" action="/painel/hospedagem/filtrar" style="margin-left:20px">
-			          <div class="form-group">
-			            <div class="form-row">
-			              <div class="col-md-2">
-			                <div class="form-label-group">
-			                  <input type="text" id="titulo"  name="titulo" class="form-control"  >
-			                  <label for="titulo">Logradouro</label>
-			                </div>
-			              </div>
-			              <div class="col-md-2">
-			                <div class="form-label-group">
-			                  <input value="0" type="text" id="qtdHospedes" name="qtdHospedes" class="form-control" >
-			                  <label for="qtdHospedes">Quatidade de hóspedes</label>
-			                </div>
-			              </div>
-			              <div class="col-md-2">
-			                <div class="form-label-group">
-			                  <input value="0" type="text" id="qtdQuartos" name="qtdQuartos" class="form-control"  >
-			                  <label for="qtdQuartos">Quantidade de quartos</label>
-			                </div>
-			              </div>
-			            </div>
-			             <div class="form-row" style="margin-top:20px; margin-bottom:10px">
-				           	 <div class="col-md-2">
-					            <div class="form-label-group">
-					              <input  type="text" id="logradouro" name="endereco.logradouro" class="form-control" >
-					              <label for="logradouro">logradouro</label>
-					            </div>
-					          </div> 
-					          <div class="col-md-2">
-					            <div class="form-label-group">
-					              <input style="width:300px" type="text" name="endereco.cidade" id="cidade" class="form-control"  >
-					              <label for="cidade">cidade</label>
-					            </div>
-					          </div>   
-					          <div class="col-md-2">
-					            <div class="form-label-group">
-					              <input style="width:300px" type="text" name="endereco.estado" id="estado" class="form-control"  >
-					              <label for="estado">estado</label>
-					            </div>
-					          </div>   
-				      	 </div>  
-				      	 <span style="margin-top:30px">Status</span>	
-				      	 <div class="form-row">
-				      	 	
-				      	 	<select name="ativo" style="width: 200px; margin-left:5px" class="form-control" id="ativo">
-						      <option value="">Selecione...</option>
-						      <option value="true">Ativo</option>
-						      <option value="false">Inativo</option>
-						    </select>
-						   <div class="col-md-2">
-					            <div class="form-label-group">
-					              <button type="submit" class="btn btn-primary">Buscar</button>
-					            </div>
-					          </div>  
-				      	 </div>   
-			          </div>
-			     </form>   
+      		  
 			     <button data-toggle="modal" data-target="#modalCadastrarEndereco" class="btn btn-danger"><strong>Cadastrar novo endereço</strong></button>  
           <div class="card-header">
             <i class="fas fa-table"></i>
