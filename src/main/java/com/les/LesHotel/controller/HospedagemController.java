@@ -118,7 +118,11 @@ public class HospedagemController extends ControllerBase {
 	public String pagamentoHospedagem(@PathVariable String id, Model model, Reserva reserva) {
 		Hospedagem hospedagem = new Hospedagem();
 		hospedagem.setId(Long.parseLong(id));
+		hospedagem = (Hospedagem) commands.get(VISUALIZAR).execute(hospedagem).getEntidades().get(0);
 		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
+		Cliente cliente = new Cliente();
+		cliente.setId(clienteLogado.getId());
+		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
 		
 		return "painel/hospedagem/pagamento";
 	}
