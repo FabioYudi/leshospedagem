@@ -1,14 +1,35 @@
 package com.les.LesHotel.entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Reserva {
 	Cliente cliente;
 	Hospedagem hospedagem;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	LocalDate checkin;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	LocalDate checkout;
+	BigDecimal total;
+	Integer qtdHospedes;
 	
 	
+	
+	public Integer getQtdHospedes() {
+		return qtdHospedes;
+	}
+	public void setQtdHospedes(Integer qtdHospedes) {
+		this.qtdHospedes = qtdHospedes;
+	}
+	
+	public BigDecimal getTotal() {
+		return total;
+	}
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
 	public Cliente getCliente() {
 		return cliente;
 	}

@@ -34,7 +34,7 @@
 		 </form> 
   
       </div>
-      <a style="margin-left:20px" href="/cliente/paginaCadastrar">Clique aqui e cadastra-se</a>
+      <a style="margin-left:20px" href="/cliente/paginaCadastrar">Clique aqui e cadastre-se</a>
       <div class="modal-footer">
         <button type="button" onclick="entrar()"  class="btn btn-primary">Entrar</button>
       </div>

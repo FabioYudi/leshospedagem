@@ -125,12 +125,27 @@
 
 <!-- Bootstrap core JavaScript -->
 
+<form id="form-pagamento" method="POST" class="hide" action="/painel/hospedagem/pagamento/${hospedagem.id}">
+	<input type="hidden" id="valorReserva" name="total"/>
+	<input type="hidden" id="qtdHospedesReserva" name="qtdHospedes"/>
+	<input type="hidden" id="dataCheckinReserva" name="checkin"/>
+	<input type="hidden" id="dataCheckoutReserva" name="checkout"/>
+	
+</form>
+
 <script>
 
 var diaria = ${hospedagem.diaria};
 
-//href="/painel/hospedagem/pagamento"
 
+
+function irParaPagamento(){
+	$("#valorReserva").val(total);
+	$("#qtdHospedesReserva").val($("#qtdHospedes").val());
+	$("#dataCheckinReserva").val($("#checkin").val());
+	$("#dataCheckoutReserva").val($("#checkout").val());
+	$("#form-pagamento").submit();
+}
 
 
 
@@ -149,16 +164,16 @@ $("#qtdHospedes").on("change", function(){
 $("#qtdHospedes").on("keyup", function(){
 	recalculaValorTotal();
 });
-
+var total;
 function recalculaValorTotal(){
 	var data1 = moment($("#checkin").val(),'YYYY-MM-DD');
 	var data2 = moment($("#checkout").val(),'YYYY-MM-DD');
 	var diff  = data2.diff(data1, 'days');
 	var qtdHospedes = $("#qtdHospedes").val();
 	if($("#qtdHospedes").val() == 1){
-		var total = diff * parseFloat(diaria);
+		 total = diff * parseFloat(diaria);
 	}else{
-		var total = diff * parseFloat(diaria) * (qtdHospedes * (diaria * 0.05));
+		total = diff * parseFloat(diaria) * (qtdHospedes * (diaria * 0.05));
 	}
 	
 	if(!isNaN(total)){
@@ -181,7 +196,7 @@ function verificaClienteLogado(){
 				$("#painel").addClass("hide");
 				$("#sair").addClass("hide");
 				$("#alertaErroLogin").removeClass("hide");
-				$("#alertaErroLogin").html("Entre ou cadastra-se antes de reservar sua hospedagem");
+				$("#alertaErroLogin").html("Entre ou cadastre-se antes de reservar sua hospedagem");
 		      	$("#abrirModalLogin").click();
 			}else{
 				
@@ -189,6 +204,7 @@ function verificaClienteLogado(){
 				$("#login").addClass("hide");
 				$("#painel").removeClass("hide");
 				$("#sair").removeClass("hide");
+				irParaPagamento();
 			}
 			
 	      },

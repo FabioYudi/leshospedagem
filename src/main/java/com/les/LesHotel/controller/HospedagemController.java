@@ -20,6 +20,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.les.LesHotel.Facade.Resultado;
 import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.Hospedagem;
+import com.les.LesHotel.entities.Reserva;
 
 @Controller
 @RequestMapping("/painel/hospedagem/")
@@ -113,8 +114,8 @@ public class HospedagemController extends ControllerBase {
 		return "painel/hospedagem/detalhes";
 	}
 	
-	@GetMapping("/pagamento/{id}")
-	public String pagamentoHospedagem(@PathVariable String id, Model mode) {
+	@PostMapping("/pagamento/{id}")
+	public String pagamentoHospedagem(@PathVariable String id, Model model, Reserva reserva) {
 		Hospedagem hospedagem = new Hospedagem();
 		hospedagem.setId(Long.parseLong(id));
 		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
