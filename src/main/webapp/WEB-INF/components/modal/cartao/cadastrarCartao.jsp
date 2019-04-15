@@ -20,20 +20,20 @@
         <form style="margin-top:20px">
 			  <div class="form-row">
 			  <div class="form-group col-md-12">
-			      <label for="logradouroCadastro">Bandeira</label>
-			      <input type="text" class="form-control" id="logradouroCadastro" >
+			      <label for="bandeira">Bandeira</label>
+			      <input type="text" class="form-control" id="bandeira" >
 			    </div>
 			    <div class="form-group col-md-12">
-			      <label for="logradouroCadastro">Número</label>
-			      <input type="text" class="form-control" id="logradouroCadastro" >
+			      <label for="numero">Número</label>
+			      <input type="text" class="form-control" id="numero" >
 			    </div>
 			    <div class="form-group col-md-12">
-			      <label for="numeroCadastro">Data de validade</label>
-			      <input type="text" class="form-control" placeholder="mm/aaaa" id="numeroCadastro" >
+			      <label for="validade">Data de validade</label>
+			      <input type="text" class="form-control" placeholder="mm/aaaa" id="validade" >
 			    </div>
 			    <div class="form-group col-md-12">
-			      <label for="cepCadastro">CVV</label>
-			      <input maxlength="3" type="text" class="form-control" id="cepCadastro" >
+			      <label for="cvv">CVV</label>
+			      <input maxlength="3" type="text" class="form-control" id="cvv" >
 			    </div>
 			    
 			  </div>
@@ -76,7 +76,7 @@
         <form style="margin-top:20px">
 			  <div class="form-row">
 			    <div class="form-group col-md-12">
-			      <label for="logradouroEdicao">Logradouro</label>
+			      <label for="bandei">Logradouro</label>
 			      <input type="text" class="form-control" id="logradouroEdicao" >
 			    </div>
 			    <div class="form-group col-md-12">
@@ -123,7 +123,7 @@
 
 
 
-<form id="formDados" class="hide" method="POST" action="/cliente/endereco/consultarAtualizacao">
+<form id="formDados" class="hide" method="POST" action="/cliente/cartoes/consultarAtualizacao">
 	<input id="mensagemEdicao" name="mensagemEdicao"></input>
 	 
 </form>
@@ -135,30 +135,19 @@
 <script>
 function cadastrar(){
 	var data = {
-			   id: $("#id").val(),
-        	   nome: "",
-        	   email: "",
-        	   senha: "",
-        	   dataNascimento: "",
-        	   cpf: "",
-        	   genero: "",
-        	   telefone:"",
-        	   enderecos: [{
-        		   logradouro:$("#logradouroCadastro").val(),
-        		   numero:$("#numeroCadastro").val(),
-        		   bairro:$("#bairroCadastro").val(),
-        		   cep:$("#cepCadastro").val(),
-        		   estado:$("#estadoCadastro").val(),
-        		   cidade:$("#cidadeCadastro").val(),
-        		   complemento:$("#complementoCadastro").val(),
-        		   principal: false
-        	   }]
+				bandeira: $("#bandeira").val(),
+				numero: $("#numero").val(),
+				validade: $("#validade").val(),
+				cvv: $("#cvv").val(),
+				principal: false
+				
+        	  };
        
-       };
+      
 $.ajax({
 	 method: "POST",
-	 url: "/cliente/cadastrarEndereco",
-	 data: { cliente: JSON.stringify(data)},
+	 url: "/cliente/cartoes/cadastrar",
+	 data: { cartao: JSON.stringify(data)},
 	 success: function(data) {
 		 data = JSON.parse(data);
          if(data.ok == true){

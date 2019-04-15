@@ -2,6 +2,7 @@ package com.les.LesHotel.entities;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -25,6 +26,8 @@ public class Cliente extends EntidadeDominio {
 	private String idAnfitriao;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private List<Endereco> enderecos;
+	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	private Set<Cartao> cartoes;
 	
 	
 	
@@ -32,6 +35,15 @@ public class Cliente extends EntidadeDominio {
 	
 	
 	
+	
+	
+	
+	public Set<Cartao> getCartoes() {
+		return cartoes;
+	}
+	public void setCartoes(Set<Cartao> cartoes) {
+		this.cartoes = cartoes;
+	}
 	public String getIdAnfitriao() {
 		return idAnfitriao;
 	}

@@ -66,36 +66,34 @@ text-decoration:none;
                    	  <th>Numero Cartão</th>
 	      			  <th>Data validade</th>
 				      <th>CVV</th>
+				      <th>Ações</th>
 				      
                   </tr>
                 </thead>
                
                 <tbody>
-                   <c:forEach var="endereco" items="">
+                   <c:forEach var="cartao" items="${cliente.cartoes}">
 				  	<tr>
-				      <th scope="row"></th>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
+
+				      <td>${cartao.bandeira}</td>
+				      <td>${cartao.numero}</td>
+				      <td>${cartao.validade}</td>
+				      <td>${cartao.cvv}</td>
 				      
 				     
 				      <td>
-				      	 <button type="button" idEndereco=""  onclick="getDadosEndereco(this)" class="btn btn-primary"><a style="color:white" href="javascript:;}">Editar</a></button>
 				      	 <c:choose>
-				      	 	<c:when test="">
-				      	 		<button onclick="setPrincipal(this)" valor="true" type="button" idCliente="" idEndereco="" class="btn btn-success">Selecionar como principal</button>
+				      	 	<c:when test="${!cartao.principal}">
+				      	 		<button onclick="setPrincipal(this)" valor="true" type="button" idCliente="${cliente.id}" idCartao="${cartao.id}" class="btn btn-success">Selecionar como preferencial</button>
 				      	 	</c:when>
 				      	 	<c:otherwise>
-				      	 		<button  valor="true" type="button" class="btn btn-warning">Este é seu endereço principal</button>
+				      	 		<button  valor="true" type="button" class="btn btn-warning">Este é seu cartão preferencial</button>
 				      	 		
 				      	 	</c:otherwise>	
 				      	 </c:choose>
 				      	 
 				     	 
-				     	 <button onclick="excluir(this)" valor="true"  type="button" class="btn btn-danger" idCliente="" idEndereco="">Excluir</button>	
+				     	 <button onclick="excluir(this)" valor="true"  type="button" class="btn btn-danger" idCliente="${cliente.id}" idEndereco="${cartao.id}">Excluir</button>	
 				      </td>
 				    </tr>
 			  	</c:forEach>
@@ -127,7 +125,7 @@ text-decoration:none;
 
 <script>
 	function desativar(botao){
-		var id = $(botao).attr("idHospedagem");
+		var id = $(botao).attr("idCartao");
 		$.ajax({
 			 method: "POST",
 			 url: "/painel/hospedagem/desativar/" + id + "/" + $(botao).attr("valor"),
@@ -151,7 +149,7 @@ text-decoration:none;
 	function setPrincipal(botao){
 		$.ajax({
 			 method: "POST",
-			 url: "/cliente/endereco/setarComoPrincipal/" + $(botao).attr("idEndereco") + "/" + $(botao).attr("idCliente"),
+			 url: "/cliente/cartoes/escolherPrincipal/" + $(botao).attr("idCartao") + "/" + $(botao).attr("idCliente"),
 			 data: {},
 			 success: function(data) {
 		        data = JSON.parse(data);
@@ -173,7 +171,7 @@ text-decoration:none;
 	function excluir(botao){
 		$.ajax({
 			 method: "POST",
-			 url: "/cliente/endereco/excluirEndereco/" + $(botao).attr("idEndereco") + "/" + $(botao).attr("idCliente"),
+			 url: "/cliente/cartoes/excluir/" + $(botao).attr("idCartao") + "/" + $(botao).attr("idCliente"),
 			 data: {},
 			 success: function(data) {
 		        data = JSON.parse(data);
