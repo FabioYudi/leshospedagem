@@ -12,12 +12,16 @@ import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.les.LesHotel.entities.reserva.CartaoReserva;
+import com.les.LesHotel.entities.reserva.ClienteReserva;
+import com.les.LesHotel.entities.reserva.HospedagemReserva;
+
 @Entity
 public class Reserva extends EntidadeDominio {
 	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	private Cliente cliente;
+	private ClienteReserva cliente;
 	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	private Hospedagem hospedagem;
+	private HospedagemReserva hospedagem;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate checkin;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -25,15 +29,8 @@ public class Reserva extends EntidadeDominio {
 	private BigDecimal total;
 	private Integer qtdHospedes;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	private List<Cartao> cartoes;
+	private List<CartaoReserva> cartoes;
 	
-	
-	public List<Cartao> getCartoes() {
-		return cartoes;
-	}
-	public void setCartoes(List<Cartao> cartoes) {
-		this.cartoes = cartoes;
-	}
 	public Integer getQtdHospedes() {
 		return qtdHospedes;
 	}
@@ -47,18 +44,7 @@ public class Reserva extends EntidadeDominio {
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
-	public Cliente getCliente() {
-		return cliente;
-	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-	public Hospedagem getHospedagem() {
-		return hospedagem;
-	}
-	public void setHospedagem(Hospedagem hospedagem) {
-		this.hospedagem = hospedagem;
-	}
+	
 	public LocalDate getCheckin() {
 		return checkin;
 	}
@@ -70,6 +56,24 @@ public class Reserva extends EntidadeDominio {
 	}
 	public void setCheckout(LocalDate checkout) {
 		this.checkout = checkout;
+	}
+	public ClienteReserva getCliente() {
+		return cliente;
+	}
+	public void setCliente(ClienteReserva cliente) {
+		this.cliente = cliente;
+	}
+	public HospedagemReserva getHospedagem() {
+		return hospedagem;
+	}
+	public void setHospedagem(HospedagemReserva hospedagem) {
+		this.hospedagem = hospedagem;
+	}
+	public List<CartaoReserva> getCartoes() {
+		return cartoes;
+	}
+	public void setCartoes(List<CartaoReserva> cartoes) {
+		this.cartoes = cartoes;
 	}
 	
 	
