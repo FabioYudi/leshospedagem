@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.les.LesHotel.Facade.Resultado;
 import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.Endereco;
-import com.les.LesHotel.entities.Hospedagem;
 
 @Controller
 @RequestMapping("/cliente")

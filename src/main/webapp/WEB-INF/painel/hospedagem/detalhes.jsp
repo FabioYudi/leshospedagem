@@ -133,6 +133,7 @@
 	
 </form>
 
+
 <script>
 
 var diaria = ${hospedagem.diaria};

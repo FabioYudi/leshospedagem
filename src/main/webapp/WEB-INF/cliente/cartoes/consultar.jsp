@@ -93,7 +93,7 @@ text-decoration:none;
 				      	 </c:choose>
 				      	 
 				     	 
-				     	 <button onclick="excluir(this)" valor="true"  type="button" class="btn btn-danger" idCliente="${cliente.id}" idEndereco="${cartao.id}">Excluir</button>	
+				     	 <button onclick="excluir(this)" valor="true"  type="button" class="btn btn-danger" idCliente="${cliente.id}" idCartao="${cartao.id}">Excluir</button>	
 				      </td>
 				    </tr>
 			  	</c:forEach>
@@ -128,7 +128,7 @@ text-decoration:none;
 		var id = $(botao).attr("idCartao");
 		$.ajax({
 			 method: "POST",
-			 url: "/painel/hospedagem/desativar/" + id + "/" + $(botao).attr("valor"),
+			 url: "/painel/cartoes/excluir/" + id  + "/" + $(botao).attr("idCliente"),
 			 data: {},
 			 success: function(data) {
 		        data = JSON.parse(data);

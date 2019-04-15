@@ -133,6 +133,8 @@
 <input id="idEndereco" name="idEndereco" class="hide" value=""/>
 
 <script>
+
+var pagamento = false;
 function cadastrar(){
 	var data = {
 				bandeira: $("#bandeira").val(),
@@ -146,13 +148,19 @@ function cadastrar(){
       
 $.ajax({
 	 method: "POST",
-	 url: "/cliente/cartoes/cadastrar",
+	 url: "/cliente/cartoes/cadastrar/" + pagamento,
 	 data: { cartao: JSON.stringify(data)},
 	 success: function(data) {
 		 data = JSON.parse(data);
          if(data.ok == true){
         	 $("#mensagemEdicao").val(data.mensagem);
-        	 $("#formDados").submit();
+			 if(data.pagamento){
+				window.location.reload();
+        	 }else{
+        		$("#formDados").submit();
+        	 }
+        	 
+        	
          }else{
         	 $("#alertaErroCadastro").removeClass("hide");
         	 $("#alertaErroCadastro").html(data.mensagem);

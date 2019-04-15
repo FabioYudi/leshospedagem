@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <link type="text/css" rel="stylesheet" media="screen" href="../../../resources/bootstrap/css/bootstrap.min.css">
 <link type="text/css" rel="stylesheet" media="screen" href="../../../resources/css/common.css">
+<script src="../../../resources/js/jquery.js"></script>
+<script src="../../../resources/bootstrap/css/bootstrap.min.css"></script>
+<script src="../../../resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../../resources/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="../../../resources/bootstrap/js/popper.min.js"></script>
+<script src="../../../resources/js/moment.js"></script>
 <meta charset="ISO-8859-1">
 <title>Pagamento</title>
 </head>
@@ -29,19 +36,22 @@
 		        <div class="form-group">
 		          	<div class="form-row">	
 		    			<label for="exampleFormControlSelect1">Selecione seu cartão de crédito ou cadastre um novo</label>
+		    			
 					    <select class="form-control" id="exampleFormControlSelect1">
-					      <option>visa-xxx321</option>
-					      <option>master-xxx245</option>
+					    	<c:forEach var="cartao" items="${cliente.cartoes}">
+		    			 		<option>${cartao.bandeira}-${cartao.numero}</option>
+		    				</c:forEach>
 					    </select>
-					    <a style="margin-top:20px" class="btn btn-primary" href="/painel/hospedagem/pagamento">Novo Cartão</a>
+					    <button type="button" data-toggle="modal" style="margin-top:20px" data-target="#modalCadastrarCartao" class="btn btn-primary">Novo Cartão</button>
 		          	</div>
 		          </div>
 		          <div class="form-group">
 		          	<div class="form-row">	
 		    			<label for="exampleFormControlSelect1">Selecione seu endereço de cobrança ou cadastre um novo</label>
 					    <select class="form-control" id="exampleFormControlSelect1">
-					      <option>endereço 1</option>
-					      <option>endereço 2</option>
+					      <c:forEach var="endereco" items="${cliente.enderecos}">
+		    			 		<option>${endereco.logradouro} - ${endereco.estado} - ${endereco.cidade}</option>
+		    			</c:forEach>
 					    </select>
 					    <a style="margin-top:20px" class="btn btn-primary" href="/painel/hospedagem/pagamento">Novo Endereço</a>
 		          	</div>
@@ -117,6 +127,9 @@
   </div>
 
 </body>
-<script src="../../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../../../resources/js/jquery.js"></script>
+<jsp:include page="../../components/modal/cartao/cadastrarCartao.jsp" />
+
+<script>
+pagamento = true;
+</script>
 </html>

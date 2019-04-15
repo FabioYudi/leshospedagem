@@ -1,6 +1,7 @@
 package com.les.LesHotel.controller;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,8 +51,8 @@ public class CartaoController extends ControllerBase {
 	}
 	
 	@ResponseBody
-	@PostMapping("/cadastrar")
-	public String cadastrarCartao(Model model, @RequestParam("cartao")String cartao) throws JsonParseException, JsonMappingException, IOException {
+	@PostMapping("/cadastrar/{pagamento}")
+	public String cadastrarCartao(Model model, @RequestParam("cartao")String cartao, @PathVariable boolean pagamento) throws JsonParseException, JsonMappingException, IOException {
 		Cliente cliente = new Cliente();
 		ObjectMapper mapper = new ObjectMapper();
 		Cliente clienteLogado = (Cliente)  httpSession.getAttribute("clienteLogado");
@@ -65,6 +66,7 @@ public class CartaoController extends ControllerBase {
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			resultado.setMsg("Cartão cadastrado com sucesso!");
 			model.addAttribute("ok", true);
+			model.addAttribute("pagamento", pagamento);
 		}else {
 			model.addAttribute("ok", false);
 			
@@ -97,6 +99,30 @@ public class CartaoController extends ControllerBase {
 			
 		}
 		
+		return mapper.writeValueAsString(model);
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/excluir/{idCartao}/{idCliente}")
+	public String excluirEndereco(Model model, @PathVariable String idCartao, @PathVariable String idCliente) throws JsonProcessingException {
+		Cliente cliente = new Cliente();
+		cliente.setId(Long.parseLong(idCliente));
+		Resultado resultado = commands.get(VISUALIZAR).execute(cliente);
+		cliente = (Cliente) resultado.getEntidades().get(0);
+		cliente.setCartoes( cliente.getCartoes().stream()
+				.filter(c -> c.getId() != Long.parseLong(idCartao))
+				.collect(Collectors.toSet()));
+		resultado = commands.get(EXCLUIR).execute(cliente);
+		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
+			resultado.setMsg("Cartão excluido com sucesso!");
+			model.addAttribute("ok", true);
+
+		}else {
+			model.addAttribute("ok", false);
+			
+		}
+		model.addAttribute("mensagem", resultado.getMsg());
 		return mapper.writeValueAsString(model);
 	}
 

@@ -2,21 +2,38 @@ package com.les.LesHotel.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class Reserva {
-	Cliente cliente;
-	Hospedagem hospedagem;
+@Entity
+public class Reserva extends EntidadeDominio {
+	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private Cliente cliente;
+	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private Hospedagem hospedagem;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	LocalDate checkin;
+	private LocalDate checkin;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	LocalDate checkout;
-	BigDecimal total;
-	Integer qtdHospedes;
+	private LocalDate checkout;
+	private BigDecimal total;
+	private Integer qtdHospedes;
+	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	private List<Cartao> cartoes;
 	
 	
-	
+	public List<Cartao> getCartoes() {
+		return cartoes;
+	}
+	public void setCartoes(List<Cartao> cartoes) {
+		this.cartoes = cartoes;
+	}
 	public Integer getQtdHospedes() {
 		return qtdHospedes;
 	}

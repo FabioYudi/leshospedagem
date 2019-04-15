@@ -123,7 +123,9 @@ public class HospedagemController extends ControllerBase {
 		Cliente cliente = new Cliente();
 		cliente.setId(clienteLogado.getId());
 		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
-		
+		model.addAttribute("cliente", cliente);
+		model.addAttribute("reserva", reserva);
+		model.addAttribute("hospedagem", hospedagem);
 		return "painel/hospedagem/pagamento";
 	}
 	
