@@ -53,7 +53,7 @@
 		    			 		<option>${endereco.logradouro} - ${endereco.estado} - ${endereco.cidade}</option>
 		    			</c:forEach>
 					    </select>
-					    <a style="margin-top:20px" class="btn btn-primary" href="/painel/hospedagem/pagamento">Novo Endereço</a>
+					    <a style="margin-top:20px" data-toggle="modal" data-target="#modalCadastrarEndereco"  class="btn btn-primary" href="/painel/hospedagem/pagamento">Novo Endereço</a>
 		          	</div>
 		          </div>
 		           <div class="form-group">
@@ -128,6 +128,7 @@
 
 </body>
 <jsp:include page="../../components/modal/cartao/cadastrarCartao.jsp" />
+<jsp:include page="../../components/modal/cliente/cadastrarEndereco.jsp" />
 
 <script>
 pagamento = true;
