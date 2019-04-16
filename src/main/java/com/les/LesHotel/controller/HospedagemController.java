@@ -18,8 +18,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.les.LesHotel.Facade.Resultado;
-import com.les.LesHotel.entities.Cliente;
-import com.les.LesHotel.entities.Hospedagem;
+import com.les.LesHotel.entities.ClienteAluguel;
+import com.les.LesHotel.entities.HospedagemAluguel;
 import com.les.LesHotel.entities.Reserva;
 
 @Controller
@@ -27,7 +27,7 @@ import com.les.LesHotel.entities.Reserva;
 public class HospedagemController extends ControllerBase {
 	
 	@PostMapping("/filtrar")
-	public String filtrarHospedagem(Model model,  Hospedagem hospedagem) {
+	public String filtrarHospedagem(Model model,  HospedagemAluguel hospedagem) {
 		Resultado resultado = commands.get(CONSULTAR).execute(hospedagem);
 		model.addAttribute("hospedagens", resultado.getEntidades());
 		return "painel/hospedagem/consultar";
@@ -37,7 +37,7 @@ public class HospedagemController extends ControllerBase {
 	
 	@PostMapping("/consultarAtualizacao")
 	public String consultaHospedagemAtualizado(Model model, @RequestParam("mensagem") String mensagem) {
-		Hospedagem hospedagem = new Hospedagem();
+		HospedagemAluguel hospedagem = new HospedagemAluguel();
 		Resultado resultado = commands.get(CONSULTAR).execute(hospedagem);
 		model.addAttribute("hospedagens", resultado.getEntidades());
 		model.addAttribute("mensagem", mensagem);
@@ -47,10 +47,10 @@ public class HospedagemController extends ControllerBase {
 	@ResponseBody
 	@PostMapping("/desativar/{id}/{valor}")
 	public String desativarHospedagem(Model model, @PathVariable("id") String id, @PathVariable("valor") boolean valor) throws JsonProcessingException {
-		Hospedagem hospedagem = new Hospedagem();
+		HospedagemAluguel hospedagem = new HospedagemAluguel();
 		hospedagem.setId(Long.parseLong(id));
 		Resultado resultado = commands.get(CONSULTAR).execute(hospedagem);
-		hospedagem = (Hospedagem) resultado.getEntidades().get(0);
+		hospedagem = (HospedagemAluguel) resultado.getEntidades().get(0);
 		hospedagem.setAtivo(valor);
 		resultado = commands.get(EXCLUIR).execute(hospedagem);
 		model.addAttribute("hospedagens", resultado.getEntidades());
@@ -68,7 +68,7 @@ public class HospedagemController extends ControllerBase {
 	
 	@GetMapping("/consultar")
 	public String consultaHospedagem(Model model) {
-		Hospedagem hospedagem = new Hospedagem();
+		HospedagemAluguel hospedagem = new HospedagemAluguel();
 		Resultado resultado = commands.get(CONSULTAR).execute(hospedagem);
 		model.addAttribute("hospedagens", resultado.getEntidades());
 		return "painel/hospedagem/consultar";
@@ -79,7 +79,7 @@ public class HospedagemController extends ControllerBase {
 	public String editaHospedagem(@RequestParam("hospedagem") String hospedagem, Model model) throws JsonParseException, JsonMappingException, IOException {
 		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 		
-		Hospedagem hos = (Hospedagem) mapper.readValue(hospedagem, Hospedagem.class);
+		HospedagemAluguel hos = (HospedagemAluguel) mapper.readValue(hospedagem, HospedagemAluguel.class);
 		Resultado resultado = commands.get("ALTERAR").execute(hos);
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			resultado.setMsg("Hospedagem alterada com sucesso!");
@@ -96,7 +96,7 @@ public class HospedagemController extends ControllerBase {
 	
 	@GetMapping("/detalhesEdicao/{id}")
 	public String carregarDadosEdicao(@PathVariable("id") String id, Model model) {
-		Hospedagem hospedagem = new Hospedagem();
+		HospedagemAluguel hospedagem = new HospedagemAluguel();
 		hospedagem.setId(Long.parseLong(id));
 		Resultado resultado = commands.get(CONSULTAR).execute(hospedagem);
 		model.addAttribute("hospedagem", resultado.getEntidades().get(0));
@@ -106,7 +106,7 @@ public class HospedagemController extends ControllerBase {
 	
 	@GetMapping("/detalhes/{id}")
 	public String detalhesHospedagem(@PathVariable String id, Model model) {
-		Hospedagem hospedagem = new Hospedagem();
+		HospedagemAluguel hospedagem = new HospedagemAluguel();
 		hospedagem.setId(Long.parseLong(id));
 		Resultado resultado = commands.get(VISUALIZAR).execute(hospedagem);
 		model.addAttribute("hospedagem", resultado.getEntidades().get(0));
@@ -116,13 +116,13 @@ public class HospedagemController extends ControllerBase {
 	
 	@PostMapping("/pagamento/{id}")
 	public String pagamentoHospedagem(@PathVariable String id, Model model, Reserva reserva) {
-		Hospedagem hospedagem = new Hospedagem();
+		HospedagemAluguel hospedagem = new HospedagemAluguel();
 		hospedagem.setId(Long.parseLong(id));
-		hospedagem = (Hospedagem) commands.get(VISUALIZAR).execute(hospedagem).getEntidades().get(0);
-		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
-		Cliente cliente = new Cliente();
+		hospedagem = (HospedagemAluguel) commands.get(VISUALIZAR).execute(hospedagem).getEntidades().get(0);
+		ClienteAluguel clienteLogado = (ClienteAluguel) httpSession.getAttribute("clienteLogado");
+		ClienteAluguel cliente = new ClienteAluguel();
 		cliente.setId(clienteLogado.getId());
-		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
+		cliente = (ClienteAluguel) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
 		model.addAttribute("cliente", cliente);
 		model.addAttribute("reserva", reserva);
 		model.addAttribute("hospedagem", hospedagem);
@@ -145,7 +145,7 @@ public class HospedagemController extends ControllerBase {
 			throws Exception {
 		ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
 		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-		Hospedagem hospedagem = (Hospedagem) mapper.readValue(entidade, Hospedagem.class);
+		HospedagemAluguel hospedagem = (HospedagemAluguel) mapper.readValue(entidade, HospedagemAluguel.class);
 		Resultado resultado = commands.get(action).execute(hospedagem);
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			resultado.setMsg("Hospedagem cadastrada com sucesso!");

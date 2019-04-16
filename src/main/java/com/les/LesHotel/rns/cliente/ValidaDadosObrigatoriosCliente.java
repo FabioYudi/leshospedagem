@@ -1,6 +1,6 @@
 package com.les.LesHotel.rns.cliente;
 
-import com.les.LesHotel.entities.Cliente;
+import com.les.LesHotel.entities.ClienteAluguel;
 import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.rns.IStrategy;
@@ -9,7 +9,7 @@ public class ValidaDadosObrigatoriosCliente implements IStrategy {
 
 	@Override
 	public String processar(EntidadeDominio entidade) {
-		Cliente cliente = (Cliente) entidade;
+		ClienteAluguel cliente = (ClienteAluguel) entidade;
 		StringBuilder builder = new StringBuilder();
 		
 		if(StringHelper.isNullOrEmpty(cliente.getCpf())) {

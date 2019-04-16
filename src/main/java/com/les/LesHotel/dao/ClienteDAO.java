@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.les.LesHotel.entities.Cliente;
+import com.les.LesHotel.entities.ClienteAluguel;
 import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.repository.ClienteRepository;
@@ -32,8 +32,8 @@ public class ClienteDAO extends AbstractDAO {
 
 	@Override
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
-		Cliente cliente = noCast(entidade);
-		List<Predicate<Cliente>> allPredicates = new ArrayList<Predicate<Cliente>>();
+		ClienteAluguel cliente = noCast(entidade);
+		List<Predicate<ClienteAluguel>> allPredicates = new ArrayList<Predicate<ClienteAluguel>>();
 		if(cliente.getId() > 0)
 			allPredicates.add(c -> c.getId() == cliente.getId());
 		if(!StringHelper.isNullOrEmpty(cliente.getCpf()))
@@ -53,7 +53,7 @@ public class ClienteDAO extends AbstractDAO {
 		
 		
 		
-		Predicate<Cliente> compositePredicate = allPredicates.stream().reduce(c -> true, Predicate::and);
+		Predicate<ClienteAluguel> compositePredicate = allPredicates.stream().reduce(c -> true, Predicate::and);
 		return repository.findAll().stream().filter(compositePredicate).collect(Collectors.toList());
 	}
 

@@ -3,14 +3,14 @@ package com.les.LesHotel.rns.hospedagem;
 import java.time.LocalDate;
 
 import com.les.LesHotel.entities.EntidadeDominio;
-import com.les.LesHotel.entities.Hospedagem;
+import com.les.LesHotel.entities.HospedagemAluguel;
 import com.les.LesHotel.rns.IStrategy;
 
 public class ValidarDataHospedagem implements IStrategy {
 
 	@Override
 	public String processar(EntidadeDominio entidade) {
-		Hospedagem hospedagem = (Hospedagem) entidade;
+		HospedagemAluguel hospedagem = (HospedagemAluguel) entidade;
 		StringBuilder builder = new StringBuilder();
 		if( hospedagem.getDataFim() == null || hospedagem.getDataFim().isBefore(LocalDate.now()) ) {
 			builder.append("A data do final das reservas deve ser maior que a data atual!<br>");

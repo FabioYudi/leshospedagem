@@ -150,6 +150,7 @@
 <input id="idEndereco" name="idEndereco" class="hide" value=""/>
 
 <script>
+var pagamento = false;
 function cadastrar(){
 	var data = {
 			   id: $("#id").val(),
@@ -174,13 +175,17 @@ function cadastrar(){
        };
 $.ajax({
 	 method: "POST",
-	 url: "/cliente/cadastrarEndereco",
+	 url: "/cliente/cadastrarEndereco/" + pagamento ,
 	 data: { cliente: JSON.stringify(data)},
 	 success: function(data) {
 		 data = JSON.parse(data);
          if(data.ok == true){
         	 $("#mensagemEdicao").val(data.mensagem);
-        	 $("#formDados").submit();
+        	 if(data.pagamento){
+ 				window.location.reload();
+         	 }else{
+         		$("#formDados").submit();
+         	 }
          }else{
         	 $("#alertaErroCadastro").removeClass("hide");
         	 $("#alertaErroCadastro").html(data.mensagem);

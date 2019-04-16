@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.les.LesHotel.entities.EntidadeDominio;
-import com.les.LesHotel.entities.Hospedagem;
+import com.les.LesHotel.entities.HospedagemAluguel;
 import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.repository.HospedagemRepository;
 
@@ -34,9 +34,9 @@ public class HospedagemDAO extends AbstractDAO  {
 
 	@Override
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
-		Hospedagem hospedagem = (Hospedagem) entidade;
+		HospedagemAluguel hospedagem = (HospedagemAluguel) entidade;
 		
-		List<Predicate<Hospedagem>> allPredicates = new ArrayList<Predicate<Hospedagem>>();
+		List<Predicate<HospedagemAluguel>> allPredicates = new ArrayList<Predicate<HospedagemAluguel>>();
 		if(hospedagem.getId() > 0) 
 			allPredicates.add(h -> h.getId() == hospedagem.getId());
 		if(!StringHelper.isNullOrEmpty(hospedagem.getTitulo()))
@@ -66,7 +66,7 @@ public class HospedagemDAO extends AbstractDAO  {
 			allPredicates.add(h -> h.getTaxas().containsAll(hospedagem.getTaxas()));
 
 		
-		Predicate<Hospedagem> compositePredicate = allPredicates.stream().reduce(h -> true, Predicate::and);
+		Predicate<HospedagemAluguel> compositePredicate = allPredicates.stream().reduce(h -> true, Predicate::and);
 		return repository.findAll().stream().filter(compositePredicate).collect(Collectors.toList());
 		
 	}

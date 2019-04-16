@@ -1,19 +1,23 @@
-package com.les.LesHotel.entities;
+package com.les.LesHotel.entities.superclasses;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity
+import com.les.LesHotel.entities.CartaoAluguel;
+import com.les.LesHotel.entities.EnderecoAluguel;
+import com.les.LesHotel.entities.EntidadeDominio;
+
+@MappedSuperclass
 public class Cliente extends EntidadeDominio {
-	
+
 	private String nome;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate dtNascimento;
@@ -25,9 +29,9 @@ public class Cliente extends EntidadeDominio {
 	private Boolean ativo;
 	private String idAnfitriao;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	private List<Endereco> enderecos;
+	private List<EnderecoAluguel> enderecos;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	private Set<Cartao> cartoes;
+	private Set<CartaoAluguel> cartoes;
 	
 	
 	
@@ -38,10 +42,10 @@ public class Cliente extends EntidadeDominio {
 	
 	
 	
-	public Set<Cartao> getCartoes() {
+	public Set<CartaoAluguel> getCartoes() {
 		return cartoes;
 	}
-	public void setCartoes(Set<Cartao> cartoes) {
+	public void setCartoes(Set<CartaoAluguel> cartoes) {
 		this.cartoes = cartoes;
 	}
 	public String getIdAnfitriao() {
@@ -98,13 +102,11 @@ public class Cliente extends EntidadeDominio {
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
-	public List<Endereco> getEnderecos() {
+	public List<EnderecoAluguel> getEnderecos() {
 		return enderecos;
 	}
-	public void setEnderecos(List<Endereco> enderecos) {
+	public void setEnderecos(List<EnderecoAluguel> enderecos) {
 		this.enderecos = enderecos;
 	}
 	
-	
-
 }

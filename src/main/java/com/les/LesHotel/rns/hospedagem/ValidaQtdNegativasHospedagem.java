@@ -1,14 +1,14 @@
 package com.les.LesHotel.rns.hospedagem;
 
 import com.les.LesHotel.entities.EntidadeDominio;
-import com.les.LesHotel.entities.Hospedagem;
+import com.les.LesHotel.entities.HospedagemAluguel;
 import com.les.LesHotel.rns.IStrategy;
 
 public class ValidaQtdNegativasHospedagem implements IStrategy {
 
 	@Override
 	public String processar(EntidadeDominio entidade) {
-		Hospedagem hospedagem = (Hospedagem) entidade;
+		HospedagemAluguel hospedagem = (HospedagemAluguel) entidade;
 		StringBuilder builder = new StringBuilder();
 		
 		if(hospedagem.getQtdHospedes() <= 0 ) {

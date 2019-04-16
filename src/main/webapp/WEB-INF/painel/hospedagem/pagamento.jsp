@@ -4,6 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+
+	.hide{
+		display:none;
+	}
+</style>
 <link type="text/css" rel="stylesheet" media="screen" href="../../../resources/bootstrap/css/bootstrap.min.css">
 <link type="text/css" rel="stylesheet" media="screen" href="../../../resources/css/common.css">
 <script src="../../../resources/js/jquery.js"></script>
@@ -29,20 +35,35 @@
         <div class="card mt-4">
           <div class="card-body">
           	<h2>Confirmação de dados</h2>
-            <h3 class="card-title">Casa na praia</h3>
-            <h4>Diária: R$250,00</h4>
-            <p class="card-text">Casa na praia em caraguatatuba, 100 metros da praia</p>
+            <h3 class="card-title">${hospedagem.titulo}</h3>
+            <h4>Diária: R$${hospedagem.diaria}</h4>
+            <p class="card-text">${hospedagem.descricao}</p>
 	        <form>
 		        <div class="form-group">
-		          	<div class="form-row">	
+		          	<div class="form">	
 		    			<label for="exampleFormControlSelect1">Selecione seu cartão de crédito ou cadastre um novo</label>
-		    			
-					    <select class="form-control" id="exampleFormControlSelect1">
-					    	<c:forEach var="cartao" items="${cliente.cartoes}">
-		    			 		<option>${cartao.bandeira}-${cartao.numero}</option>
-		    				</c:forEach>
-					    </select>
-					    <button type="button" data-toggle="modal" style="margin-top:20px" data-target="#modalCadastrarCartao" class="btn btn-primary">Novo Cartão</button>
+		    			<br>
+		    			<div id="divCartoes" >
+			    			<div class="form-group">
+			          			<div  class="form-row">
+				    				<select  id="selectCartao" class="form-control col-5" id="exampleFormControlSelect1">
+								    	<c:forEach var="cartao" items="${cliente.cartoes}">
+					    			 		<option>${cartao.bandeira}-${cartao.numero}</option>
+					    				</c:forEach>
+							   		</select>
+									<div id="divInputValor" class="hide valorCartao">
+							   			<label style="margin-left:100px" for="valorPorCartao">Valor</label>
+				                  		<input style="margin-left:10px" class="col-3" type="text" id="valorPorCartao" class="form-control" placeholder="" required="required" autofocus="autofocus">
+				                  		<button onclick="retirarCartao(this)" type="button" style="background:none; color:red; border:none">X</button>
+			    					</div>
+			    				</div>
+			    			</div>
+		    			</div>
+		    			<div class="row">
+		    				<button type="button" onclick="carregarCartoes()"   style="margin-top:20px"  class="btn btn-warning">Adicionar cartão ao pagamento</button>
+					    	<button type="button" data-toggle="modal" data-target="#modalCadastrarCartao"  style="margin-top:20px; margin-left:20px"  class="btn btn-primary">Cadastrar novo Cartão</button>
+		    			</div>
+					  
 		          	</div>
 		          </div>
 		          <div class="form-group">
@@ -90,13 +111,13 @@
       <div class="col-lg-3">
         <div style="width:300px"class="card mt-4">
         	<div class="card-body">
-            <h4>Total: R$250,00</h4>
+            <h4>Total: R$${reserva.total }</h4>
             <form>
             	<div class="form-group">
 		            <div class="form-row">
 		              <div class="col-md-6">
 		                <div class="form-label-group">
-		                  <label for="inputPassword">3 hóspedes</label>
+		                  <label for="inputPassword"><strong>Quantidade de hóspedes:</strong> ${reserva.qtdHospedes}</label>
 		                  
 		                </div>
 		              </div>
@@ -106,12 +127,12 @@
 		            <div class="form-row">
 		              <div class="col-md-6">
 		                <div class="form-label-group">
-		                  <label for="inputPassword">check-in: 24/03/2019</label>
+		                  <label for="inputPassword"><strong>Data Check-in:</strong> ${reserva.checkin}</label>
 		                </div>
 		              </div>
 		              <div class="col-md-6">
 		                <div class="form-label-group">
-		                  <label for="inputPassword">check-out: 29/03/2019</label>
+		                  <label for="inputPassword"><strong>Data Check-out:</strong> ${reserva.checkout}</label>
 		                </div>
 		              </div>
 		            </div>
@@ -132,5 +153,22 @@
 
 <script>
 pagamento = true;
+var divCartoes = $("#divCartoes").html();
+function carregarCartoes(){
+	
+	$("#divCartoes").append(divCartoes);
+	$(".valorCartao").removeClass("hide");
+}
+
+$("#divCartoes .form-group").each(function(){
+	debugger;
+	var teste = $(this).find("select").val();
+
+});
+
+function retirarCartao(button){
+	debugger;
+	$()
+}
 </script>
 </html>

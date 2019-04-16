@@ -1,25 +1,28 @@
-package com.les.LesHotel.entities;
+package com.les.LesHotel.entities.superclasses;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity
-public class Hospedagem extends EntidadeDominio {
-	
+import com.les.LesHotel.entities.EnderecoAluguel;
+import com.les.LesHotel.entities.EntidadeDominio;
+import com.les.LesHotel.entities.Taxa;
+
+@MappedSuperclass
+public class Hospedagem extends EntidadeDominio{
 	
 	private String titulo;
 	private BigDecimal diaria;
 	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	private Endereco endereco;
+	private EnderecoAluguel endereco;
 	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	private List<Taxa> taxas;
 	private int qtdQuartos;
@@ -92,10 +95,10 @@ public class Hospedagem extends EntidadeDominio {
 	public void setDiaria(BigDecimal diaria) {
 		this.diaria = diaria;
 	}
-	public Endereco getEndereco() {
+	public EnderecoAluguel getEndereco() {
 		return endereco;
 	}
-	public void setEndereco(Endereco endereco) {
+	public void setEndereco(EnderecoAluguel endereco) {
 		this.endereco = endereco;
 	}
 	public List<Taxa> getTaxas() {

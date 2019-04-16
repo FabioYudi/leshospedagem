@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.les.LesHotel.Facade.Resultado;
-import com.les.LesHotel.entities.Hospedagem;
+import com.les.LesHotel.entities.HospedagemAluguel;
 
 @Controller
 @RequestMapping("/")
@@ -18,7 +18,7 @@ public class HomeController extends ControllerBase{
 	}
 	
 	@GetMapping("/pesquisa")
-	public String pesquisar(Model model, Hospedagem hospedagem) {
+	public String pesquisar(Model model, HospedagemAluguel hospedagem) {
 		Resultado resultado = commands.get(CONSULTAR).execute(hospedagem);
 		model.addAttribute("hospedagens", resultado.getEntidades());
 		return "pesquisa";

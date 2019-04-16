@@ -1,12 +1,13 @@
-package com.les.LesHotel.entities.reserva;
+package com.les.LesHotel.entities;
 
 import javax.persistence.Entity;
 
 import com.les.LesHotel.entities.superclasses.Cliente;
 
 @Entity
-public class ClienteReserva extends Cliente {
+public class ClienteAluguel extends Cliente {
+	
+	
+	
 
-	
-	
 }

@@ -17,8 +17,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.les.LesHotel.Facade.Resultado;
-import com.les.LesHotel.entities.Cartao;
-import com.les.LesHotel.entities.Cliente;
+import com.les.LesHotel.entities.CartaoAluguel;
+import com.les.LesHotel.entities.ClienteAluguel;
 
 @Controller
 @RequestMapping("/cliente/cartoes")
@@ -26,22 +26,22 @@ public class CartaoController extends ControllerBase {
 	
 	@GetMapping("/consultar")
 	public String consultarCartoes(Model model) {
-		Cliente cliente = new Cliente();
-		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
+		ClienteAluguel cliente = new ClienteAluguel();
+		ClienteAluguel clienteLogado = (ClienteAluguel) httpSession.getAttribute("clienteLogado");
 		cliente.setId(clienteLogado.getId());
 		Resultado resultado = commands.get(VISUALIZAR).execute(cliente);
-		cliente = (Cliente) resultado.getEntidades().get(0);
+		cliente = (ClienteAluguel) resultado.getEntidades().get(0);
 		model.addAttribute("cliente", cliente);
 		return "cliente/cartoes/consultar";
 	}
 	
 	@PostMapping("/consultarAtualizacao")
 	public String consultarCartoesAtualizados(Model model, String mensagemEdicao) {
-		Cliente cliente = (Cliente)  httpSession.getAttribute("clienteLogado");
-		Cliente clienteConsulta = new Cliente();
+		ClienteAluguel cliente = (ClienteAluguel)  httpSession.getAttribute("clienteLogado");
+		ClienteAluguel clienteConsulta = new ClienteAluguel();
 		clienteConsulta.setId(cliente.getId());
 		Resultado resultado = commands.get(VISUALIZAR).execute(clienteConsulta);
-		cliente = (Cliente) resultado.getEntidades().get(0);
+		cliente = (ClienteAluguel) resultado.getEntidades().get(0);
 	
 		model.addAttribute("cliente", cliente);
 		
@@ -53,13 +53,13 @@ public class CartaoController extends ControllerBase {
 	@ResponseBody
 	@PostMapping("/cadastrar/{pagamento}")
 	public String cadastrarCartao(Model model, @RequestParam("cartao")String cartao, @PathVariable boolean pagamento) throws JsonParseException, JsonMappingException, IOException {
-		Cliente cliente = new Cliente();
+		ClienteAluguel cliente = new ClienteAluguel();
 		ObjectMapper mapper = new ObjectMapper();
-		Cliente clienteLogado = (Cliente)  httpSession.getAttribute("clienteLogado");
+		ClienteAluguel clienteLogado = (ClienteAluguel)  httpSession.getAttribute("clienteLogado");
 		cliente.setId(clienteLogado.getId());
 		Resultado resultado = commands.get(VISUALIZAR).execute(cliente);
-		cliente = (Cliente) resultado.getEntidades().get(0);
-		Cartao novoCartao = mapper.readValue(cartao, Cartao.class);
+		cliente = (ClienteAluguel) resultado.getEntidades().get(0);
+		CartaoAluguel novoCartao = mapper.readValue(cartao, CartaoAluguel.class);
 		cliente.getCartoes().add(novoCartao);
 		resultado = commands.get("ALTERAR").execute(cliente);
 		
@@ -78,11 +78,11 @@ public class CartaoController extends ControllerBase {
 	@ResponseBody	
 	@PostMapping("/escolherPrincipal/{idCartao}/{idCliente}")
 	public String setPrincipal(Model model, @PathVariable String idCartao, @PathVariable String idCliente) throws JsonProcessingException {
-		Cliente cliente = new Cliente();
+		ClienteAluguel cliente = new ClienteAluguel();
 		cliente.setId(Long.parseLong(idCliente));
 		Resultado resultado = commands.get(VISUALIZAR).execute(cliente);
-		cliente = (Cliente) resultado.getEntidades().get(0);
-		for(Cartao cartao : cliente.getCartoes()) {
+		cliente = (ClienteAluguel) resultado.getEntidades().get(0);
+		for(CartaoAluguel cartao : cliente.getCartoes()) {
 			if(cartao.getId() == Long.parseLong(idCartao)) {
 				cartao.setPrincipal(true);
 			}else {
@@ -106,10 +106,10 @@ public class CartaoController extends ControllerBase {
 	@ResponseBody
 	@PostMapping("/excluir/{idCartao}/{idCliente}")
 	public String excluirEndereco(Model model, @PathVariable String idCartao, @PathVariable String idCliente) throws JsonProcessingException {
-		Cliente cliente = new Cliente();
+		ClienteAluguel cliente = new ClienteAluguel();
 		cliente.setId(Long.parseLong(idCliente));
 		Resultado resultado = commands.get(VISUALIZAR).execute(cliente);
-		cliente = (Cliente) resultado.getEntidades().get(0);
+		cliente = (ClienteAluguel) resultado.getEntidades().get(0);
 		cliente.setCartoes( cliente.getCartoes().stream()
 				.filter(c -> c.getId() != Long.parseLong(idCartao))
 				.collect(Collectors.toSet()));

@@ -42,7 +42,7 @@
   
       </div>
       <div class="modal-footer">
-        <button type="button" onclick="cadastrar()" class="btn btn-primary">Cadastrar</button>
+        <button type="button" onclick="cadastrarCartao()" class="btn btn-primary">Cadastrar</button>
       </div>
     </div>
   </div>
@@ -135,7 +135,7 @@
 <script>
 
 var pagamento = false;
-function cadastrar(){
+function cadastrarCartao(){
 	var data = {
 				bandeira: $("#bandeira").val(),
 				numero: $("#numero").val(),
