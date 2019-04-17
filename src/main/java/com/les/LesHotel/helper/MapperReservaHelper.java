@@ -2,7 +2,9 @@ package com.les.LesHotel.helper;
 
 import java.io.IOException;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.les.LesHotel.entities.Reserva;
 import com.les.LesHotel.entities.reserva.ClienteReserva;
 import com.les.LesHotel.entities.reserva.HospedagemReserva;
@@ -23,28 +25,16 @@ public class MapperReservaHelper {
 	}
 	
 	private static ClienteReserva getCliente(Cliente cliente, Reserva reserva) throws IOException {
-		ClienteReserva clienteReserva = new ClienteReserva();
-		clienteReserva.setAtivo(cliente.getAtivo());
-		clienteReserva.setCartoes(cliente.getCartoes());
-		clienteReserva.setCpf(cliente.getCpf());
-		clienteReserva.setDtNascimento(cliente.getDtNascimento());
-		clienteReserva.setEmail(cliente.getEmail());
-		clienteReserva.setEnderecos(cliente.getEnderecos());
-		clienteReserva.setGenero(cliente.getGenero());
-		clienteReserva.setId(cliente.getId());
-		clienteReserva.setIdAnfitriao(cliente.getIdAnfitriao());
-		clienteReserva.setNome(cliente.getNome());
-		clienteReserva.setSenha(cliente.getSenha());
-		clienteReserva.setTelefone(cliente.getTelefone());
-		
-		ObjectMapper mapper = new ObjectMapper();
-		String clienteTeste =mapper.writeValueAsString(cliente);
-		ClienteReserva teste = mapper.readValue(clienteTeste, ClienteReserva.class);
+		ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+		String clienteString = mapper.writeValueAsString(cliente);
+		ClienteReserva clienteReserva = mapper.readValue(clienteString, ClienteReserva.class);
 		return clienteReserva;
 	}
 	
 	private static HospedagemReserva getHospedagem(Hospedagem hospedagem, Reserva reserva) throws IOException {
-		ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 		String hospedagemString = mapper.writeValueAsString(hospedagem);
 		HospedagemReserva hospedagemReserva = mapper.readValue(hospedagemString, HospedagemReserva.class);
 		return hospedagemReserva;

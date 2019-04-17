@@ -166,7 +166,7 @@ function continuar(){
 		var cartao = $(this).find("select option:selected").attr("idCartao");
 		var valor = $(this).find("input").val();
 		var jsonCartao = {
-			idCartao: cartao,
+			id: cartao,
 			valorCompra: valor
 		};
 		

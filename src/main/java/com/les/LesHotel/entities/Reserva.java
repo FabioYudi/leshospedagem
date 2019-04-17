@@ -22,10 +22,13 @@ public class Reserva extends EntidadeDominio {
 	private ClienteReserva cliente;
 	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	private HospedagemReserva hospedagem;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate checkin;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate checkout;
+	
 	private BigDecimal total;
 	private Integer qtdHospedes;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
