@@ -46,15 +46,15 @@
 		    			<div id="divCartoes" >
 			    			<div class="form-group">
 			          			<div  class="form-row">
-				    				<select  id="selectCartao" class="form-control col-5" id="exampleFormControlSelect1">
+				    				<select  id="selectCartao"  class="form-control col-5" id="exampleFormControlSelect1">
 								    	<c:forEach var="cartao" items="${cliente.cartoes}">
-					    			 		<option>${cartao.bandeira}-${cartao.numero}</option>
+					    			 		<option idCartao="${cartao.id}">${cartao.bandeira}-${cartao.numero}</option>
 					    				</c:forEach>
 							   		</select>
 									<div id="divInputValor" class="hide valorCartao">
 							   			<label style="margin-left:100px" for="valorPorCartao">Valor</label>
 				                  		<input style="margin-left:10px" class="col-3" type="text" id="valorPorCartao" class="form-control" placeholder="" required="required" autofocus="autofocus">
-				                  		<button onclick="retirarCartao(this)" type="button" style="background:none; color:red; border:none">X</button>
+				                  		<button idCartaoBotao="" onclick="retirarCartao(this)" type="button" style="background:none; color:red; border:none">X</button>
 			    					</div>
 			    				</div>
 			    			</div>
@@ -96,7 +96,7 @@
 		  				</div>
 		          	</div>     
 		          </div> 
-		          <a style="margin-top:20px" class="btn btn-success btn-block" href="/painel/estadia/consultar">Concordar e continuar</a>
+		          <button type="button" style="margin-top:20px" class="btn btn-success btn-block" onclick="continuar()">Concordar e continuar</button>
 	        </form>
           </div>
          
@@ -150,25 +150,97 @@
 </body>
 <jsp:include page="../../components/modal/cartao/cadastrarCartao.jsp" />
 <jsp:include page="../../components/modal/cliente/cadastrarEndereco.jsp" />
-
 <script>
+debugger;
 pagamento = true;
+var idHospedagem = ${hospedagem.id}; 
+var idCliente = ${cliente.id};
+var checkin = "${reserva.checkin}";
+var checkout = "${reserva.checkout}";
+var qtdHospedes = ${reserva.qtdHospedes};
+var total = ${reserva.total};
+var listaCartoes = [];
+function continuar(){
+	$("#divCartoes .form-group").each(function(){
+
+		var cartao = $(this).find("select option:selected").attr("idCartao");
+		var valor = $(this).find("input").val();
+		var jsonCartao = {
+			idCartao: cartao,
+			valorCompra: valor
+		};
+		
+		listaCartoes.push(jsonCartao);
+
+	});
+
+	
+	
+	var reserva = {
+		
+		checkin: checkin,
+		checkout: checkout,
+		qtdHospedes: qtdHospedes,
+		total: total,
+		cartoes: listaCartoes
+		
+	};
+	
+	$.ajax({
+		 method: "POST",
+		 url: "/pagamento/irParaConfirmacao/" + idHospedagem + "/" + idCliente,
+		 data: {reserva: JSON.stringify(reserva)},
+		 success: function(data) {
+			 debugger;
+			 data = JSON.parse(data);
+	         if(data.ok == true){
+	        	
+	         }else{
+	        	
+	         }
+	      },
+	      error: function(){
+	    	  
+	      }
+	});
+	
+	
+}
+
 var divCartoes = $("#divCartoes").html();
+
 function carregarCartoes(){
 	
 	$("#divCartoes").append(divCartoes);
 	$(".valorCartao").removeClass("hide");
+	
+	colocaIds();
 }
 
-$("#divCartoes .form-group").each(function(){
-	debugger;
-	var teste = $(this).find("select").val();
 
-});
+
+
+
+var i = 0;
+function colocaIds(){
+	debugger;
+		$("#divCartoes .form-group").each(function(){
+	     $(this).attr("id", "cartao"+i);
+	     $(this).find("button").attr("idCartaoBotao", "cartao"+i);
+	     i++;
+
+		});
+	
+}
+
+
+
+
 
 function retirarCartao(button){
-	debugger;
-	$()
+	
+	$("#" + $(button).attr("idCartaoBotao")).remove();
 }
 </script>
+
 </html>
