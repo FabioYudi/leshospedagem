@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.les.LesHotel.entities.EnderecoAluguel;
 import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.entities.Taxa;
@@ -21,6 +22,7 @@ public class Hospedagem extends EntidadeDominio{
 	
 	private String titulo;
 	private BigDecimal diaria;
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	private EnderecoAluguel endereco;
 	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)

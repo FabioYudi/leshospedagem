@@ -161,6 +161,7 @@ var qtdHospedes = ${reserva.qtdHospedes};
 var total = ${reserva.total};
 var listaCartoes = [];
 function continuar(){
+	listaCartoes = [];
 	$("#divCartoes .form-group").each(function(){
 
 		var cartao = $(this).find("select option:selected").attr("idCartao");

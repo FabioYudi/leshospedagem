@@ -2,7 +2,7 @@ package com.les.LesHotel.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -32,7 +32,7 @@ public class Reserva extends EntidadeDominio {
 	private BigDecimal total;
 	private Integer qtdHospedes;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	private List<CartaoReserva> cartoes;
+	private Set<CartaoReserva> cartoes;
 	
 	public Integer getQtdHospedes() {
 		return qtdHospedes;
@@ -72,12 +72,13 @@ public class Reserva extends EntidadeDominio {
 	public void setHospedagem(HospedagemReserva hospedagem) {
 		this.hospedagem = hospedagem;
 	}
-	public List<CartaoReserva> getCartoes() {
+	public Set<CartaoReserva> getCartoes() {
 		return cartoes;
 	}
-	public void setCartoes(List<CartaoReserva> cartoes) {
+	public void setCartoes(Set<CartaoReserva> cartoes) {
 		this.cartoes = cartoes;
 	}
+	
 	
 	
 

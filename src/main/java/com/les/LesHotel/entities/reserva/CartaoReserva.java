@@ -10,6 +10,17 @@ import com.les.LesHotel.entities.superclasses.Cartao;
 public class CartaoReserva extends Cartao {
 	
 	private BigDecimal valorCompra;
+	private Long idCartaoReferencia;
+	
+	
+
+	public Long getIdCartaoReferencia() {
+		return idCartaoReferencia;
+	}
+
+	public void setIdCartaoReferencia(Long idCartaoReferencia) {
+		this.idCartaoReferencia = idCartaoReferencia;
+	}
 
 	public BigDecimal getValorCompra() {
 		return valorCompra;
