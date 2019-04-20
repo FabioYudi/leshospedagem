@@ -34,7 +34,7 @@
 
         <div class="card mt-4">
           <div class="card-body">
-          	<h2>Confirmação de dados</h2>
+          	<h2>Confirme o pagamento</h2>
             <h3 class="card-title">${hospedagem.titulo}</h3>
             <h4>Diária: R$${hospedagem.diaria}</h4>
             <p class="card-text">${hospedagem.descricao}</p>
@@ -150,12 +150,6 @@
 </body>
 <jsp:include page="../../components/modal/cartao/cadastrarCartao.jsp" />
 <jsp:include page="../../components/modal/cliente/cadastrarEndereco.jsp" />
-
-<form id="formConfirmacao" method="POST" action="/pagamento/confirmacao">
-	<input type="hidden" name="idCliente" id="idCliente"/>
-	<input type="hidden" name="idHospedagem" id="idHospedagem"/>
-
-</form>
 <script>
 debugger;
 pagamento = true;
@@ -201,9 +195,7 @@ function continuar(){
 			 debugger;
 			 data = JSON.parse(data);
 	         if(data.ok == true){
-	        	$("#idCliente").val(data.idCliente);
-	        	$("#idHospedagem").val(data.idHospedagem);
-	        	$("#formConfirmacao").submit();
+	        	
 	         }else{
 	        	
 	         }

@@ -9,13 +9,13 @@ import javax.persistence.MappedSuperclass;
 public class EntidadeDominio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected long Id;
+	protected Long Id;
 
-	public long getId() {
+	public Long getId() {
 		return Id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		Id = id;
 	}
 }

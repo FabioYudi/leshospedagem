@@ -13,9 +13,11 @@ import org.springframework.stereotype.Component;
 import com.les.LesHotel.dao.ClienteDAO;
 import com.les.LesHotel.dao.HospedagemDAO;
 import com.les.LesHotel.dao.IDAO;
-import com.les.LesHotel.entities.ClienteAluguel;
+import com.les.LesHotel.dao.ReservaDAO;
+import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.EntidadeDominio;
-import com.les.LesHotel.entities.HospedagemAluguel;
+import com.les.LesHotel.entities.Hospedagem;
+import com.les.LesHotel.entities.Reserva;
 import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.rns.IStrategy;
 import com.les.LesHotel.rns.cliente.ValidaDadosObrigatoriosCliente;
@@ -40,6 +42,9 @@ public class Facade implements IFacade {
 	
 	@Autowired
 	private ClienteDAO clienteDAO;
+	
+	@Autowired 
+	private ReservaDAO reservaDAO;
 	
 	@PostConstruct
 	public void init() {
@@ -78,13 +83,18 @@ public class Facade implements IFacade {
 			rnsCliente.put("ALTERAR", rnsAlterarCliente);
 			
 			rnsCliente.put("EXCLUIR", rnsExcluirEnderecoCliente);
+			
+			
+			//Regras para reserva
+			List<IStrategy> rnsSalvarReserva = new ArrayList<>();
 		
 		//lista de repositorios
-		repositories.put(HospedagemAluguel.class.getName(), hospedagemDao);
-		repositories.put(ClienteAluguel.class.getName(), clienteDAO);
+		repositories.put(Hospedagem.class.getName(), hospedagemDao);
+		repositories.put(Cliente.class.getName(), clienteDAO);
+		repositories.put(Reserva.class.getName(), reservaDAO);
 		
-		rns.put(HospedagemAluguel.class.getName(), rnsHospedagem);
-		rns.put(ClienteAluguel.class.getName(), rnsCliente);
+		rns.put(Hospedagem.class.getName(), rnsHospedagem);
+		rns.put(Cliente.class.getName(), rnsCliente);
 
 	}
 

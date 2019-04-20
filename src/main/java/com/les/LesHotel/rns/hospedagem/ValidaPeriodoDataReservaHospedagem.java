@@ -3,14 +3,14 @@ package com.les.LesHotel.rns.hospedagem;
 import java.time.temporal.ChronoUnit;
 
 import com.les.LesHotel.entities.EntidadeDominio;
-import com.les.LesHotel.entities.HospedagemAluguel;
+import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.rns.IStrategy;
 
 public class ValidaPeriodoDataReservaHospedagem implements IStrategy {
 
 	@Override
 	public String processar(EntidadeDominio entidade) {
-		HospedagemAluguel hospedagem = (HospedagemAluguel) entidade;
+		Hospedagem hospedagem = (Hospedagem) entidade;
         long diferencaEmDias = ChronoUnit.DAYS.between(hospedagem.getDataInicio(), hospedagem.getDataFim());
 
         

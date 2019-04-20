@@ -1,11 +1,9 @@
-package com.les.LesHotel.entities.superclasses;
+package com.les.LesHotel.entities;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Entity;
 
-import com.les.LesHotel.entities.EntidadeDominio;
-
-@MappedSuperclass
-public class Cartao extends EntidadeDominio {
+@Entity
+public class Cartao  extends EntidadeDominio{
 	
 	private String bandeira;
 	private String numero;
@@ -46,4 +44,7 @@ public class Cartao extends EntidadeDominio {
 		this.cvv = cvv;
 	}
 	
+	
+	
+
 }

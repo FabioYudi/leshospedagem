@@ -12,16 +12,14 @@ import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.les.LesHotel.entities.reserva.CartaoReserva;
-import com.les.LesHotel.entities.reserva.ClienteReserva;
-import com.les.LesHotel.entities.reserva.HospedagemReserva;
 
 @Entity
 public class Reserva extends EntidadeDominio {
+	
 	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	private ClienteReserva cliente;
+	private Cliente cliente;
 	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	private HospedagemReserva hospedagem;
+	private Hospedagem hospedagem;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate checkin;
@@ -32,8 +30,19 @@ public class Reserva extends EntidadeDominio {
 	private BigDecimal total;
 	private Integer qtdHospedes;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	private Set<CartaoReserva> cartoes;
+	private Set<Cartao> cartoes;
 	
+	private String status;
+	
+	
+	
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public Integer getQtdHospedes() {
 		return qtdHospedes;
 	}
@@ -60,24 +69,25 @@ public class Reserva extends EntidadeDominio {
 	public void setCheckout(LocalDate checkout) {
 		this.checkout = checkout;
 	}
-	public ClienteReserva getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
-	public void setCliente(ClienteReserva cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public HospedagemReserva getHospedagem() {
+	public Hospedagem getHospedagem() {
 		return hospedagem;
 	}
-	public void setHospedagem(HospedagemReserva hospedagem) {
+	public void setHospedagem(Hospedagem hospedagem) {
 		this.hospedagem = hospedagem;
 	}
-	public Set<CartaoReserva> getCartoes() {
+	public Set<Cartao> getCartoes() {
 		return cartoes;
 	}
-	public void setCartoes(Set<CartaoReserva> cartoes) {
+	public void setCartoes(Set<Cartao> cartoes) {
 		this.cartoes = cartoes;
 	}
+	
 	
 	
 	

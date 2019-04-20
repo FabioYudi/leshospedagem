@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.les.LesHotel.entities.ClienteAluguel;
+import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.repository.ClienteRepository;
 import com.les.LesHotel.rns.IStrategy;
@@ -18,7 +18,7 @@ public class ValidaEmailJaCadastrado implements IStrategy {
 	@Override
 	public String processar(EntidadeDominio entidade) {
 		
-		ClienteAluguel cliente = (ClienteAluguel) entidade;
+		Cliente cliente = (Cliente) entidade;
 		
 		
 			return null;

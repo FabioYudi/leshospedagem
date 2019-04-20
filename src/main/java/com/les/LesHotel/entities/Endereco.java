@@ -1,11 +1,9 @@
-package com.les.LesHotel.entities.superclasses;
+package com.les.LesHotel.entities;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Entity;
 
-import com.les.LesHotel.entities.EntidadeDominio;
-
-@MappedSuperclass
-public class Endereco extends EntidadeDominio{
+@Entity
+public class Endereco extends EntidadeDominio {
 	
 	private String logradouro;
 	private String numero;
@@ -70,4 +68,6 @@ public class Endereco extends EntidadeDominio{
 	}
 	
 	
+	
+
 }

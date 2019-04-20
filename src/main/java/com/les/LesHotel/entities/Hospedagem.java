@@ -1,30 +1,26 @@
-package com.les.LesHotel.entities.superclasses;
+package com.les.LesHotel.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.les.LesHotel.entities.EnderecoAluguel;
-import com.les.LesHotel.entities.EntidadeDominio;
-import com.les.LesHotel.entities.Taxa;
 
-@MappedSuperclass
-public class Hospedagem extends EntidadeDominio{
-	
+@Entity
+public class Hospedagem extends EntidadeDominio {
 	private String titulo;
 	private BigDecimal diaria;
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	private EnderecoAluguel endereco;
+	private Endereco endereco;
 	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	private List<Taxa> taxas;
 	private int qtdQuartos;
@@ -97,10 +93,10 @@ public class Hospedagem extends EntidadeDominio{
 	public void setDiaria(BigDecimal diaria) {
 		this.diaria = diaria;
 	}
-	public EnderecoAluguel getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
-	public void setEndereco(EnderecoAluguel endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 	public List<Taxa> getTaxas() {
@@ -111,5 +107,5 @@ public class Hospedagem extends EntidadeDominio{
 	}
 	
 	
-
+	
 }

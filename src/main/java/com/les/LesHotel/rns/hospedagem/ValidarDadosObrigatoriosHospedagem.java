@@ -1,7 +1,7 @@
 package com.les.LesHotel.rns.hospedagem;
 
 import com.les.LesHotel.entities.EntidadeDominio;
-import com.les.LesHotel.entities.HospedagemAluguel;
+import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.rns.IStrategy;
 
@@ -9,7 +9,7 @@ public class ValidarDadosObrigatoriosHospedagem implements IStrategy{
 
 	@Override
 	public String processar(EntidadeDominio entidade) {
-		HospedagemAluguel hospedagem = (HospedagemAluguel) entidade;
+		Hospedagem hospedagem = (Hospedagem) entidade;
 		StringBuilder builder = new StringBuilder();
 		
 		if(StringHelper.isNullOrEmpty(hospedagem.getCategoria())) {
