@@ -37,9 +37,12 @@ public class HospedagemController extends ControllerBase {
 	
 	@PostMapping("/consultarAtualizacao")
 	public String consultaHospedagemAtualizado(Model model, @RequestParam("mensagem") String mensagem) {
-		Hospedagem hospedagem = new Hospedagem();
-		Resultado resultado = commands.get(CONSULTAR).execute(hospedagem);
-		model.addAttribute("hospedagens", resultado.getEntidades());
+		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
+		Cliente cliente = new Cliente();
+		cliente.setId(clienteLogado.getId());
+		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
+
+		model.addAttribute("hospedagens", cliente.getHospedagens());
 		model.addAttribute("mensagem", mensagem);
 		return "painel/hospedagem/consultar";
 	}
@@ -68,9 +71,11 @@ public class HospedagemController extends ControllerBase {
 	
 	@GetMapping("/consultar")
 	public String consultaHospedagem(Model model) {
-		Hospedagem hospedagem = new Hospedagem();
-		Resultado resultado = commands.get(CONSULTAR).execute(hospedagem);
-		model.addAttribute("hospedagens", resultado.getEntidades());
+		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
+		Cliente cliente = new Cliente();
+		cliente.setId(clienteLogado.getId());
+		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
+		model.addAttribute("hospedagens", cliente.getHospedagens());
 		return "painel/hospedagem/consultar";
 	}
 	

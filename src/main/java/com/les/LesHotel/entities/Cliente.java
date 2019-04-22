@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Cliente extends EntidadeDominio {
 	
@@ -29,6 +31,7 @@ public class Cliente extends EntidadeDominio {
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private Set<Cartao> cartoes;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@JsonManagedReference
 	private Set<Hospedagem> hospedagens;
 
 	

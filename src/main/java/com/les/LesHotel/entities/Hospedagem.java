@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -19,9 +20,9 @@ public class Hospedagem extends EntidadeDominio {
 	private String titulo;
 	private BigDecimal diaria;
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private Endereco endereco;
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private List<Taxa> taxas;
 	private int qtdQuartos;
 	private int qtdHospedes;
@@ -32,7 +33,8 @@ public class Hospedagem extends EntidadeDominio {
 	private String categoria;
 	private String descricao;
 	private Boolean ativo;
-	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@JsonBackReference
 	private Cliente anfitriao;
 	
 	

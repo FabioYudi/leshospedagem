@@ -26,7 +26,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <h6 class="dropdown-header">Ações</h6>
-          <a class="dropdown-item" id="side-consultar" href="/painel/estadia/consultar">Consultar</a>
+          <a class="dropdown-item" id="side-consultar" href="/cliente/consultar/reservas">Consultar</a>
           <div class="dropdown-divider"></div>
         </div>
       </li>

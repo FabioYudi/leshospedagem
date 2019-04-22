@@ -41,21 +41,17 @@
 	        <form>
 		        <div class="form-group">
 		          	<div class="form">	
-		    			<label for="exampleFormControlSelect1">Selecione seu cartão de crédito ou cadastre um novo</label>
+		    			<label for="exampleFormControlSelect1">Cartões utilizados na reserva</label>
 		    			<br>
 		    			<div id="divCartoes" >
 			    			<div class="form-group">
 			          			<div  class="form-row">
-				    				<select  id="selectCartao"  class="form-control col-5" id="exampleFormControlSelect1">
-								    	<c:forEach var="cartao" items="${cliente.cartoes}">
-					    			 		<option idCartao="${cartao.id}">${cartao.bandeira}-${cartao.numero}</option>
+								    	<c:forEach var="cartao" items="${reserva.cartoes}">
+								    		<div class="row">
+								    			<div style="margin-left:20px" idCartao="${cartao.id}">${cartao.bandeira}-${cartao.numero}</div>
+								    		</div>
+					    			 		
 					    				</c:forEach>
-							   		</select>
-									<div id="divInputValor" class="hide valorCartao">
-							   			<label style="margin-left:100px" for="valorPorCartao">Valor</label>
-				                  		<input style="margin-left:10px" class="col-3" type="text" id="valorPorCartao" class="form-control" placeholder="" required="required" autofocus="autofocus">
-				                  		<button idCartaoBotao="" onclick="retirarCartao(this)" type="button" style="background:none; color:red; border:none">X</button>
-			    					</div>
 			    				</div>
 			    			</div>
 		    			</div>
@@ -68,31 +64,19 @@
 		          </div>
 		          <div class="form-group">
 		          	<div class="form-row">	
-		    			<label for="exampleFormControlSelect1">Selecione seu endereço de cobrança ou cadastre um novo</label>
+		    			<label for="exampleFormControlSelect1">Dados do hóspede</label>
 					    <select class="form-control" id="exampleFormControlSelect1">
-					      <c:forEach var="endereco" items="${cliente.enderecos}">
-		    			 		<option>${endereco.logradouro} - ${endereco.estado} - ${endereco.cidade}</option>
-		    			</c:forEach>
+		    				<div></div>
 					    </select>
 					    <a style="margin-top:20px" data-toggle="modal" data-target="#modalCadastrarEndereco"  class="btn btn-primary" href="/painel/hospedagem/pagamento">Novo Endereço</a>
 		          	</div>
 		          </div>
-		           <div class="form-group">
-		            <div class="form-row">
-		              <div class="col-md-6">
-		                <div class="form-label-group">
-		                  <label for="firstName">Cupom de desconto</label>
-		                  <input type="text" id="firstName" class="form-control" placeholder="" required="required" autofocus="autofocus">
-		                  <button style="margin-top:10px"class="btn btn-warning">Aplicar</button>
-		                </div>
-		              </div>
-		            </div>
-		          </div>
+		           
 		          <div class="form-group">
 		          	<div class="form-row">
 		          		<div class="form-group">
-		          			<label for="exampleFormControlTextarea1">Deixe um comentário para o anfitrião</label>
-		   					<textarea style="width:480px;" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+		          			<label for="exampleFormControlTextarea1">Comentário do hóspede para o anfitrião</label>
+		   					${reserva.mensagem}
 		  				</div>
 		          	</div>     
 		          </div> 

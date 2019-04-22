@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.les.LesHotel.Facade.Resultado;
 import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.Endereco;
+import com.les.LesHotel.entities.Reserva;
 
 @Controller
 @RequestMapping("/cliente")
@@ -180,6 +181,21 @@ public class ClienteController extends ControllerBase{
 	public String logout() {
 		httpSession.removeAttribute("clienteLogado");
 		return "index";
+	}
+	
+	@GetMapping("/consultar/reservas")
+	public String consultarReservas(Model model) {
+		Cliente clienteConsulta = new Cliente();
+		Cliente cliente = (Cliente) httpSession.getAttribute("clienteLogado");
+		clienteConsulta.setId(cliente.getId());
+		Resultado resultado = commands.get(VISUALIZAR).execute(clienteConsulta);
+		cliente = (Cliente) resultado.getEntidades().get(0);
+		Reserva reserva = new Reserva();
+		reserva.setCliente(cliente);
+		resultado = commands.get(CONSULTAR).execute(reserva);
+		model.addAttribute("cliente", cliente);
+		model.addAttribute("reservas", resultado.getEntidades());
+		return "cliente/reservas";
 	}
 	
 	
