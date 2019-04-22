@@ -48,6 +48,8 @@ public class ClienteDAO extends AbstractDAO {
 			allPredicates.add(c -> c.getDtNascimento().equals(cliente.getDtNascimento()));
 		if(cliente.getEnderecos() != null && !cliente.getEnderecos().isEmpty())
 			allPredicates.add(c -> c.getEnderecos().containsAll(cliente.getEnderecos()));
+		if(cliente.getHospedagens() != null && !cliente.getHospedagens().isEmpty())
+			allPredicates.add(c -> c.getHospedagens().containsAll(cliente.getHospedagens()));
 		if(cliente.getAtivo() != null)
 			allPredicates.add(c -> c.getAtivo() == cliente.getAtivo());
 		

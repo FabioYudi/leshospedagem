@@ -146,8 +146,15 @@ public class HospedagemController extends ControllerBase {
 			throws Exception {
 		ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
 		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
+		Cliente cliente = new Cliente();
+		cliente.setId(clienteLogado.getId());
+		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
+	
 		Hospedagem hospedagem = (Hospedagem) mapper.readValue(entidade, Hospedagem.class);
-		Resultado resultado = commands.get(action).execute(hospedagem);
+		hospedagem.setAnfitriao(cliente);
+		cliente.getHospedagens().add(hospedagem);
+		Resultado resultado = commands.get(ALTERAR).execute(cliente);
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			resultado.setMsg("Hospedagem cadastrada com sucesso!");
 			model.addAttribute("ok", true);

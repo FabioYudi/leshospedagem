@@ -28,11 +28,19 @@ public class Cliente extends EntidadeDominio {
 	private List<Endereco> enderecos;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private Set<Cartao> cartoes;
+	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	private Set<Hospedagem> hospedagens;
 
 	
 	
 	
 	
+	public Set<Hospedagem> getHospedagens() {
+		return hospedagens;
+	}
+	public void setHospedagens(Set<Hospedagem> hospedagens) {
+		this.hospedagens = hospedagens;
+	}
 	public Set<Cartao> getCartoes() {
 		return cartoes;
 	}

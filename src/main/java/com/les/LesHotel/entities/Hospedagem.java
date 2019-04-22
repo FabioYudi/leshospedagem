@@ -32,12 +32,19 @@ public class Hospedagem extends EntidadeDominio {
 	private String categoria;
 	private String descricao;
 	private Boolean ativo;
+	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private Cliente anfitriao;
 	
 	
 	
 	
 	
-	
+	public Cliente getAnfitriao() {
+		return anfitriao;
+	}
+	public void setAnfitriao(Cliente anfitriao) {
+		this.anfitriao = anfitriao;
+	}
 	public Boolean getAtivo() {
 		return ativo;
 	}
