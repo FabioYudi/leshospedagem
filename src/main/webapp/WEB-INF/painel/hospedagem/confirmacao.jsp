@@ -34,41 +34,42 @@
 
         <div class="card mt-4">
           <div class="card-body">
-          	<h2>Confirme o pagamento</h2>
-            <h3 class="card-title">${hospedagem.titulo}</h3>
-            <h4>Diária: R$${hospedagem.diaria}</h4>
-            <p class="card-text">${hospedagem.descricao}</p>
-	        <form>
+          	<h6>Confirme o pagamento</h6>
+            <h4 class="card-title">${reserva.hospedagem.titulo}</h4>
+            <p>Diária: <strong>R$${reserva.hospedagem.diaria}</strong></p>
+            <p class="card-text">${reserva.hospedagem.descricao}</p>
+	      
 		        <div class="form-group">
 		          	<div class="form">	
 		    			<label for="exampleFormControlSelect1">Cartões utilizados na reserva</label>
 		    			<br>
 		    			<div id="divCartoes" >
 			    			<div class="form-group">
-			          			<div  class="form-row">
+			          			
 								    	<c:forEach var="cartao" items="${reserva.cartoes}">
 								    		<div class="row">
 								    			<div style="margin-left:20px" idCartao="${cartao.id}">${cartao.bandeira}-${cartao.numero}</div>
 								    		</div>
 					    			 		
 					    				</c:forEach>
-			    				</div>
+			    			
 			    			</div>
 		    			</div>
-		    			<div class="row">
-		    				<button type="button" onclick="carregarCartoes()"   style="margin-top:20px"  class="btn btn-warning">Adicionar cartão ao pagamento</button>
-					    	<button type="button" data-toggle="modal" data-target="#modalCadastrarCartao"  style="margin-top:20px; margin-left:20px"  class="btn btn-primary">Cadastrar novo Cartão</button>
-		    			</div>
+		   
 					  
 		          	</div>
 		          </div>
 		          <div class="form-group">
-		          	<div class="form-row">	
-		    			<label for="exampleFormControlSelect1">Dados do hóspede</label>
-					    <select class="form-control" id="exampleFormControlSelect1">
-		    				<div></div>
-					    </select>
-					    <a style="margin-top:20px" data-toggle="modal" data-target="#modalCadastrarEndereco"  class="btn btn-primary" href="/painel/hospedagem/pagamento">Novo Endereço</a>
+		          	<div class="row">	
+		    			<h4 for="exampleFormControlSelect1">Dados do hóspede</h4>
+		          	</div>
+		          	<p>Nome: <strong>${reserva.cliente.nome}</strong></p>
+		          	<p>Email: <strong>${reserva.cliente.email}</strong></p>
+		          	<p>Telefone: <strong>${reserva.cliente.nome}</strong></p>
+		          	<p>CPF: <strong>${reserva.cliente.cpf}</strong></p>
+		          	<div class="col">a</div><div class="col">b</div>
+		          	<div class="row">	
+		    			<h4 for="exampleFormControlSelect1">Dados de cobrança</h4>
 		          	</div>
 		          </div>
 		           
@@ -81,7 +82,7 @@
 		          	</div>     
 		          </div> 
 		          <button type="button" style="margin-top:20px" class="btn btn-success btn-block" onclick="continuar()">Concordar e continuar</button>
-	        </form>
+	       
           </div>
          
         </div>
