@@ -92,7 +92,7 @@
 		          	<div class="form-row">
 		          		<div class="form-group">
 		          			<label for="exampleFormControlTextarea1">Deixe um comentário para o anfitrião</label>
-		   					<textarea style="width:480px;" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+		   					<textarea style="width:480px;" class="form-control" id="textoHospede" rows="5"></textarea>
 		  				</div>
 		          	</div>     
 		          </div> 
@@ -154,6 +154,10 @@
 <form id="formConfirmacao" method="POST" action="/pagamento/confirmacao">
 	<input type="hidden" name="idCliente" id="idCliente"/>
 	<input type="hidden" name="idHospedagem" id="idHospedagem"/>
+	<input type="hidden" name="checkin" value="${reserva.checkin}"/>
+	<input type="hidden" name="checkout" value="${reserva.checkout}"/>
+	<input type="hidden" name="total" value="${reserva.total}"/>
+	<input type="hidden" name="qtdHospedes" value="${reserva.qtdHospedes}"/>
 
 </form>
 <script>
@@ -180,6 +184,8 @@ function continuar(){
 		listaCartoes.push(jsonCartao);
 
 	});
+	
+	
 
 	
 	
@@ -189,7 +195,8 @@ function continuar(){
 		checkout: checkout,
 		qtdHospedes: qtdHospedes,
 		total: total,
-		cartoes: listaCartoes
+		cartoes: listaCartoes,
+		mensagem: $("#textoHospede").text()
 		
 	};
 	

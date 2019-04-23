@@ -33,11 +33,22 @@ public class ReservaDAO extends AbstractDAO {
 		Reserva reserva = (Reserva) entidade;
 		List<Predicate<Reserva>> allPredicates = new ArrayList<Predicate<Reserva>>();
 		if(reserva.getId() != null && reserva.getId() > 0)
-			allPredicates.add(c -> c.getId() == reserva.getId());
+			allPredicates.add(r -> r.getId() == reserva.getId());
 		if(reserva.getHospedagem() != null)
-			allPredicates.add(r -> r.getHospedagem() == reserva.getHospedagem());
-		if(reserva.getCliente() != null) 
-			allPredicates.add(r -> r.getCliente() == reserva.getCliente());
+			if(reserva.getHospedagem().getId() != null && reserva.getHospedagem().getId() > 0) {
+				allPredicates.add(r -> r.getHospedagem().getId() == reserva.getHospedagem().getId());
+			}
+			
+		if(reserva.getCliente() != null ) {
+			if(reserva.getCliente().getId() != null && reserva.getCliente().getId() > 0) {
+				allPredicates.add(r -> r.getCliente().getId() == reserva.getCliente().getId());
+			}
+		}
+			
+		if(reserva.getTotal() != null) 
+			allPredicates.add(r -> r.getTotal() == reserva.getTotal());
+		if(reserva.getQtdHospedes() != null && reserva.getQtdHospedes() > 0)
+			allPredicates.add(r -> r.getQtdHospedes() == reserva.getQtdHospedes());
 		
 		
 		

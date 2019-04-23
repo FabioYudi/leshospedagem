@@ -53,7 +53,7 @@ public class PagamentoController extends ControllerBase {
 	}
 	
 	@PostMapping("/confirmacao")
-	public String irParaPagamento(Model model, String idCliente, String idHospedagem, @RequestParam("reserva") String dadosReserva) {
+	public String irParaPagamento(Model model, String idCliente, String idHospedagem,  Reserva dadosReserva) {
 		Cliente cliente = new Cliente();
 		cliente.setId(Long.parseLong(idCliente));
 		Hospedagem hospedagem = new Hospedagem();
@@ -63,7 +63,10 @@ public class PagamentoController extends ControllerBase {
 		Reserva reserva = new Reserva();
 		reserva.setCliente(cliente);
 		reserva.setHospedagem(hospedagem);
-		reserva = (Reserva) commands.get(VISUALIZAR).execute(reserva).getEntidades().get(0);
+		reserva.setCheckin(dadosReserva.getCheckin());
+		reserva.setCheckout(dadosReserva.getCheckout());
+		reserva.setQtdHospedes(dadosReserva.getQtdHospedes());
+		reserva = (Reserva) commands.get(CONSULTAR).execute(reserva).getEntidades().get(0);
 		model.addAttribute("reserva", reserva);		
 		
 		return "painel/hospedagem/confirmacao";
