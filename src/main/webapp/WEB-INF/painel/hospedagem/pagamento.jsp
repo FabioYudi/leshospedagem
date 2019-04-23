@@ -69,9 +69,9 @@
 		          <div class="form-group">
 		          	<div class="form-row">	
 		    			<label for="exampleFormControlSelect1">Selecione seu endereço de cobrança ou cadastre um novo</label>
-					    <select class="form-control" id="exampleFormControlSelect1">
+					    <select id="selectEndereco" class="form-control" id="exampleFormControlSelect1">
 					      <c:forEach var="endereco" items="${cliente.enderecos}">
-		    			 		<option>${endereco.logradouro} - ${endereco.estado} - ${endereco.cidade}</option>
+		    			 		<option value="${endereco.id}">${endereco.logradouro} - ${endereco.estado} - ${endereco.cidade}</option>
 		    			</c:forEach>
 					    </select>
 					    <a style="margin-top:20px" data-toggle="modal" data-target="#modalCadastrarEndereco"  class="btn btn-primary" href="/painel/hospedagem/pagamento">Novo Endereço</a>
@@ -154,6 +154,7 @@
 <form id="formConfirmacao" method="POST" action="/pagamento/confirmacao">
 	<input type="hidden" name="idCliente" id="idCliente"/>
 	<input type="hidden" name="idHospedagem" id="idHospedagem"/>
+	<input type="hidden" name="idEndereco" id="idEndereco"/>
 	<input type="hidden" name="checkin" value="${reserva.checkin}"/>
 	<input type="hidden" name="checkout" value="${reserva.checkout}"/>
 	<input type="hidden" name="total" value="${reserva.total}"/>
@@ -196,10 +197,11 @@ function continuar(){
 		qtdHospedes: qtdHospedes,
 		total: total,
 		cartoes: listaCartoes,
-		mensagem: $("#textoHospede").text()
+		mensagem: $("#textoHospede").val()
+		
 		
 	};
-	
+
 	$.ajax({
 		 method: "POST",
 		 url: "/pagamento/irParaConfirmacao/" + idHospedagem + "/" + idCliente,
@@ -210,7 +212,9 @@ function continuar(){
 	         if(data.ok == true){
 	        	$("#idCliente").val(data.idCliente);
 	        	$("#idHospedagem").val(data.idHospedagem);
+	        	$("#idEndereco").val($("#selectEndereco option:selected").val());
 	        	$("#formConfirmacao").submit();
+	        
 	         }else{
 	        	
 	         }

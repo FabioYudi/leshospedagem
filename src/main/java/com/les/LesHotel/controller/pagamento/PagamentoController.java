@@ -1,6 +1,8 @@
 package com.les.LesHotel.controller.pagamento;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.les.LesHotel.Facade.Resultado;
 import com.les.LesHotel.controller.ControllerBase;
 import com.les.LesHotel.entities.Cliente;
+import com.les.LesHotel.entities.Endereco;
 import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.entities.Reserva;
 import com.les.LesHotel.helper.MapperReservaHelper;
@@ -53,19 +56,23 @@ public class PagamentoController extends ControllerBase {
 	}
 	
 	@PostMapping("/confirmacao")
-	public String irParaPagamento(Model model, String idCliente, String idHospedagem,  Reserva dadosReserva) {
+	public String irParaPagamento(Model model, String idCliente, String idHospedagem, String idEndereco, Reserva dadosReserva) {
 		Cliente cliente = new Cliente();
 		cliente.setId(Long.parseLong(idCliente));
 		Hospedagem hospedagem = new Hospedagem();
 		hospedagem.setId(Long.parseLong(idHospedagem));
 		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
 		hospedagem = (Hospedagem) commands.get(VISUALIZAR).execute(hospedagem).getEntidades().get(0);
+		ArrayList<Endereco> enderecos = (ArrayList<Endereco>) cliente.getEnderecos().stream()
+		.filter(e -> e.getId() == Long.parseLong(idEndereco))
+		.collect(Collectors.toList());
 		Reserva reserva = new Reserva();
 		reserva.setCliente(cliente);
 		reserva.setHospedagem(hospedagem);
 		reserva.setCheckin(dadosReserva.getCheckin());
 		reserva.setCheckout(dadosReserva.getCheckout());
 		reserva.setQtdHospedes(dadosReserva.getQtdHospedes());
+		reserva.setMensagem(dadosReserva.getMensagem());
 		reserva = (Reserva) commands.get(CONSULTAR).execute(reserva).getEntidades().get(0);
 		model.addAttribute("reserva", reserva);		
 		

@@ -20,23 +20,28 @@ public class Reserva extends EntidadeDominio {
 	private Cliente cliente;
 	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	private Hospedagem hospedagem;
-	
+	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private Endereco endereco;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate checkin;
-	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate checkout;
-	
 	private BigDecimal total;
 	private Integer qtdHospedes;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private Set<Cartao> cartoes;
-	
 	private String status;
-	
 	private String mensagem;
+	
+	
 
 	
+	public Endereco getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
 	public String getMensagem() {
 		return mensagem;
 	}
