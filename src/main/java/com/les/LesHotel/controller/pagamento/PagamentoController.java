@@ -28,9 +28,9 @@ import com.les.LesHotel.helper.MapperReservaHelper;
 public class PagamentoController extends ControllerBase {
 
 	@ResponseBody
-	@PostMapping("/irParaConfirmacao/{idHospedagem}/{idCliente}")
+	@PostMapping("/irParaConfirmacao/{idHospedagem}/{idCliente}/{idEndereco}")
 	public String processarPagamento( @RequestParam("reserva") String reserva, Model model,
-			@PathVariable("idHospedagem") String idHospedagem, @PathVariable("idCliente") String idCliente) throws IOException {
+			@PathVariable("idHospedagem") String idHospedagem, @PathVariable("idCliente") String idCliente, @PathVariable("idEndereco") String idEndereco) throws IOException {
 		ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
 		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 		Reserva reservaCliente = mapper.readValue(reserva, Reserva.class);
@@ -43,6 +43,10 @@ public class PagamentoController extends ControllerBase {
 		hospedagem = (Hospedagem) commands.get(VISUALIZAR).execute(hospedagem).getEntidades().get(0);
 		reservaCliente = MapperReservaHelper.mapearReserva(reservaCliente, cliente, hospedagem);
 		reservaCliente.setStatus("EM PROCESSO");
+		ArrayList<Endereco> enderecos = (ArrayList<Endereco>) cliente.getEnderecos().stream()
+				.filter(e -> e.getId() == Long.parseLong(idEndereco))
+				.collect(Collectors.toList());
+		reservaCliente.setEndereco(enderecos.get(0));
 		Resultado resultado = commands.get(SALVAR).execute(reservaCliente);
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			model.addAttribute("ok", true);
@@ -56,16 +60,14 @@ public class PagamentoController extends ControllerBase {
 	}
 	
 	@PostMapping("/confirmacao")
-	public String irParaPagamento(Model model, String idCliente, String idHospedagem, String idEndereco, Reserva dadosReserva) {
+	public String irParaPagamento(Model model, String idCliente, String idHospedagem, Reserva dadosReserva) {
 		Cliente cliente = new Cliente();
 		cliente.setId(Long.parseLong(idCliente));
 		Hospedagem hospedagem = new Hospedagem();
 		hospedagem.setId(Long.parseLong(idHospedagem));
 		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
 		hospedagem = (Hospedagem) commands.get(VISUALIZAR).execute(hospedagem).getEntidades().get(0);
-		ArrayList<Endereco> enderecos = (ArrayList<Endereco>) cliente.getEnderecos().stream()
-		.filter(e -> e.getId() == Long.parseLong(idEndereco))
-		.collect(Collectors.toList());
+		
 		Reserva reserva = new Reserva();
 		reserva.setCliente(cliente);
 		reserva.setHospedagem(hospedagem);

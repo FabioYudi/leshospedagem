@@ -201,10 +201,10 @@ function continuar(){
 		
 		
 	};
-
+	var idEndereco = $("#selectEndereco option:selected").val();
 	$.ajax({
 		 method: "POST",
-		 url: "/pagamento/irParaConfirmacao/" + idHospedagem + "/" + idCliente,
+		 url: "/pagamento/irParaConfirmacao/" + idHospedagem + "/" + idCliente + "/" + idEndereco,
 		 data: {reserva: JSON.stringify(reserva)},
 		 success: function(data) {
 			 debugger;
@@ -212,7 +212,7 @@ function continuar(){
 	         if(data.ok == true){
 	        	$("#idCliente").val(data.idCliente);
 	        	$("#idHospedagem").val(data.idHospedagem);
-	        	$("#idEndereco").val($("#selectEndereco option:selected").val());
+	        
 	        	$("#formConfirmacao").submit();
 	        
 	         }else{

@@ -46,12 +46,12 @@
 		    			<div id="divCartoes" >
 			    			<div class="form-group">
 			          			
-								    	<c:forEach var="cartao" items="${reserva.cartoes}">
-								    		<div class="row">
-								    			<div style="margin-left:20px" idCartao="${cartao.id}">${cartao.bandeira}-${cartao.numero}</div>
-								    		</div>
-					    			 		
-					    				</c:forEach>
+									<c:forEach var="cartao" items="${reserva.cartoes}">
+										<div class="row">
+											<div style="margin-left:20px" idCartao="${cartao.id}">${cartao.bandeira}-${cartao.numero}</div>
+										</div>
+					    			
+					    		</c:forEach>
 			    			
 			    			</div>
 		    			</div>
@@ -59,20 +59,56 @@
 					  
 		          	</div>
 		          </div>
-		          <div class="form-group">
+		         
 		          	<div class="row">	
-		    			<h4 for="exampleFormControlSelect1">Dados do hóspede</h4>
+		    			<h4>Dados do hóspede</h4>
 		          	</div>
-		          	<p>Nome: <strong>${reserva.cliente.nome}</strong></p>
-		          	<p>Email: <strong>${reserva.cliente.email}</strong></p>
-		          	<p>Telefone: <strong>${reserva.cliente.nome}</strong></p>
-		          	<p>CPF: <strong>${reserva.cliente.cpf}</strong></p>
-		          	<div class="col">a</div><div class="col">b</div>
-		          	<div class="row">	
-		    			<h4 for="exampleFormControlSelect1">Dados de cobrança</h4>
-		          	</div>
-		          </div>
-		           
+		          		<div class="row">
+						    <div class="col-sm">
+						    	<p>Nome: <strong>${reserva.cliente.nome}</strong></p>
+						    </div>
+						     <div class="col-sm">
+						     		<p>Email: <strong>${reserva.cliente.email}</strong></p>
+						     </div>
+						</div>   
+			          	<div class="row">
+						    <div class="col-sm">
+						    	<p>Telefone: <strong>${reserva.cliente.nome}</strong></p>
+						    </div>
+						     <div class="col-sm">
+						     	<p>CPF: <strong>${reserva.cliente.cpf}</strong></p>
+						     </div>
+						</div>
+
+			    		<div class="row">
+			    			<h4>Dados de cobrança</h4>
+			    		</div>
+			    		<div class="row">
+			    		
+						    <div class="col-sm">
+						    	<p>Logradouro: <strong>${reserva.endereco.logradouro}</strong></p>
+						    </div>
+						    <div class="col-sm">
+						    	<p>Número: <strong>${reserva.endereco.numero}</strong></p>
+						    </div>
+						</div> 
+						<div class="row">
+							<div class="col-sm">
+								<p>Bairro: <strong>${reserva.endereco.bairro}</strong></p>
+							</div>
+							<div class="col-sm">
+								<p>CEP: <strong>${reserva.endereco.cep}</strong></p>
+							</div>
+						</div>  
+						<div class="row">
+							<div class="col-sm">
+								<p>Cidade: <strong>${reserva.endereco.cidade}</strong></p>
+							</div>
+							<div class="col-sm">
+								<p>Estado: <strong>${reserva.endereco.estado}</strong></p>
+							</div>
+						</div>    
+ 
 		          <div class="form-group">
 		          	<div class="form-row">
 		          		<div class="form-group">
