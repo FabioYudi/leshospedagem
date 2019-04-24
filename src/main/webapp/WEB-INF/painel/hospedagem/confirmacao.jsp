@@ -30,37 +30,28 @@
 	
    
 
-      <div class="col-lg-9">
+      <div class="col-lg-8">
 
         <div class="card mt-4">
           <div class="card-body">
-          	<h6>Confirme o pagamento</h6>
             <h4 class="card-title">${reserva.hospedagem.titulo}</h4>
             <p>Diária: <strong>R$${reserva.hospedagem.diaria}</strong></p>
             <p class="card-text">${reserva.hospedagem.descricao}</p>
-	      
-		        <div class="form-group">
-		          	<div class="form">	
-		    			<label for="exampleFormControlSelect1">Cartões utilizados na reserva</label>
-		    			<br>
-		    			<div id="divCartoes" >
-			    			<div class="form-group">
-			          			
-									<c:forEach var="cartao" items="${reserva.cartoes}">
-										<div class="row">
-											<div style="margin-left:20px" idCartao="${cartao.id}">${cartao.bandeira}-${cartao.numero}</div>
-										</div>
+
+		    <h4>Cartões utilizados na reserva</h4>
+		    	<div id="divCartoes" >
+					<c:forEach var="cartao" items="${reserva.cartoes}">
+						<div class="row">
+							<div class="col-sm">
+								<p idCartao="${cartao.id}">Cartão: <strong>${cartao.bandeira} - ${cartao.numero}</strong></p>
+							</div>
+						</div>
 					    			
-					    		</c:forEach>
+					</c:forEach>
 			    			
-			    			</div>
-		    			</div>
-		   
-					  
-		          	</div>
-		          </div>
-		         
-		          	<div class="row">	
+			    </div>
+			    <hr>
+		          	<div class="row col-sm">	
 		    			<h4>Dados do hóspede</h4>
 		          	</div>
 		          		<div class="row">
@@ -73,14 +64,14 @@
 						</div>   
 			          	<div class="row">
 						    <div class="col-sm">
-						    	<p>Telefone: <strong>${reserva.cliente.nome}</strong></p>
+						    	<p>Telefone: <strong>${reserva.cliente.telefone}</strong></p>
 						    </div>
 						     <div class="col-sm">
 						     	<p>CPF: <strong>${reserva.cliente.cpf}</strong></p>
 						     </div>
 						</div>
-
-			    		<div class="row">
+						<hr>
+			    		<div class="row col-sm">
 			    			<h4>Dados de cobrança</h4>
 			    		</div>
 			    		<div class="row">
@@ -107,15 +98,16 @@
 							<div class="col-sm">
 								<p>Estado: <strong>${reserva.endereco.estado}</strong></p>
 							</div>
-						</div>    
- 
-		          <div class="form-group">
-		          	<div class="form-row">
-		          		<div class="form-group">
-		          			<label for="exampleFormControlTextarea1">Comentário do hóspede para o anfitrião</label>
-		   					${reserva.mensagem}
-		  				</div>
-		          	</div>     
+						</div> 
+				  <hr>		   
+ 				  <h4>Comentário do hóspede para o anfitrião</h4>	
+		          <div class="form-group">	
+		          	<div class="row">
+		          		<div class="col-sm">
+		          			${reserva.mensagem}
+		          		</div>
+		          	</div>	
+		          </div>     
 		          </div> 
 		          <button type="button" style="margin-top:20px" class="btn btn-success btn-block" onclick="continuar()">Concordar e continuar</button>
 	       
@@ -128,15 +120,15 @@
 
       
 
-      </div>
-      <div class="col-lg-3">
-        <div style="width:300px"class="card mt-4">
+      
+     
+        <div class="card mt-4 col-lg-4">
         	<div class="card-body">
             <h4>Total: R$${reserva.total }</h4>
             <form>
             	<div class="form-group">
 		            <div class="form-row">
-		              <div class="col-md-6">
+		              <div class="col-md-12">
 		                <div class="form-label-group">
 		                  <label for="inputPassword"><strong>Quantidade de hóspedes:</strong> ${reserva.qtdHospedes}</label>
 		                  
@@ -158,15 +150,38 @@
 		              </div>
 		            </div>
           		</div>
+          		<div class="form-group">
+          			<hr>
+          			<h4>Anfitrião</h4>
+          			<div class="row">
+			              <div class="col-md-12">
+			                  <label for="inputPassword"><strong>Nome:</strong> ${reserva.hospedagem.anfitriao.nome}</label>
+			              </div>
+			        </div>
+			           <div class="row">      
+			              <div class="col-md-12">
+			                  <label for="inputPassword"><strong>Telefone:</strong> ${reserva.hospedagem.anfitriao.telefone}</label>
+			              </div>
+		              </div>
+			              <div class="row">
+			              	<div class="col-md-12">
+			              	   <label for="inputPassword"><strong>Email:</strong> ${reserva.hospedagem.anfitriao.email}</label>
+			              	</div>
+			              </div>
+          		</div>
             </form>
           </div>
         </div>
+      
+      
+      
+  
       </div>
       <!-- /.col-lg-9 -->
 
     </div>
 
-  </div>
+  
 
 </body>
 <jsp:include page="../../components/modal/cartao/cadastrarCartao.jsp" />
