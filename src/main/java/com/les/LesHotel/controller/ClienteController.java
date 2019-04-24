@@ -398,4 +398,14 @@ public class ClienteController extends ControllerBase{
 		return mapper.writeValueAsString(model);
 	}
 	
+	@GetMapping("/visualizarReserva/{idReserva}")
+	public String visualizarReserva(Model model, @PathVariable("idReserva") String idReserva)  {
+		Reserva reserva = new Reserva();
+		reserva.setId(Long.parseLong(idReserva));
+		reserva = (Reserva) commands.get(VISUALIZAR).execute(reserva).getEntidades().get(0);
+		model.addAttribute("reserva", reserva);
+		return "cliente/reservas/visualizar";
+		
+	}
+	
 }

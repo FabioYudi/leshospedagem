@@ -77,26 +77,26 @@ text-decoration:none;
 				      <td>${reserva.checkin}</td>
 				      <td>${reserva.checkout}</td>
 				      <td>${reserva.total}</td>
-				      <td>${reserva.status}</td>
+				      <c:choose>
+				      	<c:when test="${reserva.status eq 'EM PROCESSO'}">
+				      		<td style="color: #FFD700"><strong>${reserva.status}</strong></td>
+				      	</c:when>
+				      	<c:when test="${reserva.status eq 'APROVADO'}">
+				      		<td style="color: #008000"><strong>${reserva.status}</strong></td>
+				      	</c:when>
+				      	<c:when test="${reserva.status eq 'REPROVADO'}">
+				      		<td style="color: #8B0000"><strong>${reserva.status}</strong></td>
+				      	</c:when>
+				      </c:choose>
 				      
-				      
-				     
 				      <td>
-				      	 
-				      	 <c:choose>
-				      	 	<c:when test="${!endereco.principal}">
-				      	 		<button onclick="setPrincipal(this)" valor="true" type="button" idCliente="${cliente.id}" idEndereco="${endereco.id}" class="btn btn-success">Selecionar como principal</button>
-				      	 	</c:when>
-				      	 	<c:otherwise>
-				      	 		<button  valor="true" type="button" class="btn btn-warning">Este é seu endereço principal</button>
-				      	 		
-				      	 	</c:otherwise>	
-				      	 </c:choose>
-				      	 
-				     	 
-				     	 <button onclick="excluir(this)" valor="true"  type="button" class="btn btn-danger" idCliente="${cliente.id}" idEndereco="${endereco.id}">Excluir</button>	
+				      	 	<c:if test="${reserva.status eq 'EM PROCESSO'}">
+				      	 		<button type="button" class="btn btn-danger">Cancelar Reserva</button>
+				      	 	</c:if>
+				     	 <a type="button" href="/cliente/visualizarReserva/${reserva.id}" class="btn btn-primary">Detalhes</a>	
 				      </td>
 				    </tr>
+				  
 			  	</c:forEach>
                 </tbody>
               </table>
@@ -124,7 +124,10 @@ text-decoration:none;
 
 </body>
 
+
+
 <script>
+
 	function desativar(botao){
 		var id = $(botao).attr("idHospedagem");
 		$.ajax({

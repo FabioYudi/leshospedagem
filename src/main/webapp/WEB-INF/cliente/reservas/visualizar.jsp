@@ -109,7 +109,7 @@
 		          	</div>	
 		          </div>     
 		          </div> 
-		          <button type="button" style="margin-top:20px" class="btn btn-success btn-block" onclick="continuar()">Concordar e continuar</button>
+		          
 	       
           </div>
          
