@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.entities.Reserva;
+import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.repository.ReservaRepository;
 
 @Component
@@ -53,6 +54,8 @@ public class ReservaDAO extends AbstractDAO {
 			allPredicates.add(r -> r.getTotal().setScale(2, RoundingMode.HALF_EVEN) == reserva.getTotal().setScale(2, RoundingMode.HALF_EVEN));
 		if(reserva.getQtdHospedes() != null && reserva.getQtdHospedes() > 0)
 			allPredicates.add(r -> r.getQtdHospedes() == reserva.getQtdHospedes());
+		if(StringHelper.isNullOrEmpty(reserva.getStatus()))
+			allPredicates.add(r -> r.getStatus().equalsIgnoreCase(reserva.getStatus()));
 		
 		
 		

@@ -76,7 +76,7 @@ public class PagamentoController extends ControllerBase {
 		reserva.setCheckin(dadosReserva.getCheckin());
 		reserva.setCheckout(dadosReserva.getCheckout());
 		reserva.setQtdHospedes(dadosReserva.getQtdHospedes());
-		
+		reserva.setStatus("EM PROCESSO");
 		reserva.setTotal(null);
 		reserva = (Reserva) commands.get(CONSULTAR).execute(reserva).getEntidades().get(0);
 		model.addAttribute("reserva", reserva);		
