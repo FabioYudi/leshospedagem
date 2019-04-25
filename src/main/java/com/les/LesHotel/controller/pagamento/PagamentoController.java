@@ -1,6 +1,7 @@
 package com.les.LesHotel.controller.pagamento;
 
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -77,7 +78,7 @@ public class PagamentoController extends ControllerBase {
 		reserva.setCheckout(dadosReserva.getCheckout());
 		reserva.setQtdHospedes(dadosReserva.getQtdHospedes());
 		reserva.setStatus("EM PROCESSO");
-		reserva.setTotal(null);
+		reserva.setTotal(dadosReserva.getTotal().setScale(2, RoundingMode.HALF_EVEN));
 		reserva = (Reserva) commands.get(CONSULTAR).execute(reserva).getEntidades().get(0);
 		model.addAttribute("reserva", reserva);		
 		
