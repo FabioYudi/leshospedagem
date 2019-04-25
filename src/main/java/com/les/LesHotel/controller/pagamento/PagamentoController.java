@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import com.les.LesHotel.entities.Endereco;
 import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.entities.Reserva;
 import com.les.LesHotel.helper.MapperReservaHelper;
+import com.les.LesHotel.helper.PagamentoCartaoHelper;
 
 @Controller
 @RequestMapping("/pagamento")
@@ -74,11 +76,28 @@ public class PagamentoController extends ControllerBase {
 		reserva.setCheckin(dadosReserva.getCheckin());
 		reserva.setCheckout(dadosReserva.getCheckout());
 		reserva.setQtdHospedes(dadosReserva.getQtdHospedes());
-		reserva.setMensagem(dadosReserva.getMensagem());
+		
+		reserva.setTotal(null);
 		reserva = (Reserva) commands.get(CONSULTAR).execute(reserva).getEntidades().get(0);
 		model.addAttribute("reserva", reserva);		
 		
 		return "painel/hospedagem/confirmacao";
 		
+	}
+	
+	@GetMapping("/atualizarPagamento/{idReserva}")
+	public String atualizarReserva(@PathVariable String idReserva) {
+		Reserva reserva = new Reserva();
+		reserva.setId(Long.parseLong(idReserva));
+		reserva = (Reserva) commands.get(VISUALIZAR).execute(reserva).getEntidades().get(0);
+		if(PagamentoCartaoHelper.simularPagamento()) {
+			reserva.setStatus("APROVADO");
+		}else {
+			reserva.setStatus("REPROVADO");
+		}
+		
+		commands.get(ALTERAR).execute(reserva);
+		
+		return "forward:/cliente/consultar/reservas";
 	}
 }

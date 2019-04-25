@@ -111,7 +111,7 @@
       <div class="col-lg-3">
         <div style="width:300px"class="card mt-4">
         	<div class="card-body">
-            <h4>Total: R$${reserva.total }</h4>
+            <h4 id="txtTotal">Total: R$${reserva.total }</h4>
             <form>
             	<div class="form-group">
 		            <div class="form-row">
@@ -171,7 +171,10 @@ var checkout = "${reserva.checkout}";
 var qtdHospedes = ${reserva.qtdHospedes};
 var total = ${reserva.total};
 var listaCartoes = [];
+
+
 function continuar(){
+	
 	listaCartoes = [];
 	$("#divCartoes .form-group").each(function(){
 

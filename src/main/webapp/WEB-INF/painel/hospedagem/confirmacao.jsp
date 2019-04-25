@@ -109,7 +109,7 @@
 		          	</div>	
 		          </div>     
 		          </div> 
-		          <button type="button" style="margin-top:20px" class="btn btn-success btn-block" onclick="continuar()">Concordar e continuar</button>
+		          <a href="/pagamento/atualizarPagamento/${reserva.id}" type="button" style="margin-top:20px" class="btn btn-success btn-block" >Concordar e continuar</a>
 	       
           </div>
          
@@ -117,7 +117,7 @@
      
         <div class="card mt-4 col-lg-4">
         	<div class="card-body">
-            <h4>Total: R$${reserva.total }</h4>
+            <h4 id="txtTotal">Total: R$${reserva.total }</h4>
             <form>
             	<div class="form-group">
 		            <div class="form-row">
@@ -180,7 +180,7 @@
 <jsp:include page="../../components/modal/cartao/cadastrarCartao.jsp" />
 <jsp:include page="../../components/modal/cliente/cadastrarEndereco.jsp" />
 <script>
-debugger;
+
 pagamento = true;
 var idHospedagem = ${hospedagem.id}; 
 var idCliente = ${cliente.id};
@@ -188,8 +188,11 @@ var checkin = "${reserva.checkin}";
 var checkout = "${reserva.checkout}";
 var qtdHospedes = ${reserva.qtdHospedes};
 var total = ${reserva.total};
+var idReserva = ${reserva.id};
 var listaCartoes = [];
+$("#txtTotal").text(total.toFixed(2))
 function continuar(){
+	total = total.toFixed(2);
 	listaCartoes = [];
 	$("#divCartoes .form-group").each(function(){
 
@@ -205,7 +208,7 @@ function continuar(){
 	});
 
 	
-	
+	debugger;
 	var reserva = {
 		
 		checkin: checkin,

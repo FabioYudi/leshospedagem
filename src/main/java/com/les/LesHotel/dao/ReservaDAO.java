@@ -1,5 +1,6 @@
 package com.les.LesHotel.dao;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -44,9 +45,12 @@ public class ReservaDAO extends AbstractDAO {
 				allPredicates.add(r -> r.getCliente().getId() == reserva.getCliente().getId());
 			}
 		}
-			
+		if(reserva.getCheckin() != null)
+			allPredicates.add(r -> r.getCheckin().equals(reserva.getCheckin()));
+		if(reserva.getCheckout() != null)
+			allPredicates.add(r -> r.getCheckout().equals(reserva.getCheckout()));
 		if(reserva.getTotal() != null) 
-			allPredicates.add(r -> r.getTotal() == reserva.getTotal());
+			allPredicates.add(r -> r.getTotal().setScale(2, RoundingMode.HALF_EVEN) == reserva.getTotal().setScale(2, RoundingMode.HALF_EVEN));
 		if(reserva.getQtdHospedes() != null && reserva.getQtdHospedes() > 0)
 			allPredicates.add(r -> r.getQtdHospedes() == reserva.getQtdHospedes());
 		
