@@ -39,12 +39,12 @@ public class ReservaDAO extends AbstractDAO {
 			allPredicates.add(r -> r.getId().equals(reserva.getId()));
 		if(reserva.getHospedagem() != null)
 			if(reserva.getHospedagem().getId() != null && reserva.getHospedagem().getId() > 0) {
-				allPredicates.add(r -> r.getHospedagem().getId() == reserva.getHospedagem().getId());
+				allPredicates.add(r -> r.getHospedagem().getId().equals(reserva.getHospedagem().getId()));
 			}
 			
 		if(reserva.getCliente() != null ) {
 			if(reserva.getCliente().getId() != null && reserva.getCliente().getId() > 0) {
-				allPredicates.add(r -> r.getCliente().getId() == reserva.getCliente().getId());
+				allPredicates.add(r -> r.getCliente().getId().equals(reserva.getCliente().getId()));
 			}
 		}
 		if(reserva.getCheckin() != null)

@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -93,7 +94,18 @@ public class HospedagemController extends ControllerBase {
 		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 		
 		Hospedagem hos = (Hospedagem) mapper.readValue(hospedagem, Hospedagem.class);
-		Resultado resultado = commands.get("ALTERAR").execute(hos);
+		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
+		Cliente cliente = new Cliente();
+		cliente.setId(clienteLogado.getId());
+		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
+		Set<Hospedagem> hospedagens = 
+				cliente.getHospedagens().stream()
+					.filter(h -> !h.getId().equals(hos.getId()))
+					.collect(Collectors.toSet());
+		hos.setAnfitriao(cliente);
+		hospedagens.add(hos);
+		cliente.setHospedagens(hospedagens);
+		Resultado resultado = commands.get("ALTERAR").execute(cliente);
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			resultado.setMsg("Hospedagem alterada com sucesso!");
 			model.addAttribute("ok", true);
@@ -132,10 +144,14 @@ public class HospedagemController extends ControllerBase {
 			Reserva reservaHospedagem = (Reserva) entidade;
 			LocalDate startDate = reservaHospedagem.getCheckin();
 			LocalDate endDate = reservaHospedagem.getCheckout();
-			List<LocalDate> datas = Stream
-					.iterate(startDate, d -> d.plusDays(1))
-					.limit(ChronoUnit.DAYS.between(startDate, endDate) + 1)
-					.collect(Collectors.toList());
+			List<LocalDate> datas = new ArrayList<>();
+			if(!reservaHospedagem.getStatus().equalsIgnoreCase("REPROVADO")) {
+				 datas = Stream
+						.iterate(startDate, d -> d.plusDays(1))
+						.limit(ChronoUnit.DAYS.between(startDate, endDate) + 1)
+						.collect(Collectors.toList());
+			}
+		
 			datasIndisponives.addAll(datas);
 		}
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

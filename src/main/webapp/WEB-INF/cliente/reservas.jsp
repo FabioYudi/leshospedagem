@@ -90,7 +90,7 @@ text-decoration:none;
 				      </c:choose>
 				      
 				      <td>
-				      	 	<c:if test="${reserva.status eq 'EM PROCESSO'}">
+				      	 	<c:if test="${reserva.status eq 'EM PROCESSO' || reserva.status eq 'APROVADO'}">
 				      	 		<button type="button" class="btn btn-danger">Cancelar Reserva</button>
 				      	 	</c:if>
 				     	 <a type="button" href="/cliente/visualizarReserva/${reserva.id}" class="btn btn-primary">Detalhes</a>	
