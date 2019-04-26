@@ -32,10 +32,15 @@ public class Reserva extends EntidadeDominio {
 	private Set<Cartao> cartoes;
 	private String status;
 	private String mensagem;
+	private String motivoCancelamento;
 	
 	
-
-	
+	public String getMotivoCancelamento() {
+		return motivoCancelamento;
+	}
+	public void setMotivoCancelamento(String motivoCancelamento) {
+		this.motivoCancelamento = motivoCancelamento;
+	}
 	public Endereco getEndereco() {
 		return endereco;
 	}

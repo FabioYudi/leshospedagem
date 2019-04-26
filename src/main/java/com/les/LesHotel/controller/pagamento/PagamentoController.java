@@ -23,6 +23,7 @@ import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.Endereco;
 import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.entities.Reserva;
+import com.les.LesHotel.enumeration.StatusReservaEnum;
 import com.les.LesHotel.helper.MapperReservaHelper;
 import com.les.LesHotel.helper.PagamentoCartaoHelper;
 
@@ -99,6 +100,21 @@ public class PagamentoController extends ControllerBase {
 		
 		commands.get(ALTERAR).execute(reserva);
 		
+		return "forward:/cliente/consultar/reservas";
+	}
+	
+	@PostMapping("/cancelarReserva/{idReserva}")
+	public String cancelarReserva(Model model, String motivo, @PathVariable String idReserva, boolean hospede) {
+		Reserva reserva = new Reserva();
+		reserva.setId(Long.parseLong(idReserva));
+		reserva = (Reserva) commands.get(VISUALIZAR).execute(reserva).getEntidades().get(0);
+		if(hospede) {
+			reserva.setStatus(StatusReservaEnum.CANCELADO_HOSPEDE.getStatus());
+		}else {
+			reserva.setStatus(StatusReservaEnum.CANCELADO_ANFITRIAO.getStatus());
+		}
+		reserva.setMotivoCancelamento(motivo);
+		commands.get(ALTERAR).execute(reserva);
 		return "forward:/cliente/consultar/reservas";
 	}
 }

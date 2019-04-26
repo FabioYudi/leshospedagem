@@ -10,6 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <jsp:include page="../components/modal/reserva/modalCancelarReserva.jsp" />  
+  
 
   <title>Consulta de reservas</title>
 
@@ -91,7 +93,7 @@ text-decoration:none;
 				      
 				      <td>
 				      	 	<c:if test="${reserva.status eq 'EM PROCESSO' || reserva.status eq 'APROVADO'}">
-				      	 		<button type="button" class="btn btn-danger">Cancelar Reserva</button>
+				      	 		<button data-toggle="modal" data-target="#modalCancelarReserva" onclick="setIdReserva(this)" idReserva="${reserva.id}" type="button" class="btn btn-danger">Cancelar Reserva</button>
 				      	 	</c:if>
 				     	 <a type="button" href="/cliente/visualizarReserva/${reserva.id}" class="btn btn-primary">Detalhes</a>	
 				      </td>
@@ -111,7 +113,7 @@ text-decoration:none;
 	
   </div>
 
-  
+  	
     <form method="POST" id="formDesativar" class="hide" action="/painel/hospedagem/consultarAtualizacao">
     	<input id="mensagem" name="mensagem"></input>
     </form>
@@ -143,6 +145,26 @@ text-decoration:none;
 		        }else{
 		        	
 		        }
+		      },
+		      error: function(){
+		    	  
+		      }
+		});
+	}
+	
+	function cancelarReserva(){
+		
+		var data = {
+			motivo : $("#motivoCancelamento").val(),
+			hospede : true
+		};
+		
+		$.ajax({
+			 method: "POST",
+			 url: "/pagamento/cancelarReserva/" + idReservaCancelamento,
+			 data: data,
+			 success: function(data) {
+		       
 		      },
 		      error: function(){
 		    	  
@@ -197,8 +219,10 @@ text-decoration:none;
 		});
 	}
 
-	
-	
+	var idReservaCancelamento = "";
+	function setIdReserva(button){
+		idReservaCancelamento = $(button).attr("idReserva");
+	}
 </script>
 <script src="../../../resources/js/jquery.js"></script>
   <script src="../../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
