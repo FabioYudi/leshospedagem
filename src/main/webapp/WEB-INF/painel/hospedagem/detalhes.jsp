@@ -18,7 +18,22 @@
 
 <link type="text/css" rel="stylesheet" media="screen" href="../../../resources/bootstrap/css/bootstrap.min.css">
 <link type="text/css" rel="stylesheet" media="screen" href="../../../resources/css/common.css">
+ <script src="../../../resources/js/datepicker/datepicker-bootstrap.js" type="text/javascript"></script>
+    <link href="../../../resources/js/datepicker/datepicker-css.css" rel="stylesheet" type="text/css" />
 <meta charset="ISO-8859-1">
+
+<style>
+	.datepicker-days table .disabled-date.day {
+  background-color: #FFE4E1;
+  color: #000;
+}
+
+.datepicker table tr td.disabled, 
+.datepicker table tr td.disabled:hover {
+  background: #FFE4E1;
+  color: #000;
+}
+</style>
 <title>Detalhes</title>
 <jsp:include page="../../components/navbar.jsp" />
 </head>
@@ -93,7 +108,8 @@
 			              <div class="col-md-12">
 			                <div class="form-label-group">
 			                  <label for="checkin">check-in</label>
-			                  <input type="date" id="checkin" class="form-control" placeholder="" required="required"> 
+			                  <input  id="checkin" class="form-control datepicker"  required="required"> 
+			                 
 			                </div>
 			              </div>
 		              </div>
@@ -101,7 +117,7 @@
 			              <div class="col-md-12">
 			                <div class="form-label-group">
 			                  <label for="checkout">check-out</label>
-			                  <input  type="date" id="checkout" class="form-control" placeholder="" required="required"> 
+			                  <input   id="checkout" class="form-control datepicker" placeholder="" required="required"> 
 			                </div>
 			              </div>
 		            </div>
@@ -120,6 +136,7 @@
 
  	 	<a href="javascript:;" id="abrirModalLogin"  data-toggle="modal" data-target="#modalLogin" class="hide btn btn-block btn-primary" >da Dados</a>
  	<jsp:include page="../../components/modal/cliente/login.jsp" />
+ 	 <input id="datepicker" width="276" />
 </body>
 
 
@@ -134,17 +151,33 @@
 </form>
 
 
+
+	
 <script>
 
 var diaria = ${hospedagem.diaria};
-
+debugger;
+var datesForDisable = ${datasIndisponiveis};
+$('.datepicker').datepicker({
+	 format: 'dd/mm/yyyy',
+     autoclose: true,
+     weekStart: 1,
+     todayHighlight: false,
+     datesDisabled: datesForDisable,
+});
 
 
 function irParaPagamento(){
+	debugger;
+	var data = moment($("#checkin").val(), "DD/MM/YYYY")
+	$("#dataCheckinReserva").val(data.format("YYYY-MM-DD"));
+	var data = moment($("#checkout").val(), "DD/MM/YYYY")
+	$("#dataCheckoutReserva").val(data.format("YYYY-MM-DD"));
+	
 	$("#valorReserva").val(total);
 	$("#qtdHospedesReserva").val($("#qtdHospedes").val());
-	$("#dataCheckinReserva").val($("#checkin").val());
-	$("#dataCheckoutReserva").val($("#checkout").val());
+
+	
 	$("#form-pagamento").submit();
 }
 

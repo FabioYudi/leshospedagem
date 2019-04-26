@@ -36,7 +36,7 @@ public class ReservaDAO extends AbstractDAO {
 		Reserva reserva = (Reserva) entidade;
 		List<Predicate<Reserva>> allPredicates = new ArrayList<Predicate<Reserva>>();
 		if(reserva.getId() != null && reserva.getId() > 0)
-			allPredicates.add(r -> r.getId() == reserva.getId());
+			allPredicates.add(r -> r.getId().equals(reserva.getId()));
 		if(reserva.getHospedagem() != null)
 			if(reserva.getHospedagem().getId() != null && reserva.getHospedagem().getId() > 0) {
 				allPredicates.add(r -> r.getHospedagem().getId() == reserva.getHospedagem().getId());
@@ -55,7 +55,7 @@ public class ReservaDAO extends AbstractDAO {
 			allPredicates.add(r -> r.getTotal().setScale(2, RoundingMode.HALF_EVEN).equals(reserva.getTotal().setScale(2, RoundingMode.HALF_EVEN)));
 		if(reserva.getQtdHospedes() != null && reserva.getQtdHospedes() > 0)
 			allPredicates.add(r -> r.getQtdHospedes() == reserva.getQtdHospedes());
-		if(StringHelper.isNullOrEmpty(reserva.getStatus()))
+		if(!StringHelper.isNullOrEmpty(reserva.getStatus()))
 			allPredicates.add(r -> r.getStatus().equalsIgnoreCase(reserva.getStatus()));
 		
 		

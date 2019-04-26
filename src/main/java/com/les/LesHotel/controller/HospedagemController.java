@@ -1,6 +1,13 @@
 package com.les.LesHotel.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.les.LesHotel.Facade.Resultado;
 import com.les.LesHotel.entities.Cliente;
+import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.entities.Reserva;
 
@@ -110,10 +118,36 @@ public class HospedagemController extends ControllerBase {
 	
 	
 	@GetMapping("/detalhes/{id}")
-	public String detalhesHospedagem(@PathVariable String id, Model model) {
+	public String detalhesHospedagem(@PathVariable String id, Model model) throws JsonProcessingException {
 		Hospedagem hospedagem = new Hospedagem();
 		hospedagem.setId(Long.parseLong(id));
 		Resultado resultado = commands.get(VISUALIZAR).execute(hospedagem);
+		Reserva reserva = new Reserva();
+		reserva.setHospedagem((Hospedagem)resultado.getEntidades().get(0));
+		Resultado resultadoReserva = commands.get(CONSULTAR).execute(reserva);
+		
+		resultadoReserva.getEntidades();
+		List<LocalDate> datasIndisponives = new ArrayList<LocalDate>();
+		for(EntidadeDominio entidade : resultadoReserva.getEntidades())	{
+			Reserva reservaHospedagem = (Reserva) entidade;
+			LocalDate startDate = reservaHospedagem.getCheckin();
+			LocalDate endDate = reservaHospedagem.getCheckout();
+			List<LocalDate> datas = Stream
+					.iterate(startDate, d -> d.plusDays(1))
+					.limit(ChronoUnit.DAYS.between(startDate, endDate) + 1)
+					.collect(Collectors.toList());
+			datasIndisponives.addAll(datas);
+		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		
+	
+		List<String> datasString = new ArrayList<String>();
+		datasIndisponives.forEach(d -> {
+			String dataString = d.format(formatter);
+			datasString.add(dataString);
+		});
+		ObjectMapper mapper = new ObjectMapper();
+		model.addAttribute("datasIndisponiveis", mapper.writeValueAsString(datasString));
 		model.addAttribute("hospedagem", resultado.getEntidades().get(0));
 		
 		return "painel/hospedagem/detalhes";
@@ -123,7 +157,7 @@ public class HospedagemController extends ControllerBase {
 	public String pagamentoHospedagem(@PathVariable String id, Model model, Reserva reserva) {
 		Hospedagem hospedagem = new Hospedagem();
 		hospedagem.setId(Long.parseLong(id));
-		hospedagem = (Hospedagem) commands.get(VISUALIZAR).execute(hospedagem).getEntidades().get(0);
+		hospedagem = (Hospedagem) commands.get(VISUALIZAR).execute(hospedagem).getEntidades().get(0);	
 		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
 		Cliente cliente = new Cliente();
 		cliente.setId(clienteLogado.getId());
@@ -132,6 +166,7 @@ public class HospedagemController extends ControllerBase {
 		model.addAttribute("reserva", reserva);
 		model.addAttribute("hospedagem", hospedagem);
 		
+	
 		return "painel/hospedagem/pagamento";
 	}
 	

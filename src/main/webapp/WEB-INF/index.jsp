@@ -47,19 +47,9 @@
 	 	
 	  <button style="margin-left:80%; margin-top:20px" type="submit" class="btn btn-primary">Pesquisar</button>
 	</form>
-	 <input id="datepicker" width="276" />
-	 <script src="../resources/js/datepicker/datepicker-bootstrap.js" type="text/javascript"></script>
-    <link href="../resources/js/datepicker/datepicker-css.css" rel="stylesheet" type="text/css" />
+	 
     <script>
-    var datesForDisable = ["2019-04-19","2017-10-15","2017-10-16"]
-        $('#datepicker').datepicker({
-        	 format: 'yyyy-mm-dd',
-             autoclose: true,
-             weekStart: 1,
-             calendarWeeks: true,
-             todayHighlight: true,
-             datesDisabled: datesForDisable,
-        });
+   
     </script>
 </div>
 </div>
