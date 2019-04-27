@@ -89,11 +89,18 @@ text-decoration:none;
 				      	<c:when test="${reserva.status eq 'REPROVADO'}">
 				      		<td style="color: #8B0000"><strong>${reserva.status}</strong></td>
 				      	</c:when>
+				      	<c:when test="${reserva.status eq 'CANCELADO_HOSPEDE'}">
+				      		<td style="color: #8B0000"><strong>CANCELADO PELO HÓSPEDE</strong></td>
+				      	</c:when>
 				      </c:choose>
 				      
 				      <td>
 				      	 	<c:if test="${reserva.status eq 'EM PROCESSO' || reserva.status eq 'APROVADO'}">
+				      	 		
 				      	 		<button data-toggle="modal" data-target="#modalCancelarReserva" onclick="setIdReserva(this)" idReserva="${reserva.id}" type="button" class="btn btn-danger">Cancelar Reserva</button>
+				      	 	</c:if>
+				      	 	<c:if test="${reserva.status eq 'EM PROCESSO'}">
+				      	 		<button onclick="irParaPagamento(this)" checkout="${reserva.checkout}" checkin="${reserva.checkin}" qtdHospedes="${reserva.qtdHospedes}" valorReserva="${reserva.total}"  idHospedagem="${reserva.hospedagem.id}" type="button" class="btn btn-success">Pagar</button>
 				      	 	</c:if>
 				     	 <a type="button" href="/cliente/visualizarReserva/${reserva.id}" class="btn btn-primary">Detalhes</a>	
 				      </td>
@@ -127,8 +134,28 @@ text-decoration:none;
 </body>
 
 
+<form id="form-pagamento" method="POST" class="hide" action="">
+	<input type="hidden" id="valorReserva" name="total"/>
+	<input type="hidden" id="qtdHospedesReserva" name="qtdHospedes"/>
+	<input type="hidden" id="dataCheckinReserva" name="checkin"/>
+	<input type="hidden" id="dataCheckoutReserva" name="checkout"/>
+		<input type="hidden" name="alterar" value="true"/>
+	
+</form>
+
 
 <script>
+
+	function irParaPagamento(button){
+		debugger;
+		$("#form-pagamento").attr("action", "/painel/hospedagem/pagamento/" + $(button).attr("idHospedagem"));
+		$("#valorReserva").val($(button).attr("valorReserva"));
+		$("#qtdHospedesReserva").val($(button).attr("qtdHospedes"));
+		$("#dataCheckinReserva").val($(button).attr("checkin"));
+		$("#dataCheckoutReserva").val($(button).attr("checkout"));
+		$("#form-pagamento").submit();
+	}
+
 
 	function desativar(botao){
 		var id = $(botao).attr("idHospedagem");
@@ -160,11 +187,11 @@ text-decoration:none;
 		};
 		
 		$.ajax({
-			 method: "POST",
+			 method: "GET",
 			 url: "/pagamento/cancelarReserva/" + idReservaCancelamento,
 			 data: data,
 			 success: function(data) {
-		       
+				 window.location.reload()
 		      },
 		      error: function(){
 		    	  

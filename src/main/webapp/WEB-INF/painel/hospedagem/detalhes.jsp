@@ -148,6 +148,7 @@
 	<input type="hidden" id="dataCheckinReserva" name="checkin"/>
 	<input type="hidden" id="dataCheckoutReserva" name="checkout"/>
 	
+	
 </form>
 
 

@@ -164,6 +164,7 @@
 <script>
 
 pagamento = true;
+var alterar = ${alterar};
 var idHospedagem = ${hospedagem.id}; 
 var idCliente = ${cliente.id};
 var checkin = "${reserva.checkin}";
@@ -200,7 +201,8 @@ function continuar(){
 		qtdHospedes: qtdHospedes,
 		total: total,
 		cartoes: listaCartoes,
-		mensagem: $("#textoHospede").val()
+		mensagem: $("#textoHospede").val(),
+		
 		
 		
 	};
@@ -208,7 +210,7 @@ function continuar(){
 	$.ajax({
 		 method: "POST",
 		 url: "/pagamento/irParaConfirmacao/" + idHospedagem + "/" + idCliente + "/" + idEndereco,
-		 data: {reserva: JSON.stringify(reserva)},
+		 data: {reserva: JSON.stringify(reserva), alterar: alterar},
 		 success: function(data) {
 			 debugger;
 			 data = JSON.parse(data);

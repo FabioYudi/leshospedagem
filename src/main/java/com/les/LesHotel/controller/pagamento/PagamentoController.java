@@ -34,7 +34,7 @@ public class PagamentoController extends ControllerBase {
 	@ResponseBody
 	@PostMapping("/irParaConfirmacao/{idHospedagem}/{idCliente}/{idEndereco}")
 	public String processarPagamento( @RequestParam("reserva") String reserva, Model model,
-			@PathVariable("idHospedagem") String idHospedagem, @PathVariable("idCliente") String idCliente, @PathVariable("idEndereco") String idEndereco) throws IOException {
+			@PathVariable("idHospedagem") String idHospedagem, @PathVariable("idCliente") String idCliente, @PathVariable("idEndereco") String idEndereco, @RequestParam("alterar")  boolean alterar) throws IOException {
 		ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
 		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 		Reserva reservaCliente = mapper.readValue(reserva, Reserva.class);
@@ -51,7 +51,13 @@ public class PagamentoController extends ControllerBase {
 				.filter(e -> e.getId() == Long.parseLong(idEndereco))
 				.collect(Collectors.toList());
 		reservaCliente.setEndereco(enderecos.get(0));
-		Resultado resultado = commands.get(SALVAR).execute(reservaCliente);
+		Resultado resultado = new Resultado();
+	
+			if(!alterar) {
+				resultado =  commands.get(SALVAR).execute(reservaCliente);
+			}
+			
+		
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			model.addAttribute("ok", true);
 		}else {
@@ -103,7 +109,7 @@ public class PagamentoController extends ControllerBase {
 		return "forward:/cliente/consultar/reservas";
 	}
 	
-	@PostMapping("/cancelarReserva/{idReserva}")
+	@GetMapping("/cancelarReserva/{idReserva}")
 	public String cancelarReserva(Model model, String motivo, @PathVariable String idReserva, boolean hospede) {
 		Reserva reserva = new Reserva();
 		reserva.setId(Long.parseLong(idReserva));
