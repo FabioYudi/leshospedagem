@@ -35,7 +35,7 @@ public class ClienteDAO extends AbstractDAO {
 		Cliente cliente = noCast(entidade);
 		List<Predicate<Cliente>> allPredicates = new ArrayList<Predicate<Cliente>>();
 		if(cliente.getId() != null && cliente.getId() > 0)
-			allPredicates.add(c -> c.getId() == cliente.getId());
+			allPredicates.add(c -> c.getId().equals(cliente.getId()));
 		if(!StringHelper.isNullOrEmpty(cliente.getCpf()))
 			allPredicates.add(c -> c.getCpf().toLowerCase().contains(cliente.getCpf().toLowerCase()));
 		if(!StringHelper.isNullOrEmpty(cliente.getEmail()))

@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -38,6 +39,7 @@ public class Hospedagem extends EntidadeDominio {
 	@JsonBackReference
 	private Cliente anfitriao;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@JsonIgnore
 	private Set<Avaliacao> avaliacoesHospedagem;
 	
 	

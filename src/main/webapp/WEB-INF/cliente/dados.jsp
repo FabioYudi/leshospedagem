@@ -76,12 +76,14 @@
 		          <div class="card-header">
 		            Avaliações como hóspede
 		          </div>
-		          <div class="card-body">
-		          	<h5>Nota: <strong>5</strong></h5>
-		            <p>Muito simpático, cuidou bem da casa, recomendo</p>
-		            <small class="text-muted">Avaliado por: Lucas 24/02/19</small>
-		            <hr>
-		          </div>
+		          <c:forEach var="avaliacao" items="${cliente.avaliacoesHospede}">
+			          <div class="card-body">
+			          	<h5>Nota: <strong>${avaliacao.nota}</strong></h5>
+			            <p>${avaliacao.comentario}</p>
+			            <small class="text-muted">Avaliado por: ${avaliacao.avaliador.nome}</small>
+			            <hr>
+			          </div>
+			      </c:forEach>    
 		        </div>
   			</div>
   			<div class="col">
@@ -89,12 +91,14 @@
 		          <div class="card-header">
 		            Avaliações como anfitrião
 		          </div>
-		          <div class="card-body">
-		          	<h5>Nota: <strong>5</strong></h5>
-		            <p>Muito simpático, atendeu muito bem, recomendo</p>
-		            <small class="text-muted">Avaliado por: Fabio 24/02/19</small>
-		            <hr>
-		          </div>
+		          <c:forEach var="avaliacao" items="${cliente.avaliacoesAnfitriao}">
+			          <div class="card-body">
+			          	<h5>Nota: <strong>${avaliacao.nota}</strong></h5>
+			            <p>${avaliacao.comentario}</p>
+			            <small class="text-muted">Avaliado por: ${avaliacao.avaliador.nome}</small>
+			            <hr>
+			          </div>
+			       </c:forEach>   
 		        </div>
 		    </div>
 

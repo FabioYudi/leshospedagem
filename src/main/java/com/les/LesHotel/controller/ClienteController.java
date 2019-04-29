@@ -411,16 +411,59 @@ public class ClienteController extends ControllerBase{
 	}
 	
 	@GetMapping("/avaliar/cliente/{idReserva}")
-	public String avaliarHospede(Model model, @PathVariable String idReserva, String avaliacaoAnfitriao, String avaliacaoHospedagem) throws JsonParseException, JsonMappingException, IOException{
+	public String avaliarHospedagemAnfitriao(Model model, @PathVariable String idReserva, String avaliacaoAnfitriao, String avaliacaoHospedagem) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
 		Reserva reserva = new Reserva();
+		
+		Cliente cliente = (Cliente)  httpSession.getAttribute("clienteLogado");
+		Cliente clienteConsulta = new Cliente();
+		clienteConsulta.setId(cliente.getId());
+		Resultado resultado = commands.get(VISUALIZAR).execute(clienteConsulta);
+		cliente = (Cliente) resultado.getEntidades().get(0);
+		
+		
 		reserva.setId(Long.parseLong(idReserva));
 		reserva = (Reserva) commands.get(VISUALIZAR).execute(reserva).getEntidades().get(0);
 		Avaliacao anfitriao = mapper.readValue(avaliacaoAnfitriao, Avaliacao.class);
 		Avaliacao hospedagem = mapper.readValue(avaliacaoHospedagem, Avaliacao.class);
+		anfitriao.setAvaliador(cliente);
+		hospedagem.setAvaliador(cliente);
 		reserva.getHospedagem().getAnfitriao().getAvaliacoesAnfitriao().add(anfitriao);
 		reserva.getHospedagem().getAvaliacoesHospedagem().add(hospedagem);
-		reserva.setStatus(StatusReservaEnum.AVALIADO.getStatus());
+		reserva.setStatus(StatusReservaEnum.AVALIADO_HOSPEDE.getStatus());
+		reserva.setAvaliadoHospede(true);
+		if(reserva.isAvaliadoAnfitriao()) {
+			reserva.setStatus(StatusReservaEnum.AVALIADO.getStatus());
+		}
+		
+		
+		commands.get(ALTERAR).execute(reserva);
+		return "forward:/cliente/consultar/reservas";
+		
+		
+	}
+	
+	@GetMapping("/avaliar/hospede/{idReserva}")
+	public String avaliarHospede(Model model, @PathVariable String idReserva, String avaliacaoHospede) throws JsonParseException, JsonMappingException, IOException{
+		ObjectMapper mapper = new ObjectMapper();
+		Reserva reserva = new Reserva();
+		
+		Cliente cliente = (Cliente)  httpSession.getAttribute("clienteLogado");
+		Cliente clienteConsulta = new Cliente();
+		clienteConsulta.setId(cliente.getId());
+		Resultado resultado = commands.get(VISUALIZAR).execute(clienteConsulta);
+		cliente = (Cliente) resultado.getEntidades().get(0);
+		
+		reserva.setId(Long.parseLong(idReserva));
+		reserva = (Reserva) commands.get(VISUALIZAR).execute(reserva).getEntidades().get(0);
+		Avaliacao hospede = mapper.readValue(avaliacaoHospede, Avaliacao.class);
+		hospede.setAvaliador(cliente);
+		reserva.getCliente().getAvaliacoesHospede().add(hospede);
+		reserva.setStatus(StatusReservaEnum.AVALIADO_ANFITRIAO.getStatus());
+		reserva.setAvaliadoAnfitriao(true);
+		if(reserva.isAvaliadoHospede()) {
+			reserva.setStatus(StatusReservaEnum.AVALIADO.getStatus());
+		}
 		commands.get(ALTERAR).execute(reserva);
 		return "forward:/cliente/consultar/reservas";
 		

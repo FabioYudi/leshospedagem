@@ -97,8 +97,14 @@ text-decoration:none;
 				      	<c:when test="${reserva.status eq 'CANCELADO_ANFITRIAO'}">
 				      		<td style="color: #8B0000"><strong>CANCELADO PELO ANFITRIÃO</strong></td>
 				      	</c:when>
-				      	<c:when test="${reserva.status eq 'AVALIADO'}">
-				      		<td style="color: #0000CD"><strong>AVALIADO</strong></td>
+				      	<c:when test="${reserva.avaliadoHospede && !reserva.avaliadoAnfitriao}">
+				      		<td style="color: #0000CD"><strong>AVALIADO PELO HÓSPEDE</strong></td>
+						</c:when>
+						<c:when test="${reserva.avaliadoAnfitriao && !reserva.avaliadoHospede}">
+							<td style="color: #008000"><strong>AVALIADO PELO ANFITRIAO</strong></td>
+						</c:when>
+						<c:when test="${reserva.avaliadoAnfitriao && reserva.avaliadoHospede}">
+							<td style="color: #008000"><strong>AVALIADO PELO ANFITRIÃO E HÓSPEDE</strong></td>
 						</c:when>
 				      </c:choose>
 				      
@@ -110,7 +116,7 @@ text-decoration:none;
 				      	 	<c:if test="${reserva.status eq 'EM PROCESSO'}">
 				      	 		<button onclick="irParaPagamento(this)" checkout="${reserva.checkout}" checkin="${reserva.checkin}" qtdHospedes="${reserva.qtdHospedes}" valorReserva="${reserva.total}"  idHospedagem="${reserva.hospedagem.id}" type="button" class="btn btn-success">Pagar</button>
 				      	 	</c:if>
-				      	 	<c:if test="${reserva.status eq 'APROVADO'}">
+				      	 	<c:if test="${!reserva.avaliadoHospede && reserva.status eq 'AVALIADO_ANFITRIAO' || reserva.status eq 'APROVADO'}">
 				      	 		<button data-toggle="modal" data-target="#modalAvaliacaoHospedagem" onclick="setIdReservaAvaliacao(this)"   idReserva="${reserva.id}" type="button" class="btn btn-warning">Avaliar</button>
 				      	 	</c:if>
 				      	 	
@@ -207,7 +213,7 @@ text-decoration:none;
 			 url: "/pagamento/cancelarReserva/" + idReservaCancelamento,
 			 data: data,
 			 success: function(data) {
-				 window.location.reload()
+				 window.location.assign("/cliente/consultar/reservas");
 		      },
 		      error: function(){
 		    	  

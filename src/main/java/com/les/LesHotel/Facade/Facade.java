@@ -30,6 +30,9 @@ import com.les.LesHotel.rns.hospedagem.ValidaQtdNegativasHospedagem;
 import com.les.LesHotel.rns.hospedagem.ValidaTamanhoDescricaoHospedagem;
 import com.les.LesHotel.rns.hospedagem.ValidarDadosObrigatoriosHospedagem;
 import com.les.LesHotel.rns.hospedagem.ValidarDataHospedagem;
+import com.les.LesHotel.rns.reserva.ValidaDataCheckoutMenorDataCheckin;
+import com.les.LesHotel.rns.reserva.ValidaPeriodoReserva;
+import com.les.LesHotel.rns.reserva.ValidaQuantidadeHospedes;
 
 @Component
 public class Facade implements IFacade {
@@ -87,6 +90,13 @@ public class Facade implements IFacade {
 			
 			//Regras para reserva
 			List<IStrategy> rnsSalvarReserva = new ArrayList<>();
+			Map<String, List<IStrategy>> rnsReserva = new HashMap<>();
+			
+			rnsSalvarReserva.add(new ValidaDataCheckoutMenorDataCheckin());
+			rnsSalvarReserva.add(new ValidaQuantidadeHospedes());
+			rnsSalvarReserva.add(new ValidaPeriodoReserva());
+			rnsReserva.put("SALVAR", rnsSalvarReserva);
+			
 		
 		//lista de repositorios
 		repositories.put(Hospedagem.class.getName(), hospedagemDao);
@@ -95,6 +105,7 @@ public class Facade implements IFacade {
 		
 		rns.put(Hospedagem.class.getName(), rnsHospedagem);
 		rns.put(Cliente.class.getName(), rnsCliente);
+		rns.put(Reserva.class.getName(), rnsReserva);
 
 	}
 

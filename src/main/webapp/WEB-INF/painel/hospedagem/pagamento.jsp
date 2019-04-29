@@ -20,6 +20,11 @@
 <script src="../../../resources/js/moment.js"></script>
 <meta charset="ISO-8859-1">
 <title>Pagamento</title>
+<style>
+	.hide{
+		display:none;
+	}
+</style>
 </head>
 <body class="bg-dark">
 <jsp:include page="../../components/navbar.jsp" />
@@ -28,10 +33,10 @@
 
     <div class="row">
 	
-   
+    
 
       <div class="col-lg-9">
-
+		<div id="alertaErro" class="alert alert-warning hide" role="alert"></div>
         <div class="card mt-4">
           <div class="card-body">
           	<h2>Confirmação de dados</h2>
@@ -221,7 +226,8 @@ function continuar(){
 	        	$("#formConfirmacao").submit();
 	        
 	         }else{
-	        	
+	        	$("#alertaErro").removeClass("hide");
+	        	$("#alertaErro").html(data.mensagem);
 	         }
 	      },
 	      error: function(){

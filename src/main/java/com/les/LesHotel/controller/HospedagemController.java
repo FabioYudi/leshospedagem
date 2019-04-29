@@ -177,7 +177,7 @@ public class HospedagemController extends ControllerBase {
 		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
 		Cliente cliente = new Cliente();
 		cliente.setId(clienteLogado.getId());
-		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
+		cliente = (Cliente) commands.get(CONSULTAR).execute(cliente).getEntidades().get(0);
 		model.addAttribute("cliente", cliente);
 		model.addAttribute("reserva", reserva);
 		model.addAttribute("hospedagem", hospedagem);

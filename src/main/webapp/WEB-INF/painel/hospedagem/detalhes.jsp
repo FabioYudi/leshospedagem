@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
 <script src="../../../resources/js/jquery.js"></script>
@@ -67,23 +68,28 @@
           <div class="card-header">
             Avaliações da hospedagem
           </div>
-          <div class="card-body">
-          	<h5>Nota: <strong>5</strong></h5>
-            <p>Muito bom, recomendo!</p>
-            <small class="text-muted">Avaliado por: Fabio Spada 24/02/19</small>
-            <hr>
-          </div>
+          <c:forEach var="avaliacao" items="${hospedagem.avaliacoesHospedagem}">
+          	 <div class="card-body">
+	          	<h5>Nota: <strong>${avaliacao.nota}</strong></h5>
+	            <p>${avaliacao.comentario}</p>
+	            <small class="text-muted">Avaliado por: ${avaliacao.avaliador.nome}</small>
+	            <hr>
+	         </div>
+          </c:forEach>
+         
         </div>
         <div class="card card-outline-secondary my-4">
           <div class="card-header">
             Avaliações do anfitrião
           </div>
-          <div class="card-body">
-          	<h5>Nota: <strong>5</strong></h5>
-            <p>Muito simpático, recomendo</p>
-            <small class="text-muted">Avaliado por: Fabio Spada 24/02/19</small>
-            <hr>
-          </div>
+           <c:forEach var="avaliacao" items="${hospedagem.anfitriao.avaliacoesAnfitriao}">
+	          <div class="card-body">
+	          	<h5>Nota: <strong>${avaliacao.nota}</strong></h5>
+	            <p>${avaliacao.comentario}</p>
+	            <small class="text-muted">Avaliado por: ${avaliacao.avaliador.nome}</small>
+	            <hr>
+	          </div>
+	       </c:forEach>  
         </div>
         <!-- /.card -->
 
@@ -98,7 +104,8 @@
 		              <div class="col-md-6">
 		                <div class="form-label-group">
 		                  <label for="qtdHospedes">Qtd hóspedes</label>
-		                  <input type="text" id="qtdHospedes" class="form-control" placeholder="" required="required"> 
+		                  <input type="text" id="qtdHospedes" class="form-control" placeholder="" required="required">
+		                  <small>MAX: ${hospedagem.qtdHospedes}</small> 
 		                </div>
 		              </div>
 		            </div>
@@ -136,7 +143,7 @@
 
  	 	<a href="javascript:;" id="abrirModalLogin"  data-toggle="modal" data-target="#modalLogin" class="hide btn btn-block btn-primary" >da Dados</a>
  	<jsp:include page="../../components/modal/cliente/login.jsp" />
- 	 <input id="datepicker" width="276" />
+ 	
 </body>
 
 
@@ -201,14 +208,14 @@ $("#qtdHospedes").on("keyup", function(){
 });
 var total;
 function recalculaValorTotal(){
-	var data1 = moment($("#checkin").val(),'YYYY-MM-DD');
-	var data2 = moment($("#checkout").val(),'YYYY-MM-DD');
+	var data1 = moment($("#checkin").val(),'DD/MM/YYYY');
+	var data2 = moment($("#checkout").val(),'DD/MM/YYYY');
 	var diff  = data2.diff(data1, 'days');
 	var qtdHospedes = $("#qtdHospedes").val();
 	if($("#qtdHospedes").val() == 1){
 		 total = diff * parseFloat(diaria);
 	}else{
-		total = diff * parseFloat(diaria) * (qtdHospedes * (diaria * 0.05));
+		total = diff * parseFloat(diaria) + (qtdHospedes * (diaria * 0.05));
 	}
 	
 	if(!isNaN(total)){

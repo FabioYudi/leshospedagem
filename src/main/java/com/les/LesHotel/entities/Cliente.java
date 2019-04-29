@@ -11,10 +11,10 @@ import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class Cliente extends EntidadeDominio {
+public class Cliente extends EntidadeDominio implements Cloneable {
 	
 	private String nome;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -31,7 +31,7 @@ public class Cliente extends EntidadeDominio {
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private Set<Cartao> cartoes;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	@JsonManagedReference
+	@JsonBackReference
 	private Set<Hospedagem> hospedagens;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private Set<Avaliacao> avaliacoesHospede;
@@ -41,6 +41,10 @@ public class Cliente extends EntidadeDominio {
 	
 	
 
+	@Override
+	public  Object clone() throws CloneNotSupportedException {
+		return (Cliente) super.clone();
+	}
 	
 	
 	

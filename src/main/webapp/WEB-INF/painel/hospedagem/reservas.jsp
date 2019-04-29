@@ -104,14 +104,25 @@ text-decoration:none;
 				      	<c:when test="${reserva.status eq 'CANCELADO_ANFITRIAO'}">
 				      		<td style="color: #8B0000"><strong>CANCELADO PELO ANFITRIÃO</strong></td>
 				      	</c:when>
+				      	<c:when test="${reserva.avaliadoHospede && !reserva.avaliadoAnfitriao}">
+				      		<td style="color: #0000CD"><strong>AVALIADO PELO HÓSPEDE</strong></td>
+						</c:when>
+						<c:when test="${reserva.avaliadoAnfitriao && !reserva.avaliadoHospede}">
+							<td style="color: #008000"><strong>AVALIADO PELO ANFITRIAO</strong></td>
+						</c:when>
+						<c:when test="${reserva.avaliadoAnfitriao && reserva.avaliadoHospede}">
+							<td style="color: #008000"><strong>AVALIADO PELO ANFITRIÃO E HÓSPEDE</strong></td>
+						</c:when>
 				      </c:choose>
 				      
 				      <td>
-				      	 	<c:if test="${reserva.status eq 'EM PROCESSO' || reserva.status eq 'APROVADO'}">
-				      	 		
-				      	 		<button data-toggle="modal" data-target="#modalCancelarReserva" onclick="setIdReserva(this)" idReserva="${reserva.id}" type="button" class="btn btn-danger">Cancelar Reserva</button>
-				      	 	</c:if>
-				     	 <a type="button" href="/cliente/visualizarReserva/${reserva.id}" class="btn btn-primary">Detalhes</a>	
+				      	<c:if test="${reserva.status eq 'EM PROCESSO' || reserva.status eq 'APROVADO'}">
+				      		<button data-toggle="modal" data-target="#modalCancelarReserva" onclick="setIdReserva(this)" idReserva="${reserva.id}" type="button" class="btn btn-danger">Cancelar Reserva</button>
+				      	</c:if>
+				      	<c:if test="${!reserva.avaliadoAnfitriao && reserva.status eq 'AVALIADO_HOSPEDE' || reserva.status eq 'APROVADO'}">
+				      		<button data-toggle="modal" data-target="#modalAvaliacaoHospedagem" onclick="setIdReservaAvaliacao(this)"   idReserva="${reserva.id}" type="button" class="btn btn-warning">Avaliar</button>
+				      	</c:if>
+				     	<a type="button" href="/cliente/visualizarReserva/${reserva.id}" class="btn btn-primary">Detalhes</a>	
 				      </td>
 				    </tr>
 				  
@@ -139,7 +150,9 @@ text-decoration:none;
 
   <!-- Bootstrap core JavaScript-->
 <jsp:include page="../../components/modal/cliente/cadastrarEndereco.jsp" />
- <jsp:include page="../../components/modal/reserva/modalCancelarReserva.jsp" />  
+ <jsp:include page="../../components/modal/reserva/modalCancelarReserva.jsp" /> 
+ <jsp:include page="../../components/reserva/modalAvaliarHospede.jsp" />
+  
 </body>
 
 
@@ -258,6 +271,11 @@ text-decoration:none;
 	var idReservaCancelamento = "";
 	function setIdReserva(button){
 		idReservaCancelamento = $(button).attr("idReserva");
+	}
+	
+	var idReservaAvaliacao = "";
+	function setIdReservaAvaliacao(button){
+		idReservaAvaliacao = $(button).attr("idReserva");
 	}
 </script>
 

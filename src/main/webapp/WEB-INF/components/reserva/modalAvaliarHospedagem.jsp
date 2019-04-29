@@ -78,7 +78,7 @@ function avaliarHospedagem(){
 			 url: "/cliente/avaliar/cliente/" + idReservaAvaliacao,
 			 data: {avaliacaoAnfitriao: JSON.stringify(anfitriao), avaliacaoHospedagem: JSON.stringify(hospedagem) },
 			 success: function(data) {
-				 window.location.reload();
+				 window.location.assign("/cliente/consultar/reservas");
 		      },
 		      error: function(){
 		    	  

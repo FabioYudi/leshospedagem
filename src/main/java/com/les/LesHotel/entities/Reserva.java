@@ -33,8 +33,24 @@ public class Reserva extends EntidadeDominio {
 	private String status;
 	private String mensagem;
 	private String motivoCancelamento;
+	private boolean avaliadoHospede;
+	private boolean avaliadoAnfitriao;
 	
 	
+	
+	
+	public boolean isAvaliadoHospede() {
+		return avaliadoHospede;
+	}
+	public void setAvaliadoHospede(boolean avaliadoHospede) {
+		this.avaliadoHospede = avaliadoHospede;
+	}
+	public boolean isAvaliadoAnfitriao() {
+		return avaliadoAnfitriao;
+	}
+	public void setAvaliadoAnfitriao(boolean avaliadoAnfitriao) {
+		this.avaliadoAnfitriao = avaliadoAnfitriao;
+	}
 	public String getMotivoCancelamento() {
 		return motivoCancelamento;
 	}
