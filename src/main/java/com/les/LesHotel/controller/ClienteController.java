@@ -24,6 +24,7 @@ import com.les.LesHotel.entities.Avaliacao;
 import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.Endereco;
 import com.les.LesHotel.entities.Reserva;
+import com.les.LesHotel.enumeration.StatusReservaEnum;
 
 @Controller
 @RequestMapping("/cliente")
@@ -409,7 +410,7 @@ public class ClienteController extends ControllerBase{
 		
 	}
 	
-	@PostMapping("/avaliar/cliente/{idReserva}")
+	@GetMapping("/avaliar/cliente/{idReserva}")
 	public String avaliarHospede(Model model, @PathVariable String idReserva, String avaliacaoAnfitriao, String avaliacaoHospedagem) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
 		Reserva reserva = new Reserva();
@@ -419,6 +420,7 @@ public class ClienteController extends ControllerBase{
 		Avaliacao hospedagem = mapper.readValue(avaliacaoHospedagem, Avaliacao.class);
 		reserva.getHospedagem().getAnfitriao().getAvaliacoesAnfitriao().add(anfitriao);
 		reserva.getHospedagem().getAvaliacoesHospedagem().add(hospedagem);
+		reserva.setStatus(StatusReservaEnum.AVALIADO.getStatus());
 		commands.get(ALTERAR).execute(reserva);
 		return "forward:/cliente/consultar/reservas";
 		

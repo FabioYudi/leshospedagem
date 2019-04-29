@@ -46,7 +46,7 @@ public class PagamentoController extends ControllerBase {
 		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
 		hospedagem = (Hospedagem) commands.get(VISUALIZAR).execute(hospedagem).getEntidades().get(0);
 		reservaCliente = MapperReservaHelper.mapearReserva(reservaCliente, cliente, hospedagem);
-		reservaCliente.setStatus("EM PROCESSO");
+		reservaCliente.setStatus(StatusReservaEnum.EM_PROCESSO.getStatus());
 		ArrayList<Endereco> enderecos = (ArrayList<Endereco>) cliente.getEnderecos().stream()
 				.filter(e -> e.getId() == Long.parseLong(idEndereco))
 				.collect(Collectors.toList());
@@ -84,7 +84,7 @@ public class PagamentoController extends ControllerBase {
 		reserva.setCheckin(dadosReserva.getCheckin());
 		reserva.setCheckout(dadosReserva.getCheckout());
 		reserva.setQtdHospedes(dadosReserva.getQtdHospedes());
-		reserva.setStatus("EM PROCESSO");
+		reserva.setStatus(StatusReservaEnum.EM_PROCESSO.getStatus());
 		reserva.setTotal(dadosReserva.getTotal().setScale(2, RoundingMode.HALF_EVEN));
 		reserva = (Reserva) commands.get(CONSULTAR).execute(reserva).getEntidades().get(0);
 		model.addAttribute("reserva", reserva);		
@@ -99,9 +99,9 @@ public class PagamentoController extends ControllerBase {
 		reserva.setId(Long.parseLong(idReserva));
 		reserva = (Reserva) commands.get(VISUALIZAR).execute(reserva).getEntidades().get(0);
 		if(PagamentoCartaoHelper.simularPagamento()) {
-			reserva.setStatus("APROVADO");
+			reserva.setStatus(StatusReservaEnum.APROVADO.getStatus());
 		}else {
-			reserva.setStatus("REPROVADO");
+			reserva.setStatus(StatusReservaEnum.REPROVADO.getStatus());
 		}
 		
 		commands.get(ALTERAR).execute(reserva);

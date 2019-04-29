@@ -12,8 +12,8 @@
         <form method="post" id="formAvaliacao">
         <div class="form-group">
           	<div class="form-row">	
-    			<label for="exampleFormControlSelect1">Nota</label>
-			    <select class="form-control" id="exampleFormControlSelect1">
+    			<label for="notaAnfitriao">Nota</label>
+			    <select class="form-control" id="notaAnfitriao">
 			      <option>1</option>
 			      <option>2</option>
 			      <option>3</option>
@@ -25,16 +25,16 @@
           <div class="form-group">
           	<div class="form-row">
           		<div class="form-group">
-          			<label for="exampleFormControlTextarea1">Comentário sobre seu anfitrião</label>
-   					<textarea style="width:480px;" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+          			<label for="comentarioAnfitriao">Comentário sobre seu anfitrião</label>
+   					<textarea style="width:480px;" class="form-control" id="comentarioAnfitriao" rows="5"></textarea>
   				</div>
           	</div>     
           </div> 
           <h5 class="modal-title" id="modalAvaliacaoHospedagemLabel">Avalie a hospedagem</h5>
           <div class="form-group">
           	<div class="form-row">	
-    			<label for="exampleFormControlSelect1">Nota</label>
-			    <select class="form-control" id="exampleFormControlSelect1">
+    			<label for="notaHospedagem">Nota</label>
+			    <select class="form-control" id="notaHospedagem">
 			      <option>1</option>
 			      <option>2</option>
 			      <option>3</option>
@@ -46,8 +46,8 @@
           <div class="form-group">
           	<div class="form-row">
           		<div class="form-group">
-          			<label for="exampleFormControlTextarea1">Comentário sobre a hospedagem</label>
-   					<textarea style="width:480px;" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+          			<label for="comentarioHospedagem">Comentário sobre a hospedagem</label>
+   					<textarea style="width:480px;" class="form-control" id="comentarioHospedagem" rows="5"></textarea>
   				</div>
           	</div>     
           </div> 
@@ -60,3 +60,30 @@
     </div>
   </div>
 </div>
+
+<script>
+function avaliarHospedagem(){
+	var anfitriao = {
+			nota : $("#notaAnfitriao").val(),
+			comentario : $("#comentarioAnfitriao").val()
+		};
+	
+	var hospedagem = {
+			nota : $("#notaHospedagem").val(),
+			comentario : $("#comentarioHospedagem").val()
+		};
+		
+		$.ajax({
+			 method: "GET",
+			 url: "/cliente/avaliar/cliente/" + idReservaAvaliacao,
+			 data: {avaliacaoAnfitriao: JSON.stringify(anfitriao), avaliacaoHospedagem: JSON.stringify(hospedagem) },
+			 success: function(data) {
+				 window.location.reload();
+		      },
+		      error: function(){
+		    	  
+		      }
+		});
+	
+}
+</script>

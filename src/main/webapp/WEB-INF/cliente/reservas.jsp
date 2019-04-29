@@ -97,9 +97,12 @@ text-decoration:none;
 				      	<c:when test="${reserva.status eq 'CANCELADO_ANFITRIAO'}">
 				      		<td style="color: #8B0000"><strong>CANCELADO PELO ANFITRIÃO</strong></td>
 				      	</c:when>
+				      	<c:when test="${reserva.status eq 'AVALIADO'}">
+				      		<td style="color: #0000CD"><strong>AVALIADO</strong></td>
+				      	</c:when>
 				      </c:choose>
 				      
-				      <td>
+				      <td>	
 				      	 	<c:if test="${reserva.status eq 'EM PROCESSO' || reserva.status eq 'APROVADO'}">
 				      	 		
 				      	 		<button data-toggle="modal" data-target="#modalCancelarReserva" onclick="setIdReserva(this)" idReserva="${reserva.id}" type="button" class="btn btn-danger">Cancelar Reserva</button>
@@ -110,6 +113,7 @@ text-decoration:none;
 				      	 	<c:if test="${reserva.status eq 'APROVADO'}">
 				      	 		<button data-toggle="modal" data-target="#modalAvaliacaoHospedagem" onclick="setIdReservaAvaliacao(this)"   idReserva="${reserva.id}" type="button" class="btn btn-warning">Avaliar</button>
 				      	 	</c:if>
+				      	 	
 				     	 <a type="button" href="/cliente/visualizarReserva/${reserva.id}" class="btn btn-primary">Detalhes</a>	
 				      </td>
 				    </tr>
@@ -262,11 +266,7 @@ text-decoration:none;
 	function setIdReservaAvaliacao(button){
 		idReservaAvaliacao = $(button).attr("idReserva");
 	}
-	
-	function avaliarHospedagem(){
-		$("#formAvaliacao").attr("action", "/cliente/visualizarReserva/" + idReservaAvaliacao);
-		$("#formAavaliacao").submit();
-	}
+
 
 	var idReservaCancelamento = "";
 	function setIdReserva(button){
