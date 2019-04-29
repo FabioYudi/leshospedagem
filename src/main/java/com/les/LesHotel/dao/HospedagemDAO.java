@@ -38,7 +38,7 @@ public class HospedagemDAO extends AbstractDAO  {
 		
 		List<Predicate<Hospedagem>> allPredicates = new ArrayList<Predicate<Hospedagem>>();
 		if(hospedagem.getId() != null && hospedagem.getId() > 0) 
-			allPredicates.add(h -> h.getId() == hospedagem.getId());
+			allPredicates.add(h -> h.getId().equals(hospedagem.getId()));
 		if(!StringHelper.isNullOrEmpty(hospedagem.getTitulo()))
 			allPredicates.add(h -> h.getTitulo().toLowerCase().contains(hospedagem.getTitulo().toLowerCase()));
 		if(hospedagem.getDiaria() != null)

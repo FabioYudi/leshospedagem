@@ -33,11 +33,30 @@ public class Cliente extends EntidadeDominio {
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	@JsonManagedReference
 	private Set<Hospedagem> hospedagens;
+	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	private Set<Avaliacao> avaliacoesHospede;
+	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	private Set<Avaliacao> avaliacoesAnfitriao;
+	
+	
+	
 
 	
 	
 	
 	
+	public Set<Avaliacao> getAvaliacoesHospede() {
+		return avaliacoesHospede;
+	}
+	public void setAvaliacoesHospede(Set<Avaliacao> avaliacoesHospede) {
+		this.avaliacoesHospede = avaliacoesHospede;
+	}
+	public Set<Avaliacao> getAvaliacoesAnfitriao() {
+		return avaliacoesAnfitriao;
+	}
+	public void setAvaliacoesAnfitriao(Set<Avaliacao> avaliacoesAnfitriao) {
+		this.avaliacoesAnfitriao = avaliacoesAnfitriao;
+	}
 	public Set<Hospedagem> getHospedagens() {
 		return hospedagens;
 	}

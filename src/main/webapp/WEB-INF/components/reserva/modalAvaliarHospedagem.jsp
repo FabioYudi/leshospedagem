@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form method="post" id="formAvaliacao">
         <div class="form-group">
           	<div class="form-row">	
     			<label for="exampleFormControlSelect1">Nota</label>
@@ -54,8 +54,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Cancelar Estadia</button>
+      
+        <button onclick="avaliarHospedagem()" type="button" class="btn btn-primary">Avaliar reserva</button>
       </div>
     </div>
   </div>
