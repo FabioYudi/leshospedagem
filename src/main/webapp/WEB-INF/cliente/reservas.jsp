@@ -89,6 +89,9 @@ text-decoration:none;
 				      	<c:when test="${reserva.status eq 'REPROVADO'}">
 				      		<td style="color: #8B0000"><strong>${reserva.status}</strong></td>
 				      	</c:when>
+				      	<c:when test="${reserva.status eq 'CANCELADO_HOSPEDE'}">
+				      		<td style="color: #8B0000"><strong>CANCELADO PELO HÓSPEDE</strong></td>
+				      	</c:when>
 				      </c:choose>
 				      
 				      <td>
