@@ -20,9 +20,11 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.les.LesHotel.Facade.Resultado;
+import com.les.LesHotel.entities.Avaliacao;
 import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.Endereco;
 import com.les.LesHotel.entities.Reserva;
+import com.les.LesHotel.enumeration.StatusReservaEnum;
 
 @Controller
 @RequestMapping("/cliente")
@@ -405,6 +407,23 @@ public class ClienteController extends ControllerBase{
 		reserva = (Reserva) commands.get(VISUALIZAR).execute(reserva).getEntidades().get(0);
 		model.addAttribute("reserva", reserva);
 		return "cliente/reservas/visualizar";
+		
+	}
+	
+	@GetMapping("/avaliar/cliente/{idReserva}")
+	public String avaliarHospede(Model model, @PathVariable String idReserva, String avaliacaoAnfitriao, String avaliacaoHospedagem) throws JsonParseException, JsonMappingException, IOException{
+		ObjectMapper mapper = new ObjectMapper();
+		Reserva reserva = new Reserva();
+		reserva.setId(Long.parseLong(idReserva));
+		reserva = (Reserva) commands.get(VISUALIZAR).execute(reserva).getEntidades().get(0);
+		Avaliacao anfitriao = mapper.readValue(avaliacaoAnfitriao, Avaliacao.class);
+		Avaliacao hospedagem = mapper.readValue(avaliacaoHospedagem, Avaliacao.class);
+		reserva.getHospedagem().getAnfitriao().getAvaliacoesAnfitriao().add(anfitriao);
+		reserva.getHospedagem().getAvaliacoesHospedagem().add(hospedagem);
+		reserva.setStatus(StatusReservaEnum.AVALIADO.getStatus());
+		commands.get(ALTERAR).execute(reserva);
+		return "forward:/cliente/consultar/reservas";
+		
 		
 	}
 	

@@ -153,9 +153,7 @@ text-decoration:none;
 				      	 		
 				      	 	</c:otherwise>	
 				      	 </c:choose>
-				      	 
-				     	 
-				     	 <button type="button" class="btn btn-warning"><a style="color:black" href="/painel/hospedagem/estadia">Estadias</a></button>	
+						 <a class="btn btn-warning style="color:black" href="/painel/hospedagem/consultar/reservas/${hospedagem.id}">Reservas</a>
 				      </td>
 				    </tr>
 			  	</c:forEach>

@@ -170,7 +170,7 @@ public class HospedagemController extends ControllerBase {
 	}
 	
 	@PostMapping("/pagamento/{id}")
-	public String pagamentoHospedagem(@PathVariable String id, Model model, Reserva reserva) {
+	public String pagamentoHospedagem(@PathVariable String id, Model model, Reserva reserva, boolean alterar) {
 		Hospedagem hospedagem = new Hospedagem();
 		hospedagem.setId(Long.parseLong(id));
 		hospedagem = (Hospedagem) commands.get(VISUALIZAR).execute(hospedagem).getEntidades().get(0);	
@@ -181,6 +181,7 @@ public class HospedagemController extends ControllerBase {
 		model.addAttribute("cliente", cliente);
 		model.addAttribute("reserva", reserva);
 		model.addAttribute("hospedagem", hospedagem);
+		model.addAttribute("alterar", alterar);
 		
 	
 		return "painel/hospedagem/pagamento";
@@ -219,5 +220,21 @@ public class HospedagemController extends ControllerBase {
 		}
 		model.addAttribute("mensagem", resultado.getMsg());
 		return mapper.writeValueAsString(model);
+	}
+	
+	@GetMapping("/consultar/reservas/{idHospedagem}")
+	public String consultarReservas(Model model, @PathVariable String idHospedagem) {
+		Hospedagem hospedagem = new Hospedagem();
+		hospedagem.setId(Long.parseLong(idHospedagem));
+		Reserva reserva = new Reserva();
+		reserva.setHospedagem(hospedagem);
+		Resultado resultado = commands.get(CONSULTAR).execute(reserva);
+		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
+		Cliente cliente = new Cliente();
+		cliente.setId(clienteLogado.getId());
+		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
+		model.addAttribute("cliente", cliente);
+		model.addAttribute("reservas", resultado.getEntidades());
+		return "painel/hospedagem/reservas";
 	}
 }

@@ -34,7 +34,7 @@ public class PagamentoController extends ControllerBase {
 	@ResponseBody
 	@PostMapping("/irParaConfirmacao/{idHospedagem}/{idCliente}/{idEndereco}")
 	public String processarPagamento( @RequestParam("reserva") String reserva, Model model,
-			@PathVariable("idHospedagem") String idHospedagem, @PathVariable("idCliente") String idCliente, @PathVariable("idEndereco") String idEndereco) throws IOException {
+			@PathVariable("idHospedagem") String idHospedagem, @PathVariable("idCliente") String idCliente, @PathVariable("idEndereco") String idEndereco, @RequestParam("alterar")  boolean alterar) throws IOException {
 		ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
 		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 		Reserva reservaCliente = mapper.readValue(reserva, Reserva.class);
@@ -46,12 +46,18 @@ public class PagamentoController extends ControllerBase {
 		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
 		hospedagem = (Hospedagem) commands.get(VISUALIZAR).execute(hospedagem).getEntidades().get(0);
 		reservaCliente = MapperReservaHelper.mapearReserva(reservaCliente, cliente, hospedagem);
-		reservaCliente.setStatus("EM PROCESSO");
+		reservaCliente.setStatus(StatusReservaEnum.EM_PROCESSO.getStatus());
 		ArrayList<Endereco> enderecos = (ArrayList<Endereco>) cliente.getEnderecos().stream()
 				.filter(e -> e.getId() == Long.parseLong(idEndereco))
 				.collect(Collectors.toList());
 		reservaCliente.setEndereco(enderecos.get(0));
-		Resultado resultado = commands.get(SALVAR).execute(reservaCliente);
+		Resultado resultado = new Resultado();
+	
+			if(!alterar) {
+				resultado =  commands.get(SALVAR).execute(reservaCliente);
+			}
+			
+		
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			model.addAttribute("ok", true);
 		}else {
@@ -78,7 +84,7 @@ public class PagamentoController extends ControllerBase {
 		reserva.setCheckin(dadosReserva.getCheckin());
 		reserva.setCheckout(dadosReserva.getCheckout());
 		reserva.setQtdHospedes(dadosReserva.getQtdHospedes());
-		reserva.setStatus("EM PROCESSO");
+		reserva.setStatus(StatusReservaEnum.EM_PROCESSO.getStatus());
 		reserva.setTotal(dadosReserva.getTotal().setScale(2, RoundingMode.HALF_EVEN));
 		reserva = (Reserva) commands.get(CONSULTAR).execute(reserva).getEntidades().get(0);
 		model.addAttribute("reserva", reserva);		
@@ -93,9 +99,9 @@ public class PagamentoController extends ControllerBase {
 		reserva.setId(Long.parseLong(idReserva));
 		reserva = (Reserva) commands.get(VISUALIZAR).execute(reserva).getEntidades().get(0);
 		if(PagamentoCartaoHelper.simularPagamento()) {
-			reserva.setStatus("APROVADO");
+			reserva.setStatus(StatusReservaEnum.APROVADO.getStatus());
 		}else {
-			reserva.setStatus("REPROVADO");
+			reserva.setStatus(StatusReservaEnum.REPROVADO.getStatus());
 		}
 		
 		commands.get(ALTERAR).execute(reserva);
@@ -103,7 +109,7 @@ public class PagamentoController extends ControllerBase {
 		return "forward:/cliente/consultar/reservas";
 	}
 	
-	@PostMapping("/cancelarReserva/{idReserva}")
+	@GetMapping("/cancelarReserva/{idReserva}")
 	public String cancelarReserva(Model model, String motivo, @PathVariable String idReserva, boolean hospede) {
 		Reserva reserva = new Reserva();
 		reserva.setId(Long.parseLong(idReserva));

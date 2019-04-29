@@ -43,7 +43,7 @@
     	 	<input style="width:80%!important" type="text" id="criancas" class="form-control" placeholder="">
    	 	</div>
   	  </div>
-  	  fdsfdsfs
+  	
 	 	
 	  <button style="margin-left:80%; margin-top:20px" type="submit" class="btn btn-primary">Pesquisar</button>
 	</form>

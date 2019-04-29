@@ -3,6 +3,7 @@ package com.les.LesHotel.entities;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -36,11 +37,19 @@ public class Hospedagem extends EntidadeDominio {
 	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	@JsonBackReference
 	private Cliente anfitriao;
+	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	private Set<Avaliacao> avaliacoesHospedagem;
 	
 	
 	
 	
 	
+	public Set<Avaliacao> getAvaliacoesHospedagem() {
+		return avaliacoesHospedagem;
+	}
+	public void setAvaliacoesHospedagem(Set<Avaliacao> avaliacoesHospedagem) {
+		this.avaliacoesHospedagem = avaliacoesHospedagem;
+	}
 	public Cliente getAnfitriao() {
 		return anfitriao;
 	}

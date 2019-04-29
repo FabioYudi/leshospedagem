@@ -10,21 +10,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <jsp:include page="../components/modal/reserva/modalCancelarReserva.jsp" />  
+
   
 
   <title>Consulta de reservas</title>
-
+<link type="text/css" rel="stylesheet" media="screen" href="../../../../resources/bootstrap/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" media="screen" href="../../../../resources/css/common.css">
   <!-- Custom fonts for this template-->
- <link href="../../resources/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+ <link href="../../../../resources/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
   <!-- Custom styles for this template-->
-  <link href="../../resources/css/sb-admin.css" rel="stylesheet">
+  <link href="../../../../resources/css/sb-admin.css" rel="stylesheet">
   <!-- Page level plugin CSS-->
-  <link href="../../resources/js/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-	<script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
-<script src="../../resources/js/jquery.js"></script>
-	
+  <link href="../../../../resources/js/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  
+  <script src="../../../../resources/js/jquery.js"></script>
+  <script src="../../../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="../../../../resources/js/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../../../..resources/bootstrap/js/bootstrap.min.js"></script>
+
+
 
 <style>
 	a:link 
@@ -37,13 +44,13 @@ text-decoration:none;
 }
 </style>
 </head>
-
+ 
 <body class="bg-dark page-tp">
-<jsp:include page="../components/navbar.jsp" />
+<jsp:include page="../../components/navbar.jsp" />
 
   <div id="wrapper">
 
-	<jsp:include page="../components/sidebar.jsp" />
+	<jsp:include page="../../components/sidebar.jsp" />
 	<div id="content-wrapper">
       	<div class="container-fluid">
       		
@@ -97,23 +104,13 @@ text-decoration:none;
 				      	<c:when test="${reserva.status eq 'CANCELADO_ANFITRIAO'}">
 				      		<td style="color: #8B0000"><strong>CANCELADO PELO ANFITRIÃO</strong></td>
 				      	</c:when>
-				      	<c:when test="${reserva.status eq 'AVALIADO'}">
-				      		<td style="color: #0000CD"><strong>AVALIADO</strong></td>
-						</c:when>
 				      </c:choose>
 				      
-				      <td>	
+				      <td>
 				      	 	<c:if test="${reserva.status eq 'EM PROCESSO' || reserva.status eq 'APROVADO'}">
 				      	 		
 				      	 		<button data-toggle="modal" data-target="#modalCancelarReserva" onclick="setIdReserva(this)" idReserva="${reserva.id}" type="button" class="btn btn-danger">Cancelar Reserva</button>
 				      	 	</c:if>
-				      	 	<c:if test="${reserva.status eq 'EM PROCESSO'}">
-				      	 		<button onclick="irParaPagamento(this)" checkout="${reserva.checkout}" checkin="${reserva.checkin}" qtdHospedes="${reserva.qtdHospedes}" valorReserva="${reserva.total}"  idHospedagem="${reserva.hospedagem.id}" type="button" class="btn btn-success">Pagar</button>
-				      	 	</c:if>
-				      	 	<c:if test="${reserva.status eq 'APROVADO'}">
-				      	 		<button data-toggle="modal" data-target="#modalAvaliacaoHospedagem" onclick="setIdReservaAvaliacao(this)"   idReserva="${reserva.id}" type="button" class="btn btn-warning">Avaliar</button>
-				      	 	</c:if>
-				      	 	
 				     	 <a type="button" href="/cliente/visualizarReserva/${reserva.id}" class="btn btn-primary">Detalhes</a>	
 				      </td>
 				    </tr>
@@ -141,10 +138,8 @@ text-decoration:none;
     
 
   <!-- Bootstrap core JavaScript-->
-<jsp:include page="../components/modal/cliente/cadastrarEndereco.jsp" />
-<jsp:include page="../components/reserva/modalAvaliarHospedagem.jsp" />
-
-
+<jsp:include page="../../components/modal/cliente/cadastrarEndereco.jsp" />
+ <jsp:include page="../../components/modal/reserva/modalCancelarReserva.jsp" />  
 </body>
 
 
@@ -193,13 +188,11 @@ text-decoration:none;
 		});
 	}
 	
-
-	
 	function cancelarReserva(){
 		
 		var data = {
 			motivo : $("#motivoCancelamento").val(),
-			hospede : true
+			hospede : false
 		};
 		
 		$.ajax({
@@ -261,23 +254,11 @@ text-decoration:none;
 		      }
 		});
 	}
-	
-	var idReservaAvaliacao = "";
-	function setIdReservaAvaliacao(button){
-		idReservaAvaliacao = $(button).attr("idReserva");
-	}
-
 
 	var idReservaCancelamento = "";
 	function setIdReserva(button){
 		idReservaCancelamento = $(button).attr("idReserva");
 	}
 </script>
-<script src="../../../resources/js/jquery.js"></script>
-  <script src="../../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Core plugin JavaScript-->
-  <script src="../../../resources/js/jquery-easing/jquery.easing.min.js"></script>
-  <script src="../../../resources/bootstrap/js/bootstrap.min.js"></script>
-  <script src="../../../resources/js/jquery.js"></script>
 </html>
