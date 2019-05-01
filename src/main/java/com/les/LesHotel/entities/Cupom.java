@@ -1,6 +1,7 @@
 package com.les.LesHotel.entities;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 
@@ -8,6 +9,25 @@ import javax.persistence.Entity;
 public class Cupom extends EntidadeDominio{
 	private String codigo;
 	private BigDecimal valor;
+	private LocalDate validade;
+	private Boolean ativo;
+	
+	
+	
+	
+	
+	public LocalDate getValidade() {
+		return validade;
+	}
+	public void setValidade(LocalDate validade) {
+		this.validade = validade;
+	}
+	public Boolean getAtivo() {
+		return ativo;
+	}
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
 	public String getCodigo() {
 		return codigo;
 	}

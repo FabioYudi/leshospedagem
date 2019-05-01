@@ -30,6 +30,7 @@ import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.entities.Reserva;
+import com.les.LesHotel.enumeration.StatusReservaEnum;
 
 @Controller
 @RequestMapping("/painel/hospedagem/")
@@ -145,7 +146,9 @@ public class HospedagemController extends ControllerBase {
 			LocalDate startDate = reservaHospedagem.getCheckin();
 			LocalDate endDate = reservaHospedagem.getCheckout();
 			List<LocalDate> datas = new ArrayList<>();
-			if(!reservaHospedagem.getStatus().equalsIgnoreCase("REPROVADO")) {
+			if(!reservaHospedagem.getStatus().equalsIgnoreCase(StatusReservaEnum.REPROVADO.getStatus()) &&
+					!reservaHospedagem.getStatus().equalsIgnoreCase(StatusReservaEnum.CANCELADO_ANFITRIAO.getStatus())
+					&& !reservaHospedagem.getStatus().equalsIgnoreCase(StatusReservaEnum.CANCELADO_HOSPEDE.getStatus())) {
 				 datas = Stream
 						.iterate(startDate, d -> d.plusDays(1))
 						.limit(ChronoUnit.DAYS.between(startDate, endDate) + 1)

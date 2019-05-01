@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.les.LesHotel.dao.ClienteDAO;
+import com.les.LesHotel.dao.CupomDAO;
 import com.les.LesHotel.dao.HospedagemDAO;
 import com.les.LesHotel.dao.IDAO;
 import com.les.LesHotel.dao.ReservaDAO;
 import com.les.LesHotel.entities.Cliente;
+import com.les.LesHotel.entities.Cupom;
 import com.les.LesHotel.entities.EntidadeDominio;
 import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.entities.Reserva;
@@ -48,6 +50,9 @@ public class Facade implements IFacade {
 	
 	@Autowired 
 	private ReservaDAO reservaDAO;
+	
+	@Autowired
+	private CupomDAO cupomDAO;
 	
 	@PostConstruct
 	public void init() {
@@ -97,15 +102,25 @@ public class Facade implements IFacade {
 			rnsSalvarReserva.add(new ValidaPeriodoReserva());
 			rnsReserva.put("SALVAR", rnsSalvarReserva);
 			
+			
+			//Regras para cupom
+			List<IStrategy> rnsSalvarCupom = new ArrayList<>();
+			Map<String, List<IStrategy>> rnsCupom = new HashMap<>();
+			
+			rnsCupom.put("SALVAR", rnsSalvarCupom);
+			
+			
 		
 		//lista de repositorios
 		repositories.put(Hospedagem.class.getName(), hospedagemDao);
 		repositories.put(Cliente.class.getName(), clienteDAO);
 		repositories.put(Reserva.class.getName(), reservaDAO);
+		repositories.put(Cupom.class.getName(), cupomDAO);
 		
 		rns.put(Hospedagem.class.getName(), rnsHospedagem);
 		rns.put(Cliente.class.getName(), rnsCliente);
 		rns.put(Reserva.class.getName(), rnsReserva);
+		rns.put(Cupom.class.getName(), rnsCupom);
 
 	}
 
