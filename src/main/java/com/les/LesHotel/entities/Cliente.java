@@ -40,6 +40,39 @@ public class Cliente extends EntidadeDominio implements Cloneable {
 	
 	
 	
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((enderecos == null) ? 0 : enderecos.hashCode());
+		return result;
+	}
+
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		if (enderecos == null) {
+			if (other.enderecos != null)
+				return false;
+		} else if (!enderecos.equals(other.enderecos))
+			return false;
+		return true;
+	}
+
+
+
 
 	@Override
 	public  Object clone() throws CloneNotSupportedException {
