@@ -5,10 +5,13 @@ import java.time.LocalDate;
 
 import javax.persistence.Entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Cupom extends EntidadeDominio{
 	private String codigo;
 	private BigDecimal valor;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate validade;
 	private Boolean ativo;
 	

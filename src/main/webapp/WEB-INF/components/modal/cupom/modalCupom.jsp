@@ -41,7 +41,7 @@
       </div>
       <div class="modal-footer">
       
-        <button onclick="avaliarHospedagem()" type="button" class="btn btn-primary">Cadastrar cupom</button>
+        <button onclick="cadastrarCupom()" type="button" class="btn btn-primary">Cadastrar cupom</button>
       </div>
     </div>
   </div>

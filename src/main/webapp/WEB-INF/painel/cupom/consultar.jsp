@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Consulta de hospedagem</title>
+  <title>Consulta de cupons</title>
 
   <!-- Custom fonts for this template-->
  <link href="../../../resources/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -104,7 +104,7 @@ text-decoration:none;
 		<button data-toggle="modal" data-target="#modalCupom" class="btn btn-danger"><strong>Cadastrar novo cupom</strong></button>                  
           <div class="card-header">
             <i class="fas fa-table"></i>
-            Consulta de hospedagens</div>
+            Consulta de cupons</div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -120,13 +120,13 @@ text-decoration:none;
                 <tbody>
                   <c:forEach var="cupom" items="${cupons}">
 				  	<tr>
-				      <th scope="row"></th>
-				      <td></td>
-				      <td></td>
-				      <td></td>
+				     
+				      <td>${cupom.codigo}</td>
+				      <td>${cupom.valor}</td>
+				      <td>${cupom.validade}</td>
 				      <td>
 				      	 <c:choose>
-				      	 	<c:when test="">
+				      	 	<c:when test="${cupom.ativo}">
 								<span style="color:green">ATIVO</span>
 				      	 	</c:when>
 				      	 	<c:otherwise>
@@ -138,11 +138,11 @@ text-decoration:none;
 				      <td>
 				      	 <button type="button" class="btn btn-primary"><a style="color:white" href="/painel/hospedagem/detalhesEdicao/${hospedagem.id}">Editar</a></button>
 				      	 <c:choose>
-				      	 	<c:when test="${hospedagem.ativo}">
-				      	 		<button onclick="desativar(this)" valor="false" type="button" idHospedagem="${cupom.id}" class="btn btn-danger">Desativar</button>
+				      	 	<c:when test="${cupom.ativo}">
+				      	 		<button onclick="desativarCupom(this)" valor="false" type="button" ativar="false" idCupom="${cupom.id}" class="btn btn-danger">Desativar</button>
 				      	 	</c:when>
 				      	 	<c:otherwise>
-				      	 		<button onclick="desativar(this)" valor="true"  type="button" class="btn btn-success" idHospedagem="${hospedagem.id}">Ativar</button>
+				      	 		<button onclick="desativarCupom(this)" valor="true"  type="button" ativar="true" class="btn btn-success" idCupom="${cupom.id}">Ativar</button>
 				      	 		
 				      	 	</c:otherwise>	
 				      	 </c:choose>
@@ -181,21 +181,15 @@ text-decoration:none;
 </body>
 
 <script>
-	function desativar(botao){
+	function desativarCupom(botao){
 		var id = $(botao).attr("idHospedagem");
 		$.ajax({
-			 method: "POST",
-			 url: "/painel/hospedagem/desativar/" + id + "/" + $(botao).attr("valor"),
+			 method: "GET",
+			 url: "/cupom/desativar/" + $(botao).attr("idCupom") + "/" + $(botao).attr("ativar"),
 			 data: {},
 			 success: function(data) {
-		        data = JSON.parse(data);
-		        if(data.ok == true){
-		        	
-		        	$("#mensagem").val(data.mensagem);
-		        	$("#formDesativar").submit();
-		        }else{
-		        	
-		        }
+				 window.location.reload()
+		        
 		      },
 		      error: function(){
 		    	  
@@ -203,8 +197,8 @@ text-decoration:none;
 		});
 	}
 	
-	function cadastrar(botao){
-		var cupom = {
+	function cadastrarCupom(botao){
+		var data = {
 			codigo: $("#codigoCupom").val(),
 			valor: $("#valorCupom").val(),
 			validade: $("#validadeCupom").val(),
@@ -213,10 +207,10 @@ text-decoration:none;
 		};
 		$.ajax({
 			 method: "POST",
-			 url: "/painel/hospedagem/desativar/" + id + "/" + $(botao).attr("valor"),
-			 data: {},
+			 url: "/cupom/cadastrar",
+			 data: {cupom: JSON.stringify(data)},
 			 success: function(data) {
-		        data = JSON.parse(data);
+		        data = JSON.parse(cupom);
 		        if(data.ok == true){
 		        	
 		        	$("#mensagem").val(data.mensagem);
