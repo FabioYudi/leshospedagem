@@ -84,8 +84,9 @@ public class Facade implements IFacade {
 			rnsExcluirEnderecoCliente.add(new ValidaEnderecoPrincipal());
 			
 			rnsAlterarCliente.add(new ValidaDadosObrigatoriosEnderecoCliente());
-			
+			rnsAlterarCliente.add(new ValidaDadosObrigatoriosCliente());
 			rnsAlterarCliente.add(new ValidaDataNascimentoCliente());
+			
 			rnsCliente.put("SALVAR", rnsSalvarCliente);
 			rnsCliente.put("ALTERAR", rnsSalvarCliente);
 			rnsCliente.put("ALTERAR", rnsAlterarCliente);
