@@ -65,7 +65,7 @@
 			    			</div>
 		    			</div>
 		    			<div class="row">
-		    				<button type="button" onclick="carregarCartoes()"   style="margin-top:20px"  class="btn btn-warning">Adicionar cartão ao pagamento</button>
+		    				<button type="button" onclick="carregarCartoes()" id="btnAddCartao"  style="margin-top:20px"  class="btn btn-warning">Adicionar cartão ao pagamento</button>
 					    	<button type="button" data-toggle="modal" data-target="#modalCadastrarCartao"  style="margin-top:20px; margin-left:20px"  class="btn btn-primary">Cadastrar novo Cartão</button>
 		    			</div>
 					  
@@ -167,7 +167,8 @@
 
 </form>
 <script>
-
+debugger;
+var cartoesCliente = ${cliente.cartoes.size()};
 pagamento = true;
 var alterar = ${alterar};
 var idHospedagem = ${hospedagem.id}; 
@@ -188,6 +189,7 @@ function continuar(){
 		var valor = $(this).find("input").val();
 		var jsonCartao = {
 			id: cartao,
+			valor: valor
 		
 		};
 		
@@ -217,7 +219,7 @@ function continuar(){
 		 url: "/pagamento/irParaConfirmacao/" + idHospedagem + "/" + idCliente + "/" + idEndereco,
 		 data: {reserva: JSON.stringify(reserva), alterar: alterar},
 		 success: function(data) {
-			 debugger;
+			 
 			 data = JSON.parse(data);
 	         if(data.ok == true){
 	        	$("#idCliente").val(data.idCliente);
@@ -239,22 +241,55 @@ function continuar(){
 }
 
 var divCartoes = $("#divCartoes").html();
-
+var qtdCartoes = 0;
 function carregarCartoes(){
 	
-	$("#divCartoes").append(divCartoes);
-	$(".valorCartao").removeClass("hide");
 	
-	colocaIds();
+	
+	
+	if(verificaQtdCartoes() == false){
+		return;
+	}else{
+		$("#divCartoes").append(divCartoes);
+		$(".valorCartao").removeClass("hide");
+		colocaIds();
+	}
 }
 
+function verificaQtdCartoes(){
+	
+	var i = 1;
+	$("#divCartoes .form-group").each(function(){
+		i++;
+	});
+	debugger;
+	if(i > cartoesCliente){
+		return false;
+		
+	}else{
+		return true;
+	}
+
+}
+
+function verificaAposRemocao(){
+	var i = 0;
+	$("#divCartoes .form-group").each(function(){
+		i++;
+	});
+	debugger;
+	if(i == 1){
+		$(".valorCartao").addClass("hide");
+	}
+		
+}
 
 
 
 
 var i = 0;
 function colocaIds(){
-	debugger;
+	
 		$("#divCartoes .form-group").each(function(){
 	     $(this).attr("id", "cartao"+i);
 	     $(this).find("button").attr("idCartaoBotao", "cartao"+i);
@@ -271,6 +306,7 @@ function colocaIds(){
 function retirarCartao(button){
 	
 	$("#" + $(button).attr("idCartaoBotao")).remove();
+	verificaAposRemocao();
 }
 </script>
 

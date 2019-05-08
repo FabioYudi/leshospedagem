@@ -48,7 +48,7 @@ public class PagamentoController extends ControllerBase {
 		reservaCliente = MapperReservaHelper.mapearReserva(reservaCliente, cliente, hospedagem);
 		reservaCliente.setStatus(StatusReservaEnum.EM_PROCESSO.getStatus());
 		ArrayList<Endereco> enderecos = (ArrayList<Endereco>) cliente.getEnderecos().stream()
-				.filter(e -> e.getId() == Long.parseLong(idEndereco))
+				.filter(e -> e.getId().equals(Long.parseLong(idEndereco)))
 				.collect(Collectors.toList());
 		reservaCliente.setEndereco(enderecos.get(0));
 		Resultado resultado = new Resultado();

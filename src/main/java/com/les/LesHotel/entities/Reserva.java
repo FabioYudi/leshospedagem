@@ -29,7 +29,7 @@ public class Reserva extends EntidadeDominio {
 	private BigDecimal total;
 	private Integer qtdHospedes;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	private Set<Cartao> cartoes;
+	private Set<CartaoReserva> cartoes;
 	private String status;
 	private String mensagem;
 	private String motivoCancelamento;
@@ -113,10 +113,10 @@ public class Reserva extends EntidadeDominio {
 	public void setHospedagem(Hospedagem hospedagem) {
 		this.hospedagem = hospedagem;
 	}
-	public Set<Cartao> getCartoes() {
+	public Set<CartaoReserva> getCartoes() {
 		return cartoes;
 	}
-	public void setCartoes(Set<Cartao> cartoes) {
+	public void setCartoes(Set<CartaoReserva> cartoes) {
 		this.cartoes = cartoes;
 	}
 	

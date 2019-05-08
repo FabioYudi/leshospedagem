@@ -12,7 +12,7 @@ public class Avaliacao extends EntidadeDominio {
 	
 	private int nota;
 	private String comentario;
-	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	@JsonIgnore
 	private Cliente avaliador;
 	
