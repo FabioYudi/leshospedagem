@@ -124,6 +124,12 @@ public class ClienteController extends ControllerBase{
 		
 		Resultado resultado = commands.get(VISUALIZAR).execute(cli);
 		if(!resultado.getEntidades().isEmpty() && resultado.getEntidades().size() == 1) {
+			Cliente c = (Cliente) resultado.getEntidades().get(0);
+			if(!c.getSenha().equals(cli.getSenha())) {
+				model.addAttribute("ok", false);
+				httpSession.setAttribute("clienteLogado", null);
+				return mapper.writeValueAsString(model);
+			}
 			model.addAttribute("ok", true);
 			Cliente clien = (Cliente) resultado.getEntidades().get(0);
 			httpSession.setAttribute("clienteLogado", clien);
