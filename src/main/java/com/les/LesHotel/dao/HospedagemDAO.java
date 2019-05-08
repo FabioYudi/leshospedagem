@@ -21,15 +21,13 @@ public class HospedagemDAO extends AbstractDAO  {
 
 	@Override
 	public void salvar(EntidadeDominio entidade) {
-		repository.save(noCast(entidade));
+		
 		
 	}
 
 	@Override
 	public void alterar(EntidadeDominio entidade) {
-		if(entidade.getId() > 0) {
-			repository.save(noCast(entidade));
-		}
+		
 	}
 
 	@Override

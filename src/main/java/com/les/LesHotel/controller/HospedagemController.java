@@ -106,15 +106,17 @@ public class HospedagemController extends ControllerBase {
 		hos.setAnfitriao(cliente);
 		hospedagens.add(hos);
 		cliente.setHospedagens(hospedagens);
-		Resultado resultado = commands.get("ALTERAR").execute(cliente);
+		Resultado resultado = commands.get(SALVAR).execute(hos);
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			resultado.setMsg("Hospedagem alterada com sucesso!");
 			model.addAttribute("ok", true);
-			
+			resultado = commands.get("ALTERAR").execute(cliente);
 		}else {
 			model.addAttribute("ok", false);
 			
 		}
+		
+		
 		model.addAttribute("mensagem", resultado.getMsg());
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(model);
@@ -216,13 +218,15 @@ public class HospedagemController extends ControllerBase {
 		Hospedagem hospedagem = (Hospedagem) mapper.readValue(entidade, Hospedagem.class);
 		hospedagem.setAnfitriao(cliente);
 		cliente.getHospedagens().add(hospedagem);
-		Resultado resultado = commands.get(ALTERAR).execute(cliente);
+		Resultado resultado = commands.get(SALVAR).execute(hospedagem);
 		if(resultado.getMsg() == null || resultado.getMsg().length() <=0)  {
 			resultado.setMsg("Hospedagem cadastrada com sucesso!");
 			model.addAttribute("ok", true);
+			resultado = commands.get(ALTERAR).execute(cliente);
 		}else {
 			model.addAttribute("ok", false);
 		}
+		
 		model.addAttribute("mensagem", resultado.getMsg());
 		return mapper.writeValueAsString(model);
 	}
