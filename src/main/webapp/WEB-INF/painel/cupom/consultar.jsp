@@ -210,13 +210,14 @@ text-decoration:none;
 			 url: "/cupom/cadastrar",
 			 data: {cupom: JSON.stringify(data)},
 			 success: function(data) {
-		        data = JSON.parse(cupom);
+		        data = JSON.parse(data);
 		        if(data.ok == true){
 		        	
 		        	$("#mensagem").val(data.mensagem);
-		        	$("#formDesativar").submit();
+		        	 window.location.reload()
 		        }else{
-		        	
+		        	$("#alertaErroCupom").html(data.mensagem);
+		        	$("#alertaErroCupom").removeClass("hide");
 		        }
 		      },
 		      error: function(){

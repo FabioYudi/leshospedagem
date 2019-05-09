@@ -22,10 +22,15 @@ import com.les.LesHotel.entities.Hospedagem;
 import com.les.LesHotel.entities.Reserva;
 import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.rns.IStrategy;
+import com.les.LesHotel.rns.avaliacao.ValidaDadosObrigatoriosAvaliacao;
+import com.les.LesHotel.rns.avaliacao.ValidaDataAvaliacao;
 import com.les.LesHotel.rns.cliente.ValidaDadosObrigatoriosCliente;
 import com.les.LesHotel.rns.cliente.ValidaDadosObrigatoriosEnderecoCliente;
 import com.les.LesHotel.rns.cliente.ValidaDataNascimentoCliente;
 import com.les.LesHotel.rns.cliente.ValidaEnderecoPrincipal;
+import com.les.LesHotel.rns.cupom.ValidaDadosObrigatoriosCupom;
+import com.les.LesHotel.rns.cupom.ValidaDataCadastroCupom;
+import com.les.LesHotel.rns.cupom.ValidaDataDeUsoCupom;
 import com.les.LesHotel.rns.hospedagem.ValidaEmailJaCadastrado;
 import com.les.LesHotel.rns.hospedagem.ValidaPeriodoDataReservaHospedagem;
 import com.les.LesHotel.rns.hospedagem.ValidaQtdNegativasHospedagem;
@@ -72,46 +77,61 @@ public class Facade implements IFacade {
 		rnsHospedagem.put("ALTERAR", rnsSalvarHospedagem);
 		
 		
-		//regras para cliente
-			List<IStrategy> rnsSalvarCliente = new ArrayList<>();
-			List<IStrategy> rnsAlterarCliente = new ArrayList<>();
-			List<IStrategy> rnsExcluirEnderecoCliente = new ArrayList<>();
-			Map<String, List<IStrategy>> rnsCliente = new HashMap<>();
-			rnsSalvarCliente.add(new ValidaDadosObrigatoriosCliente());
-			rnsSalvarCliente.add(new ValidaDataNascimentoCliente());
-			rnsSalvarCliente.add(new ValidaEmailJaCadastrado());
-			
-			rnsExcluirEnderecoCliente.add(new ValidaEnderecoPrincipal());
-			
-			rnsAlterarCliente.add(new ValidaDadosObrigatoriosEnderecoCliente());
-			rnsAlterarCliente.add(new ValidaDadosObrigatoriosCliente());
-			rnsAlterarCliente.add(new ValidaDataNascimentoCliente());
-			
-			rnsCliente.put("SALVAR", rnsSalvarCliente);
-			rnsCliente.put("ALTERAR", rnsSalvarCliente);
-			rnsCliente.put("ALTERAR", rnsAlterarCliente);
-			
-			rnsCliente.put("EXCLUIR", rnsExcluirEnderecoCliente);
-			
-			
-			//Regras para reserva
-			List<IStrategy> rnsSalvarReserva = new ArrayList<>();
-			Map<String, List<IStrategy>> rnsReserva = new HashMap<>();
-			
-			rnsSalvarReserva.add(new ValidaDataCheckoutMenorDataCheckin());
-			rnsSalvarReserva.add(new ValidaQuantidadeHospedes());
-			rnsSalvarReserva.add(new ValidaPeriodoReserva());
-			rnsReserva.put("SALVAR", rnsSalvarReserva);
-			
-			
-			//Regras para cupom
-			List<IStrategy> rnsSalvarCupom = new ArrayList<>();
-			Map<String, List<IStrategy>> rnsCupom = new HashMap<>();
-			
-			rnsCupom.put("SALVAR", rnsSalvarCupom);
-			
-			
+	//regras para cliente
+		List<IStrategy> rnsSalvarCliente = new ArrayList<>();
+		List<IStrategy> rnsAlterarCliente = new ArrayList<>();
+		List<IStrategy> rnsExcluirEnderecoCliente = new ArrayList<>();
+		Map<String, List<IStrategy>> rnsCliente = new HashMap<>();
+		rnsSalvarCliente.add(new ValidaDadosObrigatoriosCliente());
+		rnsSalvarCliente.add(new ValidaDataNascimentoCliente());
+		rnsSalvarCliente.add(new ValidaEmailJaCadastrado());
 		
+		rnsExcluirEnderecoCliente.add(new ValidaEnderecoPrincipal());
+		
+		rnsAlterarCliente.add(new ValidaDadosObrigatoriosEnderecoCliente());
+		rnsAlterarCliente.add(new ValidaDadosObrigatoriosCliente());
+		rnsAlterarCliente.add(new ValidaDataNascimentoCliente());
+		
+		rnsCliente.put("SALVAR", rnsSalvarCliente);
+		rnsCliente.put("ALTERAR", rnsSalvarCliente);
+		rnsCliente.put("ALTERAR", rnsAlterarCliente);
+		
+		rnsCliente.put("EXCLUIR", rnsExcluirEnderecoCliente);
+		
+		
+		//Regras para reserva
+		List<IStrategy> rnsSalvarReserva = new ArrayList<>();
+		Map<String, List<IStrategy>> rnsReserva = new HashMap<>();
+		
+		rnsSalvarReserva.add(new ValidaDataCheckoutMenorDataCheckin());
+		rnsSalvarReserva.add(new ValidaQuantidadeHospedes());
+		rnsSalvarReserva.add(new ValidaPeriodoReserva());
+		rnsReserva.put("SALVAR", rnsSalvarReserva);
+		
+		
+		//Regras para cupom
+		List<IStrategy> rnsSalvarCupom = new ArrayList<>();
+		List<IStrategy> rnsConsultarCupom = new ArrayList<>();
+		Map<String, List<IStrategy>> rnsCupom = new HashMap<>();
+		
+		rnsConsultarCupom.add( new ValidaDataDeUsoCupom());
+		rnsSalvarCupom.add(new ValidaDadosObrigatoriosCupom());
+		rnsSalvarCupom.add(new ValidaDataCadastroCupom());
+		
+		rnsCupom.put("SALVAR", rnsSalvarCupom);
+		rnsCupom.put("CONSULTAR", rnsConsultarCupom);
+		
+		//Regras de avaliação
+		List<IStrategy> rnsAvaliarReserva = new ArrayList<>();
+		Map<String, List<IStrategy>> rnsAvaliacao = new HashMap<>();
+		
+		rnsAvaliarReserva.add(new ValidaDadosObrigatoriosAvaliacao());
+		rnsAvaliarReserva.add(new ValidaDataAvaliacao());
+
+		
+		
+		
+	
 		//lista de repositorios
 		repositories.put(Hospedagem.class.getName(), hospedagemDao);
 		repositories.put(Cliente.class.getName(), clienteDAO);

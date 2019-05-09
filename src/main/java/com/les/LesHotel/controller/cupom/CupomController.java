@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,6 +30,7 @@ public class CupomController extends ControllerBase {
 		return "painel/cupom/consultar";
 	}
 	
+	@ResponseBody
 	@PostMapping("/cadastrar")
 	public String cadastrarCupom(Model model, @RequestParam("cupom") String cupomString) throws IOException {
 	
@@ -45,7 +47,7 @@ public class CupomController extends ControllerBase {
 			
 		}
 		
-		
+		model.addAttribute("mensagem", resultado.getMsg());
 		return mapper.writeValueAsString(model);
 		
 	}
