@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.les.LesHotel.entities.Cupom;
 import com.les.LesHotel.entities.EntidadeDominio;
+import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.repository.CupomRepository;
 
 @Component
@@ -26,9 +27,7 @@ public class CupomDAO extends AbstractDAO {
 
 	@Override
 	public void alterar(EntidadeDominio entidade) {
-		if(entidade.getId() > 0) {
-			repository.save(noCast(entidade));
-		}
+		
 		
 	}
 
@@ -39,6 +38,8 @@ public class CupomDAO extends AbstractDAO {
 		List<Predicate<Cupom>> allPredicates = new ArrayList<Predicate<Cupom>>();
 		if(cupom.getId() != null && cupom.getId() > 0) 
 			allPredicates.add(h -> h.getId().equals(cupom.getId()));
+		if(!StringHelper.isNullOrEmpty(cupom.getCodigo())) 
+			allPredicates.add(h -> h.getCodigo().equals(cupom.getCodigo()));
 		
 
 		

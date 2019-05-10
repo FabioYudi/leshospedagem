@@ -123,7 +123,7 @@ public class Facade implements IFacade {
 		rnsSalvarCupom.add(new ValidaDataCadastroCupom());
 		
 		rnsCupom.put("SALVAR", rnsSalvarCupom);
-		rnsCupom.put("CONSULTAR", rnsConsultarCupom);
+		rnsCupom.put("VISUALIZAR", rnsConsultarCupom);
 		
 		//Regras de avaliação
 		List<IStrategy> rnsAvaliarReserva = new ArrayList<>();

@@ -87,8 +87,8 @@
 		              <div class="col-md-6">
 		                <div class="form-label-group">
 		                  <label for="firstName">Cupom de desconto</label>
-		                  <input type="text" id="firstName" class="form-control" placeholder="" required="required" autofocus="autofocus">
-		                  <button style="margin-top:10px"class="btn btn-warning">Aplicar</button>
+		                  <input type="text" id="codigoCupom" class="form-control" placeholder="" required="required" autofocus="autofocus">
+		                  <button id="aplicar" onclick="aplicarDesconto()" style="margin-top:10px"class="btn btn-warning">Aplicar</button>
 		                </div>
 		              </div>
 		            </div>
@@ -282,6 +282,31 @@ function verificaAposRemocao(){
 		$(".valorCartao").addClass("hide");
 	}
 		
+}
+
+function aplicarDesconto(){
+	$.ajax({
+		 method: "GET",
+		 url: "/cupom/aplicar/" + $("#codigoCupom").val(),
+		 success: function(data) {
+			 
+			 data = JSON.parse(data);
+	         if(data.ok == true){
+	        	$("#alertaErro").removeClass("alert-warning");
+	        	$("#alertaErro").addClass("alert-success");
+	        	$("#alertaErro").html("Cupom aplicado com sucesso!");
+	        	total = (total - (total * (data.cupom.valor/100)));
+	        	$("#valorTotal").html(total);
+	         }else{
+	        	$("#alertaErro").removeClass("hide");
+	        	$("#alertaErro").html(data.mensagem);
+	         }
+	      },
+	      error: function(){
+	    	  
+	      }
+	});
+	
 }
 
 

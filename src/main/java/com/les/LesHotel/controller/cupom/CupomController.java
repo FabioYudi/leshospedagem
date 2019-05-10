@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.les.LesHotel.Facade.Resultado;
 import com.les.LesHotel.controller.ControllerBase;
 import com.les.LesHotel.entities.Cupom;
+import com.les.LesHotel.helper.StringHelper;
 
 @Controller
 @RequestMapping("/cupom")
@@ -75,5 +77,29 @@ public class CupomController extends ControllerBase {
 		return "forward:/cupom/consultar";
 		
 	}
+	
+	@ResponseBody
+	@GetMapping("/aplicar/{codigo}")
+	public String aplicarCupom(Model model, @PathVariable String codigo) throws JsonProcessingException {
+		Cupom cupom = new Cupom();
+		cupom.setCodigo(codigo);
+		Resultado resultado = commands.get(VISUALIZAR).execute(cupom);
+		if(resultado.getEntidades() == null || resultado.getEntidades().isEmpty()) {
+			model.addAttribute("ok", false);
+			model.addAttribute("mensagem", "Código de cupom inválido");
+		}else {
+			cupom = (Cupom) resultado.getEntidades().get(0);
+			resultado = commands.get(ALTERAR).execute(cupom);
+			if(StringHelper.isNullOrEmpty(resultado.getMsg())) {
+				model.addAttribute("ok", true);
+				model.addAttribute("cupom", cupom);
+			}else {
+				model.addAttribute("mensagem", resultado.getMsg());
+			}
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(model);
+	}
+	
 
 }
