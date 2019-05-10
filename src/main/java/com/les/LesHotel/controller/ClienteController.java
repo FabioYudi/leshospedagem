@@ -416,6 +416,7 @@ public class ClienteController extends ControllerBase{
 		
 	}
 	
+	@ResponseBody
 	@GetMapping("/avaliar/cliente/{idReserva}")
 	public String avaliarHospedagemAnfitriao(Model model, @PathVariable String idReserva, String avaliacaoAnfitriao, String avaliacaoHospedagem) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
@@ -442,9 +443,19 @@ public class ClienteController extends ControllerBase{
 			reserva.setStatus(StatusReservaEnum.AVALIADO.getStatus());
 		}
 		
+		Resultado resultadoAnfitriao = commands.get(SALVAR).execute(anfitriao);
+		Resultado resultadoHospedagem = commands.get(SALVAR).execute(hospedagem);
+		if(resultadoAnfitriao.getMsg() == null && resultadoHospedagem.getMsg() == null) {
+			commands.get(ALTERAR).execute(reserva);
+			model.addAttribute("ok", true);
+		}else {
+			model.addAttribute("ok", false);
+			model.addAttribute("mensagemAnfitriao", resultadoAnfitriao.getMsg());
+			model.addAttribute("mensagemHospedagem", resultadoHospedagem.getMsg());
+
+		}
 		
-		commands.get(ALTERAR).execute(reserva);
-		return "forward:/cliente/consultar/reservas";
+		return mapper.writeValueAsString(model);
 		
 		
 	}

@@ -55,6 +55,11 @@ public class PagamentoController extends ControllerBase {
 	
 			if(!alterar) {
 				resultado =  commands.get(SALVAR).execute(reservaCliente);
+			}else {
+				Reserva reservaAlterar = (Reserva) commands.get(CONSULTAR).execute(reservaCliente).getEntidades().get(0);
+				reservaAlterar.setCartoes(reservaCliente.getCartoes());
+				reservaAlterar.setEndereco(reservaCliente.getEndereco());
+				resultado =  commands.get(ALTERAR).execute(reservaAlterar);
 			}
 			
 		

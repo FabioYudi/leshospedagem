@@ -16,11 +16,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Reserva extends EntidadeDominio {
 	
-	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private Cliente cliente;
-	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private Hospedagem hospedagem;
-	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private Endereco endereco;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate checkin;

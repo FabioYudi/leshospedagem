@@ -10,11 +10,13 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.les.LesHotel.dao.AvaliacaoDAO;
 import com.les.LesHotel.dao.ClienteDAO;
 import com.les.LesHotel.dao.CupomDAO;
 import com.les.LesHotel.dao.HospedagemDAO;
 import com.les.LesHotel.dao.IDAO;
 import com.les.LesHotel.dao.ReservaDAO;
+import com.les.LesHotel.entities.Avaliacao;
 import com.les.LesHotel.entities.Cliente;
 import com.les.LesHotel.entities.Cupom;
 import com.les.LesHotel.entities.EntidadeDominio;
@@ -23,7 +25,6 @@ import com.les.LesHotel.entities.Reserva;
 import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.rns.IStrategy;
 import com.les.LesHotel.rns.avaliacao.ValidaDadosObrigatoriosAvaliacao;
-import com.les.LesHotel.rns.avaliacao.ValidaDataAvaliacao;
 import com.les.LesHotel.rns.cliente.ValidaDadosObrigatoriosCliente;
 import com.les.LesHotel.rns.cliente.ValidaDadosObrigatoriosEnderecoCliente;
 import com.les.LesHotel.rns.cliente.ValidaDataNascimentoCliente;
@@ -58,6 +59,9 @@ public class Facade implements IFacade {
 	
 	@Autowired
 	private CupomDAO cupomDAO;
+	
+	@Autowired
+	private AvaliacaoDAO avaliacaoDAO;
 	
 	@PostConstruct
 	public void init() {
@@ -126,10 +130,10 @@ public class Facade implements IFacade {
 		Map<String, List<IStrategy>> rnsAvaliacao = new HashMap<>();
 		
 		rnsAvaliarReserva.add(new ValidaDadosObrigatoriosAvaliacao());
-		rnsAvaliarReserva.add(new ValidaDataAvaliacao());
+		
 
 		
-		
+		rnsAvaliacao.put("SALVAR", rnsAvaliarReserva);
 		
 	
 		//lista de repositorios
@@ -137,11 +141,13 @@ public class Facade implements IFacade {
 		repositories.put(Cliente.class.getName(), clienteDAO);
 		repositories.put(Reserva.class.getName(), reservaDAO);
 		repositories.put(Cupom.class.getName(), cupomDAO);
+		repositories.put(Avaliacao.class.getName(), avaliacaoDAO);
 		
 		rns.put(Hospedagem.class.getName(), rnsHospedagem);
 		rns.put(Cliente.class.getName(), rnsCliente);
 		rns.put(Reserva.class.getName(), rnsReserva);
 		rns.put(Cupom.class.getName(), rnsCupom);
+		rns.put(Avaliacao.class.getName(), rnsAvaliacao);
 
 	}
 

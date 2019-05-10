@@ -2,6 +2,7 @@
 <div class="modal fade" id="modalAvaliacaoHospedagem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+    <div id="erroAvaliacao" class="alert alert-danger hide" role="alert"></div>
       <div class="modal-header">
         <h5 class="modal-title" id="modalAvaliacaoHospedagemLabel">Avalie seu anfitrião</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -78,7 +79,14 @@ function avaliarHospedagem(){
 			 url: "/cliente/avaliar/cliente/" + idReservaAvaliacao,
 			 data: {avaliacaoAnfitriao: JSON.stringify(anfitriao), avaliacaoHospedagem: JSON.stringify(hospedagem) },
 			 success: function(data) {
-				 window.location.assign("/cliente/consultar/reservas");
+				 data = JSON.parse(data);
+				 if(data.ok){
+					 window.location.assign("/cliente/consultar/reservas");
+				 }else{
+					 $("#erroAvaliacao").removeClass("hide");
+					 $("#erroAvaliacao").html(data.mensagemAnfitriao + data.mensagemHospedagem);
+					}
+				
 		      },
 		      error: function(){
 		    	  
