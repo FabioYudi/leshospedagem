@@ -296,7 +296,8 @@ function aplicarDesconto(){
 	        	$("#alertaErro").addClass("alert-success");
 	        	$("#alertaErro").html("Cupom aplicado com sucesso!");
 	        	total = (total - (total * (data.cupom.valor/100)));
-	        	$("#valorTotal").html(total);
+	        	$("#valorTotal").text(total.toFixed(2));
+	        	$("#valorTotal").text($("#valorTotal").text().replace(".", ","));
 	         }else{
 	        	$("#alertaErro").removeClass("hide");
 	        	$("#alertaErro").html(data.mensagem);
