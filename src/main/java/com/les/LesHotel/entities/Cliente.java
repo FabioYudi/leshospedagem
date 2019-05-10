@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -26,7 +28,8 @@ public class Cliente extends EntidadeDominio implements Cloneable {
 	private String telefone;
 	private Boolean ativo;
 	private String idAnfitriao;
-	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Endereco> enderecos;
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private Set<Cartao> cartoes;
