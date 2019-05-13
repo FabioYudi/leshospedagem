@@ -161,6 +161,20 @@
 			              	   <label for="inputPassword"><strong>Email:</strong> ${reserva.hospedagem.anfitriao.email}</label>
 			              	</div>
 			              </div>
+			              <hr style="background-color:red">
+			              <div class="row">
+			              	<div class="col-md-12">
+			              	   <label for="inputPassword"><strong>Status:</strong> ${reserva.status}</label>
+			              	   <c:if test="${reserva.status eq  'CANCELADO_ANFITRIAO' || reserva.status eq 'CANCELADO_HOSPEDE'}">
+			              	  	 <div class="row">
+					              	<div class="col-md-12">
+					              	   <label for="inputPassword"><strong>Motivo:</strong> ${reserva.motivoCancelamento}</label>
+					              	</div>
+					              </div>
+			              	   			
+			              	   </c:if>
+			              	</div>
+			              </div>
           		</div>
           		<hr style="background-color:red">
           		<div class="form-group">

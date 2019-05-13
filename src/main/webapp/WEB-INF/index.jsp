@@ -33,16 +33,7 @@
     	 	<input style="width:80%!important" type="text" id="checkout" class="form-control datepicker"  data-date-format="dd/mm/yyyy"  placeholder="dd/mm/aaaa">
    	 	</div>
   	  </div>
-	   <div class="row" style="margin-top:20px">
-    	<div class="col">
-    		<label  style="color:black; margin-left:10px" for="adultos">Adultos</label>
-     		<input style="width:80%!important" type="text" id="adultos" class="form-control" placeholder="">
-    	</div>
-    	<div class="col" style="margin-right:20px">
-    	    <label style="color:black" for="criancas">Crianças</label>
-    	 	<input style="width:80%!important" type="text" id="criancas" class="form-control" placeholder="">
-   	 	</div>
-  	  </div>
+ 
   	
 	 	
 	  <button style="margin-left:80%; margin-top:20px" type="submit" class="btn btn-primary">Pesquisar</button>

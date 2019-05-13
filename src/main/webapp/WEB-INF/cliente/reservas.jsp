@@ -213,7 +213,14 @@ text-decoration:none;
 			 url: "/pagamento/cancelarReserva/" + idReservaCancelamento,
 			 data: data,
 			 success: function(data) {
-				 window.location.assign("/cliente/consultar/reservas");
+				 data = JSON.parse(data);
+				 if(data.ok){
+					 window.location.assign("/cliente/consultar/reservas");
+				 }else{
+					 $("#erroCancelar").removeClass("hide");
+					 $("#erroCancelar").html(data.mensagem);
+				 }
+				 
 		      },
 		      error: function(){
 		    	  

@@ -166,12 +166,17 @@
 var diaria = ${hospedagem.diaria};
 debugger;
 var datesForDisable = ${datasIndisponiveis};
+debugger;
+var dataInicio = moment("${hospedagem.dataInicio}", "YYYY-MM-DDD");
+var dataFim = moment("${hospedagem.dataFim}", "YYYY-MM-DDD");;
 $('.datepicker').datepicker({
 	 format: 'dd/mm/yyyy',
      autoclose: true,
      weekStart: 1,
      todayHighlight: false,
      datesDisabled: datesForDisable,
+     startDate: dataInicio.format("DD/MM/YYYY"),
+     endDate: dataFim.format("DD/MM/YYYY")
 });
 
 

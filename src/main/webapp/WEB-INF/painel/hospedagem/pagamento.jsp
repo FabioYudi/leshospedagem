@@ -117,6 +117,9 @@
         <div style="width:300px"class="card mt-4">
         	<div class="card-body">
             <h4 id="txtTotal">Total: R$<span id="valorTotal">${reserva.total}</span></h4>
+            <h4 id="desconto" class="" style="color:red"></h4>
+            <hr>
+            <h4 id="valorNovo" style="color:green"></h4>
             <form>
             	<div class="form-group">
 		            <div class="form-row">
@@ -162,7 +165,7 @@
 	<input type="hidden" name="idEndereco" id="idEndereco"/>
 	<input type="hidden" name="checkin" value="${reserva.checkin}"/>
 	<input type="hidden" name="checkout" value="${reserva.checkout}"/>
-	<input type="hidden" name="total" value="${reserva.total}"/>
+	<input type="hidden" name="total" id="totalSubmit" value="${reserva.total}"/>
 	<input type="hidden" name="qtdHospedes" value="${reserva.qtdHospedes}"/>
 
 </form>
@@ -177,6 +180,7 @@ var checkin = "${reserva.checkin}";
 var checkout = "${reserva.checkout}";
 var qtdHospedes = ${reserva.qtdHospedes};
 var total = ${reserva.total};
+var totalOriginal = total;
 var listaCartoes = [];
 $("#valorTotal").text(total.toFixed(2));
 $("#valorTotal").text($("#valorTotal").text().replace(".", ","));
@@ -200,7 +204,7 @@ function continuar(){
 	
 
 	
-	
+	debugger;
 	var reserva = {
 		
 		checkin: checkin,
@@ -295,9 +299,13 @@ function aplicarDesconto(){
 	        	$("#alertaErro").removeClass("alert-warning");
 	        	$("#alertaErro").addClass("alert-success");
 	        	$("#alertaErro").html("Cupom aplicado com sucesso!");
-	        	total = (total - (total * (data.cupom.valor/100)));
-	        	$("#valorTotal").text(total.toFixed(2));
+	        	total = (totalOriginal - (totalOriginal * (data.cupom.valor/100)));
 	        	$("#valorTotal").text($("#valorTotal").text().replace(".", ","));
+	        	var desconto = totalOriginal * (data.cupom.valor/100);
+	        	$("#valorTotal").html("<strike>" + totalOriginal.toFixed(2)+ "</strike>")
+	        	$("#desconto").text("Desconto:" + desconto.toFixed(2));
+	        	$("#valorNovo").text("Novo total: " + total.toFixed(2));
+	        	$("#totalSubmit").val(total);
 	         }else{
 	        	$("#alertaErro").removeClass("hide");
 	        	$("#alertaErro").html(data.mensagem);

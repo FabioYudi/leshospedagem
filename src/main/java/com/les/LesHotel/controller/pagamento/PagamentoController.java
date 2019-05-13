@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -26,6 +27,7 @@ import com.les.LesHotel.entities.Reserva;
 import com.les.LesHotel.enumeration.StatusReservaEnum;
 import com.les.LesHotel.helper.MapperReservaHelper;
 import com.les.LesHotel.helper.PagamentoCartaoHelper;
+import com.les.LesHotel.helper.StringHelper;
 
 @Controller
 @RequestMapping("/pagamento")
@@ -114,8 +116,9 @@ public class PagamentoController extends ControllerBase {
 		return "forward:/cliente/consultar/reservas";
 	}
 	
+	@ResponseBody
 	@GetMapping("/cancelarReserva/{idReserva}")
-	public String cancelarReserva(Model model, String motivo, @PathVariable String idReserva, boolean hospede) {
+	public String cancelarReserva(Model model, String motivo, @PathVariable String idReserva, boolean hospede) throws JsonProcessingException {
 		Reserva reserva = new Reserva();
 		reserva.setId(Long.parseLong(idReserva));
 		reserva = (Reserva) commands.get(VISUALIZAR).execute(reserva).getEntidades().get(0);
@@ -125,7 +128,18 @@ public class PagamentoController extends ControllerBase {
 			reserva.setStatus(StatusReservaEnum.CANCELADO_ANFITRIAO.getStatus());
 		}
 		reserva.setMotivoCancelamento(motivo);
-		commands.get(ALTERAR).execute(reserva);
-		return "forward:/cliente/consultar/reservas";
+		Resultado resultado = commands.get(EXCLUIR).execute(reserva);
+		if(StringHelper.isNullOrEmpty(resultado.getMsg())) {
+			commands.get(ALTERAR).execute(reserva);
+			model.addAttribute("ok", true);
+			
+		}else {
+			model.addAttribute("ok", false);
+			model.addAttribute("mensagem", resultado.getMsg());
+		}
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(model);
 	}
 }

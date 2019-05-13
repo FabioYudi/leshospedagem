@@ -84,7 +84,7 @@ function avaliarHospedagem(){
 					 window.location.assign("/cliente/consultar/reservas");
 				 }else{
 					 $("#erroAvaliacao").removeClass("hide");
-					 $("#erroAvaliacao").html(data.mensagemAnfitriao + data.mensagemHospedagem);
+					 $("#erroAvaliacao").html(data.mensagemAnfitriao + data.mensagemHospedagem + data.mensagemAvaliacao);
 					}
 				
 		      },

@@ -25,6 +25,9 @@ import com.les.LesHotel.entities.Reserva;
 import com.les.LesHotel.helper.StringHelper;
 import com.les.LesHotel.rns.IStrategy;
 import com.les.LesHotel.rns.avaliacao.ValidaDadosObrigatoriosAvaliacao;
+import com.les.LesHotel.rns.avaliacao.ValidaDataAvaliacao;
+import com.les.LesHotel.rns.cancelamento.ValidaDadosObrigatoriosCancelamento;
+import com.les.LesHotel.rns.cancelamento.ValidaDataCancelamento;
 import com.les.LesHotel.rns.cliente.ValidaDadosObrigatoriosCliente;
 import com.les.LesHotel.rns.cliente.ValidaDadosObrigatoriosEnderecoCliente;
 import com.les.LesHotel.rns.cliente.ValidaDataNascimentoCliente;
@@ -105,11 +108,19 @@ public class Facade implements IFacade {
 		
 		//Regras para reserva
 		List<IStrategy> rnsSalvarReserva = new ArrayList<>();
+		List<IStrategy> rnsCancelarReserva = new ArrayList<>();
 		Map<String, List<IStrategy>> rnsReserva = new HashMap<>();
 		
 		rnsSalvarReserva.add(new ValidaDataCheckoutMenorDataCheckin());
 		rnsSalvarReserva.add(new ValidaQuantidadeHospedes());
 		rnsSalvarReserva.add(new ValidaPeriodoReserva());
+		
+		rnsCancelarReserva.add(new ValidaDataCancelamento());
+		rnsCancelarReserva.add(new ValidaDataAvaliacao());
+		rnsCancelarReserva.add(new ValidaDadosObrigatoriosCancelamento());
+		
+		
+		rnsReserva.put("EXCLUIR", rnsCancelarReserva);
 		rnsReserva.put("SALVAR", rnsSalvarReserva);
 		
 		

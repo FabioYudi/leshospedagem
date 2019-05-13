@@ -445,13 +445,15 @@ public class ClienteController extends ControllerBase{
 		
 		Resultado resultadoAnfitriao = commands.get(SALVAR).execute(anfitriao);
 		Resultado resultadoHospedagem = commands.get(SALVAR).execute(hospedagem);
-		if(resultadoAnfitriao.getMsg() == null && resultadoHospedagem.getMsg() == null) {
+		Resultado resultadoAvaliacao = commands.get(EXCLUIR).execute(reserva);
+		if(resultadoAnfitriao.getMsg() == null && resultadoHospedagem.getMsg() == null && resultadoAvaliacao.getEntidades() == null) {
 			commands.get(ALTERAR).execute(reserva);
 			model.addAttribute("ok", true);
 		}else {
 			model.addAttribute("ok", false);
 			model.addAttribute("mensagemAnfitriao", resultadoAnfitriao.getMsg());
 			model.addAttribute("mensagemHospedagem", resultadoHospedagem.getMsg());
+			model.addAttribute("mensagemAvaliacao", resultadoAvaliacao.getMsg());
 
 		}
 		
@@ -460,6 +462,7 @@ public class ClienteController extends ControllerBase{
 		
 	}
 	
+	@ResponseBody
 	@GetMapping("/avaliar/hospede/{idReserva}")
 	public String avaliarHospede(Model model, @PathVariable String idReserva, String avaliacaoHospede) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
@@ -481,8 +484,21 @@ public class ClienteController extends ControllerBase{
 		if(reserva.isAvaliadoHospede()) {
 			reserva.setStatus(StatusReservaEnum.AVALIADO.getStatus());
 		}
-		commands.get(ALTERAR).execute(reserva);
-		return "forward:/cliente/consultar/reservas";
+		Resultado resultadoHospede = commands.get(SALVAR).execute(hospede);
+		Resultado resultadoAvaliacao = commands.get(EXCLUIR).execute(reserva);
+		if(resultadoHospede.getMsg() == null && resultadoAvaliacao.getEntidades() == null) {
+			commands.get(ALTERAR).execute(reserva);
+			model.addAttribute("ok", true);
+		}else {
+			model.addAttribute("ok", false);
+			
+			model.addAttribute("mensagemHospede", resultadoAvaliacao.getMsg());
+			model.addAttribute("mensagemAvaliacao", resultadoHospede.getMsg());
+
+		}
+
+		
+		return mapper.writeValueAsString(model);
 		
 		
 	}

@@ -66,7 +66,7 @@ public class ReservaDAO extends AbstractDAO {
 
 	@Override
 	public void deletar(EntidadeDominio entidade) {
-		repository.save(noCast(entidade));	
+		
 		
 	}
 
