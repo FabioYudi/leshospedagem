@@ -5,6 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.les.LesHotel.Facade.Resultado;
+import com.les.LesHotel.entities.Reserva;
 
 
 
@@ -43,8 +49,18 @@ public class PainelController extends ControllerBase{
 	}
 	
 	@GetMapping("painel/graficos/graficos")
-	public String consultaDeGraficos() {
+	public String consultaDeGraficos(Model model) {
+		
 		return "painel/graficos/graficos";
+	}
+	
+	@ResponseBody
+	@GetMapping("painel/getReservas")
+	public String getReservas(Model model) throws JsonProcessingException {
+		Resultado resultado = commands.get(CONSULTAR).execute(new Reserva());
+		model.addAttribute("reservas",   resultado.getEntidades());
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(model);
 	}
 	
 	

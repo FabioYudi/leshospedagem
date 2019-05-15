@@ -39,7 +39,7 @@
 <jsp:include page="../../components/navbar.jsp" />
 </head>
 <body class="bg-dark">
-
+<div id="alertaErro" class="alert alert-warning hide" role="alert"></div>
   
   <!-- Page Content -->
   <div class="container">
@@ -167,8 +167,8 @@ var diaria = ${hospedagem.diaria};
 debugger;
 var datesForDisable = ${datasIndisponiveis};
 debugger;
-var dataInicio = moment("${hospedagem.dataInicio}", "YYYY-MM-DDD");
-var dataFim = moment("${hospedagem.dataFim}", "YYYY-MM-DDD");;
+var dataInicio = moment("${hospedagem.dataInicio}");
+var dataFim = moment("${hospedagem.dataFim}");;
 $('.datepicker').datepicker({
 	 format: 'dd/mm/yyyy',
      autoclose: true,
@@ -181,7 +181,11 @@ $('.datepicker').datepicker({
 
 
 function irParaPagamento(){
-	debugger;
+	if($("checkin").val() == "" || $("#checkin").val() == null || $("#checkout").val() == "" || $("#checkout").val() == null || $("qtdHospedes").val() == ""){
+		$("#alertaErro").removeClass("hide");
+		$("#alertaErro").html("Por favor, preencha todos os campos");
+		return;
+	}
 	var data = moment($("#checkin").val(), "DD/MM/YYYY")
 	$("#dataCheckinReserva").val(data.format("YYYY-MM-DD"));
 	var data = moment($("#checkout").val(), "DD/MM/YYYY")

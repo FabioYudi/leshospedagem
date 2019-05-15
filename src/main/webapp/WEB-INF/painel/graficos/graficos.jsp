@@ -11,28 +11,45 @@
   <!-- Custom styles for this template-->
   <link href="../../../resources/css/sb-admin.css" rel="stylesheet">
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Análise</title>
 </head>
 <body class="bg-dark">
 <jsp:include page="../../components/navbar.jsp" />
-<jsp:include page="../../components/sidebar.jsp" />
+<div id="wrapper">
+	<jsp:include page="../../components/sidebar.jsp" />
+	<div id="content-wrapper">
+   	 <div class="container-fluid">
+   	 	<div  class="card card-register mx-auto mt-2">
+			<canvas id="myChart" width="100" height="100"></canvas>
+		</div>
+
+   	 </div>
+   	</div> 
+</div>
+
 
 <script src="../../../resources/grafico/Chart.min.js"></script>
-<div style="width:800px!important; max-width:2000px; margin-top:-35%!important"  class="card card-register mx-auto mt-2">
-	<canvas id="myChart" width="200" height="200"></canvas>
-</div>
+
 
   <!-- Custom fonts for this template-->
  
 <script>
+
+var estados = ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RO", "RS", "RR", "SC", "SE", "SP", "TO"]
+
+var reservas = [];
+getReservas();
+var reservaPorEstados = [];
+getReservasPorEstado(estados, reservas);
 var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
+    
     data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: estados,
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'Nº de reservas',
+            data: reservaPorEstados,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -62,6 +79,43 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+function getReservas(){
+	$.ajax({
+		 method: "GET",
+		 url: "/painel/getReservas",
+		 async: false,
+		 data: {},
+		 success: function(data) {
+			 
+	        data = JSON.parse(data);
+	        reservas = data.reservas;
+	        	
+	        
+	      },
+	      error: function(){
+	    	  
+	      }
+	});
+}
+
+
+function getReservasPorEstado(estados, reservas){
+	debugger;
+	for(var i = 0; i < estados.length; i++){
+		var qtd = 0;
+		for(var j = 0; j < reservas.length; j++){
+			if(estados[i].toUpperCase() == reservas[j].hospedagem.endereco.estado.toUpperCase()){
+				qtd++;	
+			}
+		}
+		reservaPorEstados.push(qtd);
+		
+	}
+	
+
+	
+}
 </script>
 <!-- Bootstrap core JavaScript-->
   <script src="../../resources/js/jquery.js"></script>
