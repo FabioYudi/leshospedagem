@@ -2,6 +2,7 @@ package com.les.LesHotel.controller.pagamento;
 
 import java.io.IOException;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -53,6 +54,8 @@ public class PagamentoController extends ControllerBase {
 				.filter(e -> e.getId().equals(Long.parseLong(idEndereco)))
 				.collect(Collectors.toList());
 		reservaCliente.setEndereco(enderecos.get(0));
+		
+		reservaCliente.setDataReserva(LocalDate.now());
 		Resultado resultado = new Resultado();
 	
 			if(!alterar) {

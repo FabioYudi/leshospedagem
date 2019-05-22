@@ -35,10 +35,20 @@ public class Reserva extends EntidadeDominio {
 	private String motivoCancelamento;
 	private boolean avaliadoHospede;
 	private boolean avaliadoAnfitriao;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private LocalDate dataReserva;
 	
 	
 	
 	
+	
+	
+	public LocalDate getDataReserva() {
+		return dataReserva;
+	}
+	public void setDataReserva(LocalDate dataReserva) {
+		this.dataReserva = dataReserva;
+	}
 	public boolean isAvaliadoHospede() {
 		return avaliadoHospede;
 	}
