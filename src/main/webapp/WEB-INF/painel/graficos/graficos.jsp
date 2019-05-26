@@ -36,7 +36,7 @@
 <script>
 
 var estados = ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RO", "RS", "RR", "SC", "SE", "SP", "TO"]
-
+var periodo = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
 var reservas = [];
 getReservas();
 var reservaPorEstados = [];
@@ -46,9 +46,9 @@ var myChart = new Chart(ctx, {
     type: 'line',
     
     data: {
-        labels: estados,
+        labels: periodo,
         datasets: [{
-            label: 'Nº de reservas',
+            label: 'Estados',
             data: reservaPorEstados,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
