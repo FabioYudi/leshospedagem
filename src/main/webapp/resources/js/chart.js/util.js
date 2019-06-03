@@ -16,7 +16,22 @@ window.chartColors = {
 	darkRed: 'rgb(128, 3, 18)',
 	lightPurple: 'rgb(176, 167, 250)',
 	brown: 'rgb(100, 30, 22)',
-	darkBlue: 'rgb(36, 113, 163)',
+	darkBlue: 'rgb(36, 113, 163)',	
+	coral: 'rgb(240, 128, 128)',
+	cyan: 'rgb(0,255,255)',
+	lime: 'rgb(0,255,0)',
+	olive: 'rgb(128,128,0)',
+	gold: 'rgb(218,165,32)',
+	wheat: 'rgb(245,222,179)',
+	mistyRose:  'rgb(255,228,225)',
+	thistle: 'rgb(216,191,216)',
+	chocolate: 'rgb(210,105,30)',	
+	khaki: 'rgb(189,83,107)',
+	rosy: 'rgb(188,143,143)',
+	sea: 'rgb(60,179,113)',
+	teal: 'rgb(0,128,128)',
+	blue: 'rgb(0,0,255)'
+	
 	
 	
 };
