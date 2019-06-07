@@ -65,7 +65,7 @@
 		    <div class="col-2">
 			    <label style="color:white" for="mes1">Mes 1</label>
 			    <select class="form-control" id="mes1">
-			     	<option>Selecione...</option>
+			     	<option value="">Selecione...</option>
 					<option value="1">Janeiro</option>
 					<option value="2">Fevereiro</option>
 					<option value="3">Março</option>
@@ -83,7 +83,7 @@
 		    <div class="col-2">
 		    	<label style="color:white" for="mes2">Mes 2</label>
 		   		<select class="form-control" id="mes2">
-			     	<option>Selecione...</option>
+			     	<option value="">Selecione...</option>
 					<option value="1">Janeiro</option>
 					<option value="2">Fevereiro</option>
 					<option value="3">Março</option>
@@ -133,19 +133,67 @@
   <!-- Custom fonts for this template-->
  
 <script>
+
+
+
+var cores = new Map();
+cores.set("AC", window.chartColors.red);
+cores.set("AL", window.chartColors.orange);
+cores.set("AM", window.chartColors.yellow);
+cores.set("AP", window.chartColors.green);
+cores.set("BA", window.chartColors.yellow);
+cores.set("CE", window.chartColors.green);
+cores.set("DF", window.chartColors.blue);
+cores.set("ES", window.chartColors.purple);
+cores.set("GO", window.chartColors.grey);
+cores.set("MA", window.chartColors.pink);
+cores.set("MT", window.chartColors.black);
+cores.set("MS", window.chartColors.aqua);
+cores.set("MG", window.chartColors.lightBlue);
+cores.set("PA", window.chartColors.lightGreen);
+cores.set("PB", window.chartColors.darkRed);
+cores.set("PR", window.chartColors.lightPurple);
+cores.set("PE", window.chartColors.brown);
+cores.set("PI", window.chartColors.darkBlue);
+cores.set("RJ", window.chartColors.coral);
+cores.set("RN", window.chartColors.cyan);
+cores.set("RO", window.chartColors.lime);
+cores.set("RS", window.chartColors.olive);
+cores.set("RR", window.chartColors.gpçd);
+cores.set("SC", window.chartColors.wheat);
+cores.set("SE", window.chartColors.mistyRose);
+cores.set("SP", window.chartColors.thistle);
+cores.set("TO", window.chartColors.chocolate);
+
+
 var mesesMap = new Map();
-mesesMap.set("JANEIRO", "1");
-mesesMap.set("FEVEREIRO", "2");
-mesesMap.set("MARÇO", "3");
-mesesMap.set("ABRIL", "4");
-mesesMap.set("MAIO", "5");
-mesesMap.set("JUNHO", "6");
-mesesMap.set("JULHO", "7");
-mesesMap.set("AGOSTO", "8");
-mesesMap.set("SETEMBRO", "9");
-mesesMap.set("OUTUBRO", "10");
-mesesMap.set("NOVEMBRO", "11");
-mesesMap.set("DEZEMBRO", "12");
+mesesMap.set("JANEIRO", 	"1");
+mesesMap.set("FEVEREIRO",	"2");
+mesesMap.set("MARÇO", 		"3");
+mesesMap.set("ABRIL", 		"4");
+mesesMap.set("MAIO", 		"5");
+mesesMap.set("JUNHO", 		"6");
+mesesMap.set("JULHO", 		"7");
+mesesMap.set("AGOSTO", 		"8");
+mesesMap.set("SETEMBRO", 	"9");
+mesesMap.set("OUTUBRO",		"10");
+mesesMap.set("NOVEMBRO", 	"11");
+mesesMap.set("DEZEMBRO", 	"12");
+
+
+var mesesMapInvertido = new Map();
+mesesMapInvertido.set("1",	"JANEIRO");
+mesesMapInvertido.set("2",	"FEVEREIRO");
+mesesMapInvertido.set("3",	"MARÇO");
+mesesMapInvertido.set("4",	"ABRIL");
+mesesMapInvertido.set("5",	"MAIO");
+mesesMapInvertido.set("6",	"JUNHO");
+mesesMapInvertido.set("7",	"JULHO");
+mesesMapInvertido.set("8",	"AGOSTO");
+mesesMapInvertido.set("9",	"SETEMBRO");
+mesesMapInvertido.set("10",	"OUTUBRO");
+mesesMapInvertido.set("11",	"NOVEMBRO");
+mesesMapInvertido.set("12",	"DEZEMBRO");
 
 var reservasEstadoMap = new Map();
 reservasEstadoMap.set("AC", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -467,7 +515,6 @@ function getReservasPorEstado(estados, reservas, meses, ano){
 				var qtd = 0;
 				for(var k = 0; k < meses.length; k++){
 					if(mesesMap.get(meses[k].toUpperCase()) == reservas[j].dataReserva.monthValue && reservas[j].dataReserva.year == ano ){
-						debugger;
 						var arrayReservaPorEstado = reservasEstadoMap.get(estados[i]);
 						arrayReservaPorEstado[k]++;
 						reservasEstadoMap.set(estados[i], arrayReservaPorEstado);
@@ -485,17 +532,49 @@ function getReservasPorEstado(estados, reservas, meses, ano){
 }
 
 function filtrar(){
+	var mes1 = $("#mes1").val();
+	var mes2 = $("#mes2").val();
+	
+	var mesesFiltro = []
+	
+	
+	if(mes1 == "" && mes2 == ""){
+		myChart.data.labels = MESES;
+		window.myChart.update();
+	}else{
+		myChart.data.labels = [];
+		
+		for(var i = parseInt(mes1); i<= parseInt(mes2);i++){
+			myChart.data.labels.push(mesesMapInvertido.get(i.toString()));
+		}
+		
+		window.myChart.update();
+	}
+	
+
+
 	
 	var estado = $("#estadoFiltro").val();
 	var ano = $("#ano").val();
 	
-	for(var i = 0; i < estados.length; i++){
+	
+	
+	if(ano == ""){
+		ano = 2019;
+	}else{
+		ano = parseInt(ano);
+	}
+	
+	filtrarEstado(estado, ano);
+	
+	
+	/*for(var i = 0; i < estados.length; i++){
 		
 		for(var j = 0; j < reservas.length; j++){
-			if(estado.toUpperCase == reservas[j].hospedagem.endereco.estado.toUpperCase()){
+			if(filtrarEstado(estado, i, j)){
 				var qtd = 0;
-				for(var k = 0; k < meses.length; k++){
-					if(mesesMap.get(meses[k].toUpperCase()) == reservas[j].dataReserva.monthValue && reservas[j].dataReserva.year == ano ){
+				for(var k = 0; k < mesesFiltro.length; k++){
+					if(filtrarMes(k, j, mesesFiltro)){
 						debugger;
 						var arrayReservaPorEstado = reservasEstadoMap.get(estados[i]);
 						arrayReservaPorEstado[k]++;
@@ -511,10 +590,79 @@ function filtrar(){
 		}
 		reservaPorEstados.push(qtd);
 		
-	}
+	}*/
 }
 
 
+
+
+function filtrarEstado(estado, ano){
+	
+	
+	if(estado == ""){
+		
+	}else{
+		var arrayReservaPorEstado = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		myChart.data.datasets = [];
+		for(var j = 0; j < reservas.length; j++){
+			if(estado.toUpperCase() == reservas[j].hospedagem.endereco.estado.toUpperCase()){
+				var qtd = 0;
+				for(var k = 0; k < myChart.data.labels.length; k++){
+					if(mesesMap.get(myChart.data.labels[k].toUpperCase()) == reservas[j].dataReserva.monthValue && reservas[j].dataReserva.year == ano ){
+						arrayReservaPorEstado[mesesMap.get(myChart.data.labels[k].toUpperCase())]++;
+						reservasEstadoMap.set(estado, arrayReservaPorEstado);
+					}
+				}
+				
+				
+				
+				
+				
+			}
+		}
+		
+		var newDataset = {
+				label: estado,
+				backgroundColor: cores.get(estado),
+				borderColor: cores.get(estado),
+				data: reservasEstadoMap.get(estado),
+				fill: false
+			};
+		
+		myChart.data.datasets.push(newDataset);
+		window.myChart.update();
+		
+	}
+	
+
+}
+
+
+function filtrarMes(k, j, mesesFiltro){
+	
+	var mes1 = parseInt($("#mes1").val());
+	var mes2 = parseInt($("#mes2").val());
+	
+	if(mes1 == "" && mes2 == ""){
+		if(mesesMap.get(meses[k].toUpperCase()) == reservas[j].dataReserva.monthValue && reservas[j].dataReserva.year == ano ){
+			return true;
+		}else{
+			
+			return false;
+		}
+	}else{
+		
+		if(mesesMapInvertido.get(mesesFiltro[k]) == reservas[j].dataReserva.monthValue && reservas[j].dataReserva.year == ano ){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	
+	
+	
+}
 
 </script>
 <!-- Bootstrap core JavaScript-->
