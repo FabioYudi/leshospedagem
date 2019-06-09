@@ -601,6 +601,46 @@ function filtrarEstado(estado, ano){
 	
 	if(estado == ""){
 		
+		for(var i = 0; i < estados.length; i++){
+			var arrayReservaPorEstado = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+			myChart.data.datasets = [];
+			for(var j = 0; j < reservas.length; j++){
+				if(estados[i].toUpperCase() == reservas[j].hospedagem.endereco.estado.toUpperCase()){
+					var qtd = 0;
+					for(var k = 0; k < myChart.data.labels.length; k++){
+						if(mesesMap.get(myChart.data.labels[k].toUpperCase()) == reservas[j].dataReserva.monthValue && reservas[j].dataReserva.year == ano ){
+							arrayReservaPorEstado[k]++;
+							reservasEstadoMap.set(estados[i], arrayReservaPorEstado);
+							
+						}
+						
+					}
+					
+					
+					var newDataset = {
+							label: estados[i],
+							backgroundColor: cores.get(estados[i]),
+							borderColor: cores.get(estado),
+							data: reservasEstadoMap.get(estados[i]),
+							fill: false
+						};
+					
+					myChart.data.datasets.push(newDataset);
+				}
+			}
+			
+			
+			
+		}
+		
+		
+		
+		
+		window.myChart.update();
+		
+		
+		
+		
 	}else{
 		var arrayReservaPorEstado = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		myChart.data.datasets = [];
@@ -609,9 +649,10 @@ function filtrarEstado(estado, ano){
 				var qtd = 0;
 				for(var k = 0; k < myChart.data.labels.length; k++){
 					if(mesesMap.get(myChart.data.labels[k].toUpperCase()) == reservas[j].dataReserva.monthValue && reservas[j].dataReserva.year == ano ){
-						arrayReservaPorEstado[mesesMap.get(myChart.data.labels[k].toUpperCase())]++;
-						reservasEstadoMap.set(estado, arrayReservaPorEstado);
+						arrayReservaPorEstado[k]++;
+						
 					}
+					reservasEstadoMap.set(estado, arrayReservaPorEstado);
 				}
 				
 				
