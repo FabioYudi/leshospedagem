@@ -80,12 +80,14 @@ public class HospedagemController extends ControllerBase {
 	
 	
 	@GetMapping("/consultar")
-	public String consultaHospedagem(Model model) {
+	public String consultaHospedagem(Model model, Hospedagem hospedagem) {
 		Cliente clienteLogado = (Cliente) httpSession.getAttribute("clienteLogado");
 		Cliente cliente = new Cliente();
 		cliente.setId(clienteLogado.getId());
 		cliente = (Cliente) commands.get(VISUALIZAR).execute(cliente).getEntidades().get(0);
-		model.addAttribute("hospedagens", cliente.getHospedagens());
+		Resultado resultado = commands.get(CONSULTAR).execute(hospedagem);
+		model.addAttribute("hospedagens", resultado.getEntidades());
+		//model.addAttribute("hospedagens", cliente.getHospedagens());
 		return "painel/hospedagem/consultar";
 	}
 	

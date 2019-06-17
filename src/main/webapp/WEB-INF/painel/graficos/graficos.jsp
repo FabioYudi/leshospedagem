@@ -600,10 +600,10 @@ function filtrarEstado(estado, ano){
 	
 	
 	if(estado == ""){
-		
+		myChart.data.datasets = [];
 		for(var i = 0; i < estados.length; i++){
 			var arrayReservaPorEstado = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-			myChart.data.datasets = [];
+			
 			for(var j = 0; j < reservas.length; j++){
 				if(estados[i].toUpperCase() == reservas[j].hospedagem.endereco.estado.toUpperCase()){
 					var qtd = 0;
@@ -617,26 +617,28 @@ function filtrarEstado(estado, ano){
 					}
 					
 					
-					var newDataset = {
-							label: estados[i],
-							backgroundColor: cores.get(estados[i]),
-							borderColor: cores.get(estado),
-							data: reservasEstadoMap.get(estados[i]),
-							fill: false
-						};
-					
-					myChart.data.datasets.push(newDataset);
+				
 				}
 			}
 			
+			reservasEstadoMap.set(estados[i], arrayReservaPorEstado);
+
+			var newDataset = {
+					label: estados[i],
+					backgroundColor: cores.get(estados[i]),
+					borderColor: cores.get(estados[i]),
+					data: reservasEstadoMap.get(estados[i]),
+					fill: false
+				};
+			
+			myChart.data.datasets.push(newDataset);
+			
+			
+			window.myChart.update();
 			
 			
 		}
 		
-		
-		
-		
-		window.myChart.update();
 		
 		
 		

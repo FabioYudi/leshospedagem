@@ -175,8 +175,8 @@
 				      </div>  
 			         </div>
 			        </form>
-			        <div class="card-header">Taxas</div>
-			        <a type="button" data-toggle="modal" data-target="#modalCadastrarTaxa"  class="btn btn-danger"  style="margin-bottom:20px; color:white; margin-top:10px" id="adicionarTaxa">Adicionar Taxa</a>
+			        <div style="display:none" class="card-header">Taxas</div>
+			        <a style="display:none" type="button" data-toggle="modal" data-target="#modalCadastrarTaxa"  class="btn btn-danger"  style="margin-bottom:20px; color:white; margin-top:10px" id="adicionarTaxa">Adicionar Taxa</a>
 			        
 			        <div id="taxas" class="row">
 				             

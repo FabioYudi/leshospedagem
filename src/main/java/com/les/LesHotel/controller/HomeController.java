@@ -13,9 +13,10 @@ import com.les.LesHotel.entities.Hospedagem;
 public class HomeController extends ControllerBase{
 	
 	@GetMapping("/")
-	public String index() {
-		
-		return "index";
+	public String index(Model model, Hospedagem hospedagem) {
+		Resultado resultado = commands.get(CONSULTAR).execute(hospedagem);
+		model.addAttribute("hospedagens", resultado.getEntidades());
+		return "pesquisa";
 	}
 	
 	@GetMapping("/pesquisa")
