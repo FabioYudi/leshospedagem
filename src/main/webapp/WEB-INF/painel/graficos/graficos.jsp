@@ -110,7 +110,7 @@
    	 
    	 
    	 
-   	 	<div  style="width:60%;" class="card">
+   	 	<div  style="width:100%;" class="card">
    	 		<div class="chartjs-size-monitor">
    	 			<div class="chartjs-size-monitor-expand">
    	 				<div class=""></div>
